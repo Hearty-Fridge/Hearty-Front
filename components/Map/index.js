@@ -1,14 +1,14 @@
 import GoogleMapReact from 'google-map-react';
-import styled from 'styled-components';
 import { useState, useEffect, useCallback } from 'react';
+import { MapWrapper } from './styles';
 
-const Marker = (props) => (
+const Marker = ({ color }) => (
   <div className={'marker'}>
-    <div>Hi</div>
+    <div style={{ color: `${color}` }}>★</div>
   </div>
 );
 
-const MapComponent = () => {
+const MapComponent = ({ mark }) => {
   const [loc, setLoc] = useState(null);
   const [marker, setMarker] = useState(null);
 
@@ -42,7 +42,8 @@ const MapComponent = () => {
           onClick={onClickMap}
           defaultCenter={loc}
         >
-          {marker && <Marker {...marker} />}
+          {mark && mark.mark.map((m) => <Marker color="blue" {...m.loc} />)}
+          {marker && <Marker color="red" {...marker} />}
         </GoogleMapReact>
       ) : (
         <div>Loading...</div>
@@ -52,8 +53,3 @@ const MapComponent = () => {
 };
 
 export default MapComponent;
-
-const MapWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-`;
