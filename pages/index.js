@@ -26,15 +26,15 @@ function Home() {
   );
 }
 
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
+// export async function getStaticProps() {
+//   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery('hello', () => callApi());
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   await queryClient.prefetchQuery('hello', () => callApi());
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }
 
 export default Home;
