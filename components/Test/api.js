@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 
 const callApi = async () => {
-  const res = await axios('/api/hello');
+  const res = await axios('http://localhost:3000/api/hello');
   return res;
 };
 

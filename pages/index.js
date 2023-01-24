@@ -8,7 +8,6 @@ import { dehydrate } from 'react-query';
 
 function Home() {
   const { isLoading, error, data } = useQuery('hello', () => callApi());
-  console.log(isLoading, error, data);
 
   return (
     <>

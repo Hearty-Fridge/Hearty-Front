@@ -1,12 +1,16 @@
 import MapComponent from '@components/Map';
+import axios from 'axios';
 
 const Map = ({ res }) => {
   return <MapComponent mark={res} />;
 };
 
 export const getStaticProps = async () => {
-  const data = await fetch('http://localhost:3000/api/map');
-  const res = await data.json();
+  const data = await axios.get(
+    `${process.env.NEXT_PUBLIC_SERVER_NAME}/api/v1/fridge/all`
+  );
+
+  const res = data.data;
   return {
     props: {
       res,
