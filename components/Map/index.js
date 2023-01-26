@@ -44,7 +44,11 @@ const MapComponent = ({ mark }) => {
     <MapWrapper>
       {loc ? (
         <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY }}
+          bootstrapURLKeys={{
+            language: 'en',
+            region: 'US',
+            key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
+          }}
           defaultZoom={20}
           onClick={onClickMap}
           defaultCenter={loc}

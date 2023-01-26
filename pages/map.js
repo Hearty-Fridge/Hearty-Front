@@ -1,8 +1,13 @@
+import Layout from '@components/Layout';
 import MapComponent from '@components/Map';
 import axios from 'axios';
 
 const Map = ({ res }) => {
-  return <MapComponent mark={res} />;
+  return (
+    <Layout>
+      <MapComponent mark={res} />
+    </Layout>
+  );
 };
 
 export const getStaticProps = async () => {
