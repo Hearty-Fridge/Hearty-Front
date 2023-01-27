@@ -31,7 +31,12 @@ export const InfoArea = styled.div`
     margin: 5%;
   }
   .signin {
-    color: ${(props) => props.theme.palette.gray};
+    color: white;
+    width: 107px;
+    text-align: center;
+    border-radius: 18px;
+    padding: 10px;
+    background-color: ${(props) => props.theme.palette.accent}
   }
   .signup {
     color: white;
