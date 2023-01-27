@@ -13,7 +13,12 @@ const Marker = ({ color }) => (
   </Link>
 );
 
-const MapComponent = ({ loc, setLoc, mark }) => {
+const MapComponent = ({
+  centerLoc,
+  setCenterLoc,
+  visibleList,
+  setVisibleListInBoundary,
+}) => {
   const [marker, setMarker] = useState(null);
 
   // 클릭하면 마커 생성
@@ -30,7 +35,7 @@ const MapComponent = ({ loc, setLoc, mark }) => {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        setLoc(tmpLoc);
+        setCenterLoc(tmpLoc);
         setMarker(tmpLoc);
       });
     } else {
@@ -39,14 +44,14 @@ const MapComponent = ({ loc, setLoc, mark }) => {
         lat: 37.330689,
         lng: 126.5930664,
       };
-      setLoc(tmpLoc);
+      setCenterLoc(tmpLoc);
       setMarker(tmpLoc);
     }
   }, []);
 
   return (
     <MapWrapper>
-      {loc ? (
+      {visibleList ? (
         <GoogleMapReact
           bootstrapURLKeys={{
             language: 'en',
@@ -55,15 +60,19 @@ const MapComponent = ({ loc, setLoc, mark }) => {
           }}
           defaultZoom={20}
           onClick={onClickMap}
-          center={loc}
+          center={centerLoc}
+          onChange={(e) => {
+            setVisibleListInBoundary({
+              minLat: e.bounds.se.lat,
+              maxLat: e.bounds.nw.lat,
+              minLng: e.bounds.nw.lng,
+              maxLng: e.bounds.se.lng,
+            });
+          }}
         >
-          {mark &&
-            mark.map((m) => (
-              <Marker
-                key={m.address}
-                color="blue"
-                {...{ lat: m.lat, lng: m.lng }}
-              />
+          {visibleList &&
+            visibleList.map((m) => (
+              <Marker key={m.id} color="blue" {...{ lat: m.lat, lng: m.lng }} />
             ))}
           {marker && <Marker color="red" {...marker} />}
         </GoogleMapReact>

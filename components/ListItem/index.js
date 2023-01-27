@@ -1,10 +1,10 @@
 import { Wrapper, ImgArea, InfoArea, Prefer } from './styles';
 
-const ListItem = ({ setLoc, info }) => {
+const ListItem = ({ setCenterLoc, info }) => {
   return (
     <Wrapper
       onClick={() => {
-        setLoc({ lat: info.lat, lng: info.lng });
+        setCenterLoc({ lat: info.lat, lng: info.lng });
       }}
     >
       <ImgArea
