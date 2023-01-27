@@ -1,5 +1,6 @@
 import Header from '@components/Header';
 import Head from 'next/head';
+import { FlexContainer } from './styles';
 
 const Layout = ({ children }) => {
   return (
@@ -11,7 +12,7 @@ const Layout = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      {children}
+      <FlexContainer>{children}</FlexContainer>
     </>
   );
 };
