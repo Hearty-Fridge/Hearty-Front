@@ -12,7 +12,11 @@ const Header = () => {
       <Navigation>
         <Link href="/">Logo</Link>
         {navMenu.map((menu) => {
-          return <Link href={`/${menu.toLowerCase()}`}>{menu}</Link>;
+          return (
+            <Link key={menu} href={`/${menu.toLowerCase()}`}>
+              {menu}
+            </Link>
+          );
         })}
       </Navigation>
       <InfoArea>
@@ -20,11 +24,11 @@ const Header = () => {
           <>
             <div>Message</div>
             <div>Alarm</div>
-            <div class="signup">My</div>
+            <div className="signup">My</div>
           </>
         ) : (
           <>
-            <div class="signin">Login</div>
+            <div className="signin">Login</div>
           </>
         )}
       </InfoArea>

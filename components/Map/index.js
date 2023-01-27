@@ -21,6 +21,29 @@ const MapComponent = ({ loc, setLoc, mark }) => {
     setMarker({ lat: e.lat, lng: e.lng });
   }, []);
 
+  // 얘를 Map component에 넣을지 여기에 둘지
+  useEffect(() => {
+    // geolocation을 사용할 수 있다면
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const tmpLoc = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        setLoc(tmpLoc);
+        setMarker(tmpLoc);
+      });
+    } else {
+      // default : 서울 시청
+      const tmpLoc = {
+        lat: 37.330689,
+        lng: 126.5930664,
+      };
+      setLoc(tmpLoc);
+      setMarker(tmpLoc);
+    }
+  }, []);
+
   return (
     <MapWrapper>
       {loc ? (
@@ -36,7 +59,11 @@ const MapComponent = ({ loc, setLoc, mark }) => {
         >
           {mark &&
             mark.map((m) => (
-              <Marker color="blue" {...{ lat: m.lat, lng: m.lng }} />
+              <Marker
+                key={m.address}
+                color="blue"
+                {...{ lat: m.lat, lng: m.lng }}
+              />
             ))}
           {marker && <Marker color="red" {...marker} />}
         </GoogleMapReact>

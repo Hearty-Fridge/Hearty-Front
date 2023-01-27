@@ -8,7 +8,7 @@ const FridgeList = ({ locList, setLoc }) => {
     <ListWrapper>
       <SearchArea placeholder="Search" />
       {locList.map((l) => (
-        <ListItem setLoc={setLoc} info={l} />
+        <ListItem key={l.id} setLoc={setLoc} info={l} />
       ))}
     </ListWrapper>
   );
