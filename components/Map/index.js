@@ -1,5 +1,5 @@
 import GoogleMapReact from 'google-map-react';
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { MapWrapper } from './styles';
 import Link from 'next/link';
 import { IoLocationSharp } from 'react-icons/io5';
@@ -18,36 +18,15 @@ const MapComponent = ({
   setCenterLoc,
   visibleList,
   setVisibleListInBoundary,
+  marker,
+  setMarker,
 }) => {
-  const [marker, setMarker] = useState(null);
-
   // 클릭하면 마커 생성
   const onClickMap = useCallback((e) => {
     setMarker({ lat: e.lat, lng: e.lng });
   }, []);
 
   // 얘를 Map component에 넣을지 여기에 둘지
-  useEffect(() => {
-    // geolocation을 사용할 수 있다면
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const tmpLoc = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        setCenterLoc(tmpLoc);
-        setMarker(tmpLoc);
-      });
-    } else {
-      // default : 서울 시청
-      const tmpLoc = {
-        lat: 37.330689,
-        lng: 126.5930664,
-      };
-      setCenterLoc(tmpLoc);
-      setMarker(tmpLoc);
-    }
-  }, []);
 
   return (
     <MapWrapper>
@@ -62,6 +41,10 @@ const MapComponent = ({
           onClick={onClickMap}
           center={centerLoc}
           onChange={(e) => {
+            setCenterLoc({
+              lat: e.center.lat,
+              lng: e.center.lng,
+            });
             setVisibleListInBoundary({
               minLat: e.bounds.se.lat,
               maxLat: e.bounds.nw.lat,
