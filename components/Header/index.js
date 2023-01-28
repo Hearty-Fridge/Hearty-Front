@@ -5,12 +5,9 @@ import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
 const NAV_MENU = ['Intro', 'Map', 'Donating'];
 import { useGoogleLogin } from '@react-oauth/google';
-import { axiosInstance } from '../../api';
 import axios from 'axios';
 import { userState } from 'atoms/user';
 import { useRecoilState } from 'recoil';
-
-const navMenu = ['Intro', 'Map', 'Donating'];
 const TOKEN_KEY = 'accessToken';
 
 const Header = () => {
