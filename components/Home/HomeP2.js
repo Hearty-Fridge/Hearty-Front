@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
-const HomeP1 = () => {
+const HomeP2 = () => {
   return (
     <Wrapper>
-      <Title>
-        Let’s donate <br /> with hearty fridge!
-      </Title>
+      <Title>P2</Title>
       <Flex>
         <SubTitle>
           <How>How?</How>
@@ -13,7 +11,6 @@ const HomeP1 = () => {
           promoting a healthy life and the welfare of all <br />
           generations, e and the welfare of.
         </SubTitle>
-        <BackImg />
       </Flex>
     </Wrapper>
   );
@@ -37,19 +34,15 @@ const Title = styled.div`
 const Flex = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
-  padding-right: 61px;
 `;
 
 const SubTitle = styled.div`
-  display: inline-block;
   font-weight: 400;
   font-size: 30px;
   line-height: 36px;
 
   letter-spacing: -0.01em;
   margin-top: 60px;
-  z-index: 1;
 
   color: ${(props) => props.theme.palette.secondary.main};
 `;
@@ -69,15 +62,4 @@ const How = styled.div`
   border-color: ${({ theme }) => theme.palette.accent};
 `;
 
-const BackImg = styled.div`
-  /* position: absolute; */
-  position: relative;
-  width: 1101px;
-  height: 648px;
-  background-color: white;
-  z-index: -1;
-  bottom: 0;
-  background-image: url(/image/mainP1_sample.png);
-  filter: blur(5px);
-`;
-export default HomeP1;
+export default HomeP2;
