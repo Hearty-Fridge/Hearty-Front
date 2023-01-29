@@ -94,7 +94,6 @@ const TopWrapper = styled.div`
   height: 137px;
   align-items: center;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.palette.background};
 `;
 
 const Navigation = styled.nav`
@@ -107,7 +106,7 @@ const Navigation = styled.nav`
     margin-left: 80px;
   }
   a {
-    margin-left: 80px;
+    margin-right: 80px;
     color: ${(props) => props.theme.palette.secondary.main};
   }
 `;
@@ -130,7 +129,6 @@ const InfoArea = styled.div`
     margin-right: 48px;
   }
   .signup {
-    margin-right: 80px;
     color: white;
     width: 107px;
     text-align: center;
@@ -139,7 +137,6 @@ const InfoArea = styled.div`
     background-color: ${(props) => props.theme.palette.accent};
   }
   .mypage {
-    margin-right: 80px;
     color: white;
     width: 107px;
     text-align: center;

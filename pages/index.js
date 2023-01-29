@@ -1,24 +1,12 @@
 import Layout from '@components/Layout';
+import HomeP1 from '@components/Home/HomeP1';
 
 const Home = () => {
   return (
     <Layout>
-      <div style={{ textAlign: 'center', color: 'black' }}>
-        This is Index Page
-      </div>
+      <HomeP1 />
     </Layout>
   );
 };
-
-// export async function getStaticProps() {
-//   const queryClient = new QueryClient();
-
-//   await queryClient.prefetchQuery('hello', () => callApi());
-//   return {
-//     props: {
-//       dehydratedState: dehydrate(queryClient),
-//     },
-//   };
-// }
 
 export default Home;

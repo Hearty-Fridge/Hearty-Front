@@ -14,12 +14,14 @@ const client = new QueryClient({
 });
 
 export default function App({ Component, pageProps }) {
-    return (
+  return (
     <QueryClientProvider client={client}>
       {process.env.NODE_ENV !== 'production' ? (
         <ReactQueryDevtools initialsOpen={false} />
       ) : null}
-      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_LOGIN_CLIENT_ID}>
+      <GoogleOAuthProvider
+        clientId={process.env.NEXT_PUBLIC_GOOGLE_LOGIN_CLIENT_ID}
+      >
         <ThemeProvider theme={theme}>
           <Hydrate state={pageProps.dehydratedState}>
             <Component {...pageProps} />
