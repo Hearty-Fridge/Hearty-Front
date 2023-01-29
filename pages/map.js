@@ -4,6 +4,24 @@ import MapComponent from '@components/Map';
 import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
 
+function getDistanceFromLatLonInKm({ lat1, lng1, lat2, lng2 }) {
+  function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
+  var r = 6371; //지구의 반지름(km)
+  var dLat = deg2rad(lat2 - lat1);
+  var dLon = deg2rad(lng2 - lng1);
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = r * c; // Distance in km
+  return Math.round(d * 1000);
+}
+
 // default centerLoc이랑 centerLoc이랑 따로 둬야 할 듯
 const Map = ({ res }) => {
   const [GPSLoc, setGPSLoc] = useState(null);
@@ -13,7 +31,6 @@ const Map = ({ res }) => {
 
   const setVisibleListInBoundary = useCallback(
     ({ minLat, maxLat, minLng, maxLng }) => {
-      console.log(GPSLoc);
       let tmp = [];
       res.forEach((elem) => {
         if (
@@ -24,8 +41,13 @@ const Map = ({ res }) => {
         ) {
           // 거리순으로 정렬을 어떻게 해야할지 모르겠네
           if (GPSLoc) {
-            const t =
-              Math.abs(elem.lat - GPSLoc.lat) + Math.abs(elem.lng - GPSLoc.lng);
+            const t = getDistanceFromLatLonInKm({
+              lat1: elem.lat,
+              lng1: elem.lng,
+              lat2: GPSLoc.lat,
+              lng2: GPSLoc.lng,
+            });
+            // Math.abs(elem.lat - GPSLoc.lat) + Math.abs(elem.lng - GPSLoc.lng);
             tmp.push({ ...elem, dist: t });
           } else {
             tmp.push(elem);

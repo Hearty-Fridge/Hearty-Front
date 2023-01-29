@@ -13,8 +13,10 @@ const ListItem = ({ setCenterLoc, info }) => {
       <InfoArea>
         <div className="title">{info.name}</div>
         <div className="loc">{info.address}</div>
-        <div className="status">Food Status: {info.foods.length}</div>
-        {Object.keys(info).includes('dist') && <div>{info.dist}</div>}
+        <div className="status">
+          Food Status: {info.foods.length} | Hearty Message: 0
+        </div>
+        {/* {Object.keys(info).includes('dist') && <div>{info.dist}</div>} */}
       </InfoArea>
       <Prefer>★</Prefer>
     </Wrapper>

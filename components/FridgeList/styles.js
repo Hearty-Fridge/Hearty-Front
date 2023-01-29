@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const ListWrapper = styled.div`
-  width: 35%;
+  width: 591px;
   height: calc(100vh - 137px);
-  padding-left: 2%;
+  padding-left: 80px;
   overflow-y: scroll;
   /* padding-left: 80px;
   padding-top: 50px; */
@@ -13,13 +13,13 @@ export const ListWrapper = styled.div`
 export const SearchArea = styled.input`
   background-color: ${(props) => props.theme.palette.secondary.main30};
   color: white;
-  margin-top: 5%;
+  margin-top: 50px;
   margin-bottom: 5%;
   padding-left: 20px;
   padding-right: 20px;
   font-size: 18px;
-  width: 90%;
-  height: 40px;
+  width: 460px;
+  height: 56px;
   border: none;
   border-radius: 50px;
   ::placeholder {
