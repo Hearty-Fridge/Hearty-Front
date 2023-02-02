@@ -1,4 +1,21 @@
+import ListItem from '@components/Fridge/FridgeListItem';
 import styled from 'styled-components';
+
+// LocList: 동사무소 위치 정보, setLoc => google map center location setter
+const FridgeList = ({ setCenterLoc, visibleList }) => {
+  return (
+    <ListWrapper>
+      <SearchArea placeholder="Search" />
+      <VisibleList>
+        {visibleList?.map((l) => (
+          <ListItem key={l.id} setCenterLoc={setCenterLoc} info={l} />
+        ))}
+      </VisibleList>
+    </ListWrapper>
+  );
+};
+
+export default FridgeList;
 
 export const ListWrapper = styled.div`
   width: 591px;

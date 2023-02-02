@@ -1,10 +1,9 @@
-import FridgeList from '@components/FridgeList';
-import FridgeDetail from '@components/FridgeDetail';
+import FridgeList from '@components/Fridge/FridgeList';
+import FridgeDetail from '@components/Fridge/FridgeDetail';
 import Layout from '@components/Layout';
-import Map from '@components/Map';
-import { QueryClient, dehydrate, useQuery } from 'react-query';
+import Map from '@components/Map/Map';
 import { useState, useEffect, useCallback } from 'react';
-import { useFridges, fetchFridges } from '@hooks/api/useFridges';
+import { useGetAllFridges } from 'api/Fridges/useFridges';
 
 function getDistanceFromLatLonInKm({ lat1, lng1, lat2, lng2 }) {
   function deg2rad(deg) {
@@ -26,12 +25,7 @@ function getDistanceFromLatLonInKm({ lat1, lng1, lat2, lng2 }) {
 
 // default centerLoc이랑 centerLoc이랑 따로 둬야 할 듯
 const MapPage = () => {
-  const { isLoading, error, data, status } = useQuery('fridges', fetchFridges, {
-    refetchOnWindowFocus: false,
-    refetchOnmount: false,
-    refetchOnReconnect: false,
-    retry: false,
-  });
+  const { data, refetch } = useGetAllFridges();
   const [showDetail, setShowDetail] = useState(false);
   const [GPSLoc, setGPSLoc] = useState({ lat: 0, lng: 0 });
   const [centerLoc, setCenterLoc] = useState(null);
@@ -42,7 +36,7 @@ const MapPage = () => {
   const setVisibleListInBoundary = useCallback(
     ({ minLat, maxLat, minLng, maxLng }) => {
       let tmp = [];
-      data.forEach((elem) => {
+      data?.forEach((elem) => {
         // 눈에 보이는 영역 안에 있으면
         if (
           minLat <= elem.lat &&
@@ -101,9 +95,7 @@ const MapPage = () => {
   return (
     <Layout>
       <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
-      {showDetail && (
-        <FridgeDetail detailData={detailData} setShow={setShowDetail} />
-      )}
+      {showDetail && <FridgeDetail detailData={id} setShow={setShowDetail} />}
       <Map
         centerLoc={centerLoc}
         setCenterLoc={setCenterLoc}
@@ -116,18 +108,6 @@ const MapPage = () => {
     </Layout>
   );
 };
-
-export async function getServerSideProps() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery('fridges', fetchFridges);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
 
 // export const getStaticProps = async () => {
 //   const data = await axios.get(

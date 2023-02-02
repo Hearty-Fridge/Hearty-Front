@@ -1,7 +1,7 @@
 import GoogleMapReact from 'google-map-react';
 import { useCallback } from 'react';
-import { MapWrapper } from './styles';
 import { IoLocationSharp } from 'react-icons/io5';
+import styled from 'styled-components';
 
 const Marker = ({ color }) => (
   // 일단 마커 누르면 홈으로 가도록 해 둔 상태
@@ -64,3 +64,9 @@ const Map = ({
 };
 
 export default Map;
+
+export const MapWrapper = styled.div`
+  overflow: hidden;
+  width: calc(100vw - 591px);
+  height: calc(100vh - 137px);
+`;
