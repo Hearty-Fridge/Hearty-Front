@@ -18,11 +18,11 @@ export default function App({ Component, pageProps }) {
       {process.env.NODE_ENV !== 'production' ? (
         <ReactQueryDevtools initialsOpen={false} />
       ) : null}
-      <ThemeProvider theme={theme}>
-        <Hydrate state={pageProps.dehydratedState}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <ThemeProvider theme={theme}>
           <Component {...pageProps} />
-        </Hydrate>
-      </ThemeProvider>
+        </ThemeProvider>
+      </Hydrate>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

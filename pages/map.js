@@ -1,8 +1,10 @@
 import FridgeList from '@components/FridgeList';
+import FridgeDetail from '@components/FridgeDetail';
 import Layout from '@components/Layout';
 import MapComponent from '@components/Map';
-import axios from 'axios';
+import { QueryClient, dehydrate, useQuery } from 'react-query';
 import { useState, useEffect, useCallback } from 'react';
+import { useFridges, fetchFridges } from '@hooks/api/useFridges';
 
 function getDistanceFromLatLonInKm({ lat1, lng1, lat2, lng2 }) {
   function deg2rad(deg) {
@@ -23,48 +25,55 @@ function getDistanceFromLatLonInKm({ lat1, lng1, lat2, lng2 }) {
 }
 
 // default centerLoc이랑 centerLoc이랑 따로 둬야 할 듯
-const Map = ({ res }) => {
-  const [GPSLoc, setGPSLoc] = useState(null);
+const Map = () => {
+  const { isLoading, error, data, status } = useQuery('fridges', fetchFridges, {
+    refetchOnWindowFocus: false,
+    refetchOnmount: false,
+    refetchOnReconnect: false,
+    retry: false,
+  });
+  const [showDetail, setShowDetail] = useState(false);
+  const [GPSLoc, setGPSLoc] = useState({ lat: 0, lng: 0 });
   const [centerLoc, setCenterLoc] = useState(null);
-  const [visibleList, setVisibleList] = useState(res);
+  const [visibleList, setVisibleList] = useState(null);
   const [marker, setMarker] = useState(null);
+  const [detailData, setDetailData] = useState(null);
 
   const setVisibleListInBoundary = useCallback(
     ({ minLat, maxLat, minLng, maxLng }) => {
       let tmp = [];
-      res.forEach((elem) => {
+      data.forEach((elem) => {
+        // 눈에 보이는 영역 안에 있으면
         if (
           minLat <= elem.lat &&
           elem.lat <= maxLat &&
           minLng <= elem.lng &&
           elem.lng <= maxLng
         ) {
-          // 거리순으로 정렬을 어떻게 해야할지 모르겠네
-          if (GPSLoc) {
-            const t = getDistanceFromLatLonInKm({
+          // GPSLoc이 null이면 gps를 불러오지 못함
+          // -> 현재 위치의 lat과 lng를 알 수 없음.
+          tmp.push({
+            ...elem,
+            dist: getDistanceFromLatLonInKm({
               lat1: elem.lat,
               lng1: elem.lng,
               lat2: GPSLoc.lat,
               lng2: GPSLoc.lng,
-            });
-            // Math.abs(elem.lat - GPSLoc.lat) + Math.abs(elem.lng - GPSLoc.lng);
-            tmp.push({ ...elem, dist: t });
-          } else {
-            tmp.push(elem);
-          }
+            }),
+          });
         }
       });
-      if (GPSLoc) {
-        tmp.sort((a, b) => {
-          return parseFloat(a.dist) - parseFloat(b.dist);
-        });
-      }
+      // 오름차순 정렬
+      tmp.sort((a, b) => {
+        return parseFloat(a.dist) - parseFloat(b.dist);
+      });
       setVisibleList(tmp);
     },
     [GPSLoc, setVisibleList]
   );
 
   useEffect(() => {
+    setVisibleList(data);
     // geolocation을 사용할 수 있다면
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -87,11 +96,14 @@ const Map = ({ res }) => {
       setCenterLoc(tmpLoc);
       setMarker(tmpLoc);
     }
-  }, [setGPSLoc, setCenterLoc, setMarker]);
+  }, [setGPSLoc, setCenterLoc, setMarker, setVisibleList, data]);
 
   return (
     <Layout>
       <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
+      {showDetail && (
+        <FridgeDetail detailData={detailData} setShow={setShowDetail} />
+      )}
       <MapComponent
         centerLoc={centerLoc}
         setCenterLoc={setCenterLoc}
@@ -99,22 +111,35 @@ const Map = ({ res }) => {
         setVisibleListInBoundary={setVisibleListInBoundary}
         marker={marker}
         setMarker={setMarker}
+        setDetailData={setDetailData}
       />
     </Layout>
   );
 };
 
-export const getStaticProps = async () => {
-  const data = await axios.get(
-    `${process.env.NEXT_PUBLIC_SERVER_NAME}/api/v1/fridge/all`
-  );
+export async function getServerSideProps() {
+  const queryClient = new QueryClient();
 
-  const res = data.data;
+  await queryClient.prefetchQuery('fridges', fetchFridges);
+
   return {
     props: {
-      res,
+      dehydratedState: dehydrate(queryClient),
     },
   };
-};
+}
+
+// export const getStaticProps = async () => {
+//   const data = await axios.get(
+//     `${process.env.NEXT_PUBLIC_SERVER_NAME}/api/v1/fridge/all`
+//   );
+
+//   const res = data.data.data;
+//   return {
+//     props: {
+//       res,
+//     },
+//   };
+// };
 
 export default Map;

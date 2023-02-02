@@ -4,7 +4,6 @@ export const ListWrapper = styled.div`
   width: 591px;
   height: calc(100vh - 137px);
   padding-left: 80px;
-  overflow-y: scroll;
   /* padding-left: 80px;
   padding-top: 50px; */
   background-color: ${(props) => props.theme.palette.beige1};
@@ -31,4 +30,9 @@ export const SearchArea = styled.input`
     /* text-align: center; */
     text-indent: 30px;
   }
+`;
+
+export const VisibleList = styled.div`
+  height: 100%;
+  overflow-y: scroll;
 `;

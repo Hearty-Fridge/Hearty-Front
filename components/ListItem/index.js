@@ -14,9 +14,9 @@ const ListItem = ({ setCenterLoc, info }) => {
         <div className="title">{info.name}</div>
         <div className="loc">{info.address}</div>
         <div className="status">
-          Food Status: {info.foods.length} | Hearty Message: 0
+          {/* Food Status: {info.foods.length} | Hearty Message: 0 */}
         </div>
-        {/* {Object.keys(info).includes('dist') && <div>{info.dist}</div>} */}
+        {Object.keys(info).includes('dist') && <div>{info.dist}m</div>}
       </InfoArea>
       <Prefer>★</Prefer>
     </Wrapper>

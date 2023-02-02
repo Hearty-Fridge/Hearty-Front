@@ -6,11 +6,9 @@ import { IoLocationSharp } from 'react-icons/io5';
 
 const Marker = ({ color }) => (
   // 일단 마커 누르면 홈으로 가도록 해 둔 상태
-  <Link href="/" className={'marker'}>
-    <div style={{ color: `${color}`, fontSize: '32px' }}>
-      <IoLocationSharp />
-    </div>
-  </Link>
+  <div className="marker" style={{ color: `${color}`, fontSize: '32px' }}>
+    <IoLocationSharp />
+  </div>
 );
 
 const MapComponent = ({
