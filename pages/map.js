@@ -1,7 +1,7 @@
 import FridgeList from '@components/FridgeList';
 import FridgeDetail from '@components/FridgeDetail';
 import Layout from '@components/Layout';
-import MapComponent from '@components/Map';
+import Map from '@components/Map';
 import { QueryClient, dehydrate, useQuery } from 'react-query';
 import { useState, useEffect, useCallback } from 'react';
 import { useFridges, fetchFridges } from '@hooks/api/useFridges';
@@ -25,7 +25,7 @@ function getDistanceFromLatLonInKm({ lat1, lng1, lat2, lng2 }) {
 }
 
 // default centerLoc이랑 centerLoc이랑 따로 둬야 할 듯
-const Map = () => {
+const MapPage = () => {
   const { isLoading, error, data, status } = useQuery('fridges', fetchFridges, {
     refetchOnWindowFocus: false,
     refetchOnmount: false,
@@ -104,7 +104,7 @@ const Map = () => {
       {showDetail && (
         <FridgeDetail detailData={detailData} setShow={setShowDetail} />
       )}
-      <MapComponent
+      <Map
         centerLoc={centerLoc}
         setCenterLoc={setCenterLoc}
         visibleList={visibleList}
@@ -142,4 +142,4 @@ export async function getServerSideProps() {
 //   };
 // };
 
-export default Map;
+export default MapPage;

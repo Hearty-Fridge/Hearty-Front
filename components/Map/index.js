@@ -1,7 +1,6 @@
 import GoogleMapReact from 'google-map-react';
 import { useCallback } from 'react';
 import { MapWrapper } from './styles';
-import Link from 'next/link';
 import { IoLocationSharp } from 'react-icons/io5';
 
 const Marker = ({ color }) => (
@@ -11,7 +10,7 @@ const Marker = ({ color }) => (
   </div>
 );
 
-const MapComponent = ({
+const Map = ({
   centerLoc,
   setCenterLoc,
   visibleList,
@@ -64,4 +63,4 @@ const MapComponent = ({
   );
 };
 
-export default MapComponent;
+export default Map;
