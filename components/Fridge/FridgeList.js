@@ -17,7 +17,7 @@ const FridgeList = ({ setCenterLoc, visibleList }) => {
 
 export default FridgeList;
 
-export const ListWrapper = styled.div`
+const ListWrapper = styled.div`
   width: 591px;
   height: calc(100vh - 137px);
   padding-left: 80px;
@@ -26,7 +26,7 @@ export const ListWrapper = styled.div`
   background-color: ${(props) => props.theme.palette.beige1};
 `;
 
-export const SearchArea = styled.input`
+const SearchArea = styled.input`
   background-color: ${(props) => props.theme.palette.secondary.main30};
   color: white;
   margin-top: 50px;
@@ -49,7 +49,7 @@ export const SearchArea = styled.input`
   }
 `;
 
-export const VisibleList = styled.div`
+const VisibleList = styled.div`
   height: 100%;
   overflow-y: scroll;
 `;

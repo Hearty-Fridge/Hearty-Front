@@ -25,7 +25,7 @@ const ListItem = ({ setCenterLoc, info }) => {
 
 export default ListItem;
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: stretch;
   padding-left: 34px;
@@ -37,14 +37,14 @@ export const Wrapper = styled.div`
   border-radius: 10px;
 `;
 
-export const ImgArea = styled.img`
+const ImgArea = styled.img`
   /* padding: 1%; */
   width: 90px;
   height: 90px;
   border-radius: 10px;
 `;
 
-export const InfoArea = styled.div`
+const InfoArea = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -64,6 +64,6 @@ export const InfoArea = styled.div`
   }
 `;
 
-export const Prefer = styled.div`
+const Prefer = styled.div`
   color: ${(props) => props.theme.palette.primary};
 `;

@@ -1,14 +1,7 @@
 import GoogleMapReact from 'google-map-react';
 import { useCallback } from 'react';
-import { IoLocationSharp } from 'react-icons/io5';
 import styled from 'styled-components';
-
-const Marker = ({ color }) => (
-  // 일단 마커 누르면 홈으로 가도록 해 둔 상태
-  <div className="marker" style={{ color: `${color}`, fontSize: '32px' }}>
-    <IoLocationSharp />
-  </div>
-);
+import { Marker } from './marker';
 
 const Map = ({
   centerLoc,
@@ -17,12 +10,17 @@ const Map = ({
   setVisibleListInBoundary,
   marker,
   setMarker,
+  setShowDetail,
 }) => {
   // 클릭하면 마커 생성
   const onClickMap = useCallback((e) => {
     setMarker({ lat: e.lat, lng: e.lng });
   }, []);
 
+  const onClickMarker = useCallback((id, lat, lng) => {
+    setShowDetail(id);
+    setCenterLoc({ lat: lat, lng: lng });
+  }, []);
   // 얘를 Map component에 넣을지 여기에 둘지
 
   return (
@@ -52,7 +50,12 @@ const Map = ({
         >
           {visibleList &&
             visibleList.map((m) => (
-              <Marker key={m.id} color="blue" {...{ lat: m.lat, lng: m.lng }} />
+              <Marker
+                onClick={() => onClickMarker(m.id, m.lat, m.lng)}
+                key={m.id}
+                color="blue"
+                {...{ lat: m.lat, lng: m.lng }}
+              />
             ))}
           {marker && <Marker color="red" {...marker} />}
         </GoogleMapReact>

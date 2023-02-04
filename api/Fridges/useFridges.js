@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-export const useGetAllFridges = () => {
+export const getAllFridges = () => {
   return useQuery(
     ['fridges'],
     async () => {
@@ -12,6 +12,21 @@ export const useGetAllFridges = () => {
     {
       onError: (e) => {
         console.error(e);
+      },
+    }
+  );
+};
+
+export const getFridgesById = (id) => {
+  return useQuery(
+    ['fridgesById'],
+    async () => {
+      const { data } = await axios.get(`/fridges/get~~~`);
+      return data.data;
+    },
+    {
+      onError: (e) => {
+        console.log(e);
       },
     }
   );

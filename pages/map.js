@@ -3,7 +3,7 @@ import FridgeDetail from '@components/Fridge/FridgeDetail';
 import Layout from '@components/Layout';
 import Map from '@components/Map/Map';
 import { useState, useEffect, useCallback } from 'react';
-import { useGetAllFridges } from 'api/Fridges/useFridges';
+import { getAllFridges } from 'api/Fridges/useFridges';
 
 function getDistanceFromLatLonInKm({ lat1, lng1, lat2, lng2 }) {
   function deg2rad(deg) {
@@ -25,8 +25,8 @@ function getDistanceFromLatLonInKm({ lat1, lng1, lat2, lng2 }) {
 
 // default centerLoc이랑 centerLoc이랑 따로 둬야 할 듯
 const MapPage = () => {
-  const { data, refetch } = useGetAllFridges();
-  const [showDetail, setShowDetail] = useState(false);
+  const { data, refetch } = getAllFridges();
+  const [showDetail, setShowDetail] = useState(null);
   const [GPSLoc, setGPSLoc] = useState({ lat: 0, lng: 0 });
   const [centerLoc, setCenterLoc] = useState(null);
   const [visibleList, setVisibleList] = useState(null);
@@ -95,7 +95,7 @@ const MapPage = () => {
   return (
     <Layout>
       <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
-      {showDetail && <FridgeDetail detailData={id} setShow={setShowDetail} />}
+      {showDetail && <FridgeDetail setShow={setShowDetail} />}
       <Map
         centerLoc={centerLoc}
         setCenterLoc={setCenterLoc}
@@ -103,7 +103,7 @@ const MapPage = () => {
         setVisibleListInBoundary={setVisibleListInBoundary}
         marker={marker}
         setMarker={setMarker}
-        setDetailData={setDetailData}
+        setShowDetail={setShowDetail}
       />
     </Layout>
   );
