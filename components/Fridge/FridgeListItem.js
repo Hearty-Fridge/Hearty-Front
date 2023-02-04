@@ -1,12 +1,8 @@
 import styled from 'styled-components';
 
-const ListItem = ({ setCenterLoc, info }) => {
+const ListItem = ({ onClick, info }) => {
   return (
-    <Wrapper
-      onClick={() => {
-        setCenterLoc({ lat: info.lat, lng: info.lng });
-      }}
-    >
+    <Wrapper onClick={onClick}>
       <ImgArea
         src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${info.fridgeImage}`}
       />

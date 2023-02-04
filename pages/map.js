@@ -94,8 +94,14 @@ const MapPage = () => {
 
   return (
     <Layout>
-      <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
-      {showDetail && <FridgeDetail setShow={setShowDetail} />}
+      <FridgeList
+        setCenterLoc={setCenterLoc}
+        setShowDetail={setShowDetail}
+        visibleList={visibleList}
+      />
+      {showDetail && (
+        <FridgeDetail showDetail={showDetail} setShow={setShowDetail} />
+      )}
       <Map
         centerLoc={centerLoc}
         setCenterLoc={setCenterLoc}

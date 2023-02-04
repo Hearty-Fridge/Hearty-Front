@@ -1,14 +1,33 @@
 import ListItem from '@components/Fridge/FridgeListItem';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 // LocList: 동사무소 위치 정보, setLoc => google map center location setter
-const FridgeList = ({ setCenterLoc, visibleList }) => {
+const FridgeList = ({ setCenterLoc, setShowDetail, visibleList }) => {
+  const onClickFridgeItem = useCallback(
+    (info) => {
+      console.log('Clicked');
+      setCenterLoc({
+        lat: info.lat,
+        lng: info.lng,
+      });
+      setShowDetail(info.id);
+    },
+    [setShowDetail, setCenterLoc]
+  );
+
   return (
     <ListWrapper>
       <SearchArea placeholder="Search" />
       <VisibleList>
         {visibleList?.map((l) => (
-          <ListItem key={l.id} setCenterLoc={setCenterLoc} info={l} />
+          <ListItem
+            key={l.id}
+            onClick={() => {
+              onClickFridgeItem(l);
+            }}
+            info={l}
+          />
         ))}
       </VisibleList>
     </ListWrapper>

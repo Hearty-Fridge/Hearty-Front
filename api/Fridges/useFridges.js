@@ -21,7 +21,7 @@ export const getFridgesById = (id) => {
   return useQuery(
     ['fridgesById'],
     async () => {
-      const { data } = await axios.get(`/fridges/get~~~`);
+      const { data } = await axios.get(`/fridge/getFridge?id=${id}`);
       return data.data;
     },
     {
