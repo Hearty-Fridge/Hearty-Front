@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const HomeP3 = () => {
+export const HomeP3 = ({ className }) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Title>P3</Title>
       <Flex>
         <SubTitle>
@@ -18,7 +18,6 @@ const HomeP3 = () => {
 
 const Wrapper = styled.div`
   margin-top: 99px;
-  height: 943px;
 `;
 const Title = styled.div`
   font-family: 'Playfair Display';
@@ -61,5 +60,3 @@ const How = styled.div`
   border-width: 1px;
   border-color: ${({ theme }) => theme.palette.accent};
 `;
-
-export default HomeP3;

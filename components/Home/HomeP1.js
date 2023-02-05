@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const HomeP1 = () => {
+export const HomeP1 = ({ className }) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Title>
         Let’s donate <br /> with hearty fridge!
       </Title>
@@ -21,7 +21,7 @@ const HomeP1 = () => {
 
 const Wrapper = styled.div`
   margin-top: 99px;
-  height: 943px;
+  /* height: 943px; */
 `;
 const Title = styled.div`
   font-family: 'Playfair Display';
@@ -80,4 +80,3 @@ const BackImg = styled.div`
   background-image: url(/image/mainP1_sample.png);
   filter: blur(5px);
 `;
-export default HomeP1;
