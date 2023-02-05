@@ -115,17 +115,4 @@ const MapPage = () => {
   );
 };
 
-// export const getStaticProps = async () => {
-//   const data = await axios.get(
-//     `${process.env.NEXT_PUBLIC_SERVER_NAME}/api/v1/fridge/all`
-//   );
-
-//   const res = data.data.data;
-//   return {
-//     props: {
-//       res,
-//     },
-//   };
-// };
-
 export default MapPage;

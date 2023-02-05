@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   margin-bottom: 3%;
   width: 490px;
   height: 150px;
-  background-color: ${(props) => props.theme.palette.background};
+  background-color: ${({ theme }) => theme.palette.background};
   border-radius: 10px;
 `;
 
@@ -48,18 +48,18 @@ const InfoArea = styled.div`
   width: 80%;
   .title {
     font-size: 24px;
-    color: ${(props) => props.theme.palette.secondary.main};
+    color: ${({ theme }) => theme.palette.secondary.main};
   }
   .loc {
     font-size: 18px;
-    color: ${(props) => props.theme.palette.secondary.main};
+    color: ${({ theme }) => theme.palette.secondary.main};
   }
   .status {
     font-size: 16px;
-    color: ${(props) => props.theme.palette.gray};
+    color: ${({ theme }) => theme.palette.gray};
   }
 `;
 
 const Prefer = styled.div`
-  color: ${(props) => props.theme.palette.primary};
+  color: ${({ theme }) => theme.palette.primary};
 `;

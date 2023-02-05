@@ -106,19 +106,19 @@ const Info = styled.div`
 
 const Title = styled.div`
   font-size: 36px;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 const Address = styled.div`
   font-size: 16px;
-  color: ${(props) => props.theme.palette.secondary.main70};
+  color: ${({ theme }) => theme.palette.secondary.main70};
 `;
 
 const BtnArea = styled.div`
   display: flex;
 `;
 const Donate = styled.button`
-  background-color: ${(props) => props.theme.palette.primary};
+  background-color: ${({ theme }) => theme.palette.primary};
   color: white;
   border: none;
   width: 80px;
@@ -128,8 +128,8 @@ const Donate = styled.button`
 `;
 
 const Reserve = styled.button`
-  background-color: ${(props) => props.theme.palette.beige1};
-  color: ${(props) => props.theme.palette.primary};
+  background-color: ${({ theme }) => theme.palette.beige1};
+  color: ${({ theme }) => theme.palette.primary};
   border: none;
   width: 80px;
   height: 32px;
@@ -146,7 +146,7 @@ const Section = styled.div`
   .name {
     font-size: 24px;
     font-weight: 600;
-    color: ${(props) => props.theme.palette.secondary.main};
+    color: ${({ theme }) => theme.palette.secondary.main};
     margin-top: 24px;
     margin-bottom: 16px;
   }

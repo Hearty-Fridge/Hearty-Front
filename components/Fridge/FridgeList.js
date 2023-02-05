@@ -42,11 +42,11 @@ const ListWrapper = styled.div`
   padding-left: 80px;
   /* padding-left: 80px;
   padding-top: 50px; */
-  background-color: ${(props) => props.theme.palette.beige1};
+  background-color: ${({ theme }) => theme.palette.beige1};
 `;
 
 const SearchArea = styled.input`
-  background-color: ${(props) => props.theme.palette.secondary.main30};
+  background-color: ${({ theme }) => theme.palette.secondary.main30};
   color: white;
   margin-top: 50px;
   margin-bottom: 5%;

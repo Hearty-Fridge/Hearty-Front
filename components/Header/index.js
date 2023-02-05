@@ -1,39 +1,156 @@
 import Link from 'next/link';
-import { TopWrapper, Navigation, InfoArea } from './styles';
-import { useState } from 'react';
+import { useMemo } from 'react';
+import Image from 'next/image';
+import styled, { css } from 'styled-components';
+import { useRouter } from 'next/router';
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+import { userState } from 'atoms/user';
+import { useRecoilState } from 'recoil';
+import { getZIndex } from '@styles/zIndex';
 
-const navMenu = ['Intro', 'Map', 'Donating'];
+const NAV_MENU = ['Intro', 'Map', 'Donating'];
+const TOKEN_KEY = 'accessToken';
 
 const Header = () => {
+  const [curUserData, setCurUserData] = useRecoilState(userState);
   // recoil 써서 나중에 전역으로 관리하자!
-  const [isLogin, setIsLogin] = useState(false);
+  // const [isLogin, setIsLogin] = useState(false);
+  const { pathname } = useRouter();
+  const currentPath = useMemo(() => pathname.replace('/', ''), [pathname]);
+
+  const handleSuccess = async (accessToken) => {
+    try {
+      const res = await axios.post(`/member/googleLogin`, {
+        accessToken: accessToken,
+      });
+      console.log('성공', res);
+
+      setCurUserData({
+        isLogin: true,
+        name: res.data.name,
+        email: res.data.email,
+        profileImage: res.data.profileImage,
+      });
+
+      localStorage.setItem(TOKEN_KEY, res.data.accessToken);
+    } catch (error) {
+      console.error('error: ', error);
+    }
+  };
+
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      handleSuccess(tokenResponse.access_token);
+    },
+    // flow: 'auth-code',
+  });
+
   return (
-    <TopWrapper>
+    <StyledHeader>
       <Navigation>
-        <Link href="/">Logo</Link>
-        {navMenu.map((menu) => {
-          return (
-            <Link key={menu} href={`/${menu.toLowerCase()}`}>
-              {menu}
-            </Link>
-          );
-        })}
+        <Link href="/">
+          <Image src="/image/Logo.png" width={145} height={111} />
+        </Link>
+        {NAV_MENU.map((navMenu) => (
+          <NavLink
+            key={navMenu}
+            selected={currentPath === navMenu.toLowerCase()}
+            href={`/${navMenu.toLowerCase()}`}
+          >
+            {navMenu}
+          </NavLink>
+        ))}
       </Navigation>
       <InfoArea>
-        {isLogin ? (
+        {curUserData.isLogin ? (
           <>
-            <div>Message</div>
-            <div>Alarm</div>
-            <div className="signup">My</div>
+            <div>
+              <Image
+                src="/image/message.png"
+                width={36}
+                height={36}
+                alt="message"
+              />
+            </div>
+            <div>
+              <Image
+                src="/image/alarm.png"
+                width={36}
+                height={36}
+                alt="alarm"
+              />
+            </div>
+            <MyPageButton href="/mypage">My</MyPageButton>
           </>
         ) : (
           <>
-            <div className="signin">Login</div>
+            <LogInButton onClick={login}>Login</LogInButton>
           </>
         )}
       </InfoArea>
-    </TopWrapper>
+    </StyledHeader>
   );
 };
 
 export default Header;
+
+const StyledHeader = styled.header`
+  padding: 0 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 137px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: ${getZIndex('header')};
+`;
+
+const Navigation = styled.nav`
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  column-gap: 80px;
+`;
+
+const NavLink = styled(Link)`
+  color: ${({ theme }) => theme.palette.secondary.main};
+  ${({ selected }) =>
+    selected &&
+    css`
+      font-weight: 800;
+    `};
+`;
+
+const InfoArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  font-size: 18px;
+  column-gap: 48px;
+`;
+
+const LinkButtonStyle = css`
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16.5px 28px;
+  border-radius: 100px;
+`;
+
+const LogInButton = styled.button`
+  ${LinkButtonStyle};
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: ${({ theme }) => theme.palette.accent};
+`;
+
+const MyPageButton = styled(Link)`
+  ${LinkButtonStyle}
+  min-width: 107px;
+  background-color: ${({ theme }) => theme.palette.primary};
+`;
