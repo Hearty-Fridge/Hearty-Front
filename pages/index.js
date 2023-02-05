@@ -1,42 +1,58 @@
 import Layout from '@components/Layout';
-import HomeP1 from '@components/Home/HomeP1';
-import HomeP2 from '@components/Home/HomeP2';
-import HomeP3 from '@components/Home/HomeP3';
-import HomeP4 from '@components/Home/HomeP4';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import Slider from 'react-slick';
+import { HomeP1, HomeP2, HomeP3, HomeP4 } from '@components/Home';
+import ReactFullpage from '@fullpage/react-fullpage';
+import styled from 'styled-components';
+import useUrlHash from '@hooks/useUrlHash';
+
+const ANCHORS = ['P1', 'P2', 'P3', 'P4'];
 
 const Home = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    vertical: true,
-    verticalSwiping: true,
-    arrows: false,
-    dotsClass: 'dots_custom',
-  };
+  const { hash } = useUrlHash('P1');
 
   return (
-    <Layout>
-      <Slider {...settings}>
-        <div>
-          <HomeP1 />
-        </div>
-        <div>
-          <HomeP2 />
-        </div>
-        <div>
-          <HomeP3 />
-        </div>
-        <div>
-          <HomeP4 />
-        </div>
-      </Slider>
-    </Layout>
+    <>
+      <Layout>
+        <ReactFullpage
+          anchors={ANCHORS}
+          render={() => {
+            return (
+              <ReactFullpage.Wrapper>
+                <HomeP1 className="section" />
+                <HomeP2 className="section" />
+                <HomeP3 className="section" />
+                <HomeP4 className="section" />
+              </ReactFullpage.Wrapper>
+            );
+          }}
+        />
+      </Layout>
+      <IndicatorWrapper>
+        {ANCHORS.map((dot) => (
+          <Indicator key={dot} href={`#${dot}`} active={dot === hash} />
+        ))}
+      </IndicatorWrapper>
+    </>
   );
 };
 
 export default Home;
+
+const IndicatorWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  z-index: 100;
+`;
+
+const Indicator = styled.a`
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  transition: background-color 0.2s ease-out;
+  background-color: ${({ theme, active }) =>
+    active ? theme.palette.secondary.main : '#ffffff'};
+`;
