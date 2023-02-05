@@ -13,10 +13,12 @@ const FridgeDetail = ({ showDetail, setShow }) => {
   } else {
     return (
       <Wrapper>
-        <div onClick={() => setShow(null)}>X</div>
-        <StyledImg
-          src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${detailData.fridgeImage}`}
-        />
+        <GradientImage>
+          <img
+            src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${detailData.fridgeImage}`}
+          />
+        </GradientImage>
+        <ExitButton onClick={() => setShow(null)}>X</ExitButton>
         <Info>
           <Title>{detailData.name}</Title>
           <Address>{detailData.address}</Address>
@@ -45,14 +47,40 @@ const Wrapper = styled.div`
   position: relative; //이걸 해줘야 img의 absolute가 제대로 들어감
   background-color: white;
   width: 500px;
-  z-index: -2;
+  z-index: 1;
 `;
 
-const StyledImg = styled.img`
+const GradientImage = styled.div`
   position: absolute;
   top: 0px;
   width: 350px;
-  z-index: -1;
+  z-index: 2;
+  & > img {
+    width: 350px;
+  }
+  ::after {
+    display: block;
+    position: relative;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0,
+      #fff 100%
+    );
+    margin-top: -150px;
+    height: 150px;
+    width: 100%;
+    content: '';
+  }
+`;
+
+const ExitButton = styled.button`
+  position: absolute;
+  font-size: 20px;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  background: none;
+  border: none;
 `;
 
 const ColoredHr = styled.hr`
@@ -62,7 +90,8 @@ const ColoredHr = styled.hr`
 `;
 
 const Info = styled.div`
-  z-index: 1;
+  position: relative;
+  z-index: 3;
   display: flex;
   margin: 30px;
   margin-top: 220px;
