@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@styles/theme';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { RecoilRoot } from 'recoil';
 
 const client = new QueryClient({
   defaultOptions: {
@@ -19,15 +20,17 @@ export default function App({ Component, pageProps }) {
       {process.env.NODE_ENV !== 'production' ? (
         <ReactQueryDevtools initialsOpen={false} />
       ) : null}
-      <GoogleOAuthProvider
-        clientId={process.env.NEXT_PUBLIC_GOOGLE_LOGIN_CLIENT_ID}
-      >
-        <ThemeProvider theme={theme}>
-          <Hydrate state={pageProps.dehydratedState}>
-            <Component {...pageProps} />
-          </Hydrate>
-        </ThemeProvider>
-      </GoogleOAuthProvider>
+      <RecoilRoot>
+        <GoogleOAuthProvider
+          clientId={process.env.NEXT_PUBLIC_GOOGLE_LOGIN_CLIENT_ID}
+        >
+          <ThemeProvider theme={theme}>
+            <Hydrate state={pageProps.dehydratedState}>
+              <Component {...pageProps} />
+            </Hydrate>
+          </ThemeProvider>
+        </GoogleOAuthProvider>
+      </RecoilRoot>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
