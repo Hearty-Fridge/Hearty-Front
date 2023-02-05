@@ -1,6 +1,6 @@
 import Layout from '@components/Layout';
 import MapComponent from '@components/Map';
-import {axiosInstance} from '../api'
+import { axiosInstance } from '../api';
 
 const Map = ({ res }) => {
   return (
@@ -11,9 +11,7 @@ const Map = ({ res }) => {
 };
 
 export const getStaticProps = async () => {
-  const data = await axiosInstance.get(
-    `/fridge/all`
-  );
+  const data = await axiosInstance.get(`/fridge/all`);
 
   const res = data.data;
   return {
