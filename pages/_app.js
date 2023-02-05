@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@styles/theme';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import './slick.css';
 
 const client = new QueryClient({
   defaultOptions: {
