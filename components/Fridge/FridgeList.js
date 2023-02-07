@@ -21,6 +21,7 @@ const FridgeList = ({ setCenterLoc, setShowDetail, visibleList }) => {
       <SearchArea placeholder="Search" />
       <VisibleList>
         {visibleList?.map((l) => (
+          // todo: selected -> 색상 변경
           <ListItem
             key={l.id}
             onClick={() => {
@@ -69,6 +70,6 @@ const SearchArea = styled.input`
 `;
 
 const VisibleList = styled.div`
-  height: 100%;
+  height: calc(100vh - 267.5px);
   overflow-y: scroll;
 `;

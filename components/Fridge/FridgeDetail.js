@@ -53,10 +53,10 @@ const Wrapper = styled.div`
 const GradientImage = styled.div`
   position: absolute;
   top: 0px;
-  width: 350px;
+  width: 100%;
   z-index: 2;
   & > img {
-    width: 350px;
+    width: 100%;
   }
   ::after {
     display: block;
