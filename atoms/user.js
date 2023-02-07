@@ -1,7 +1,9 @@
 const { atom } = require('recoil');
+import { v1 } from 'uuid';
 
 export const userState = atom({
-  key: 'userState',
+  //for resolve duplicate key error -> v1 : 난수
+  key: `userState/${v1()}`,
   default: {
     isLogin: false,
     email: '',
