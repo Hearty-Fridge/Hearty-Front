@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const ListItem = ({ onClick, info }) => {
+  console.log(info);
   return (
     <Wrapper onClick={onClick}>
       <ImgArea
@@ -26,7 +27,7 @@ const Wrapper = styled.div`
   align-items: stretch;
   padding-left: 34px;
   padding: 30px 30px;
-  margin-bottom: 3%;
+  margin-bottom: 10px;
   width: 490px;
   height: 150px;
   background-color: ${({ theme }) => theme.palette.background};

@@ -8,6 +8,7 @@ import axios from 'axios';
 import { userState } from 'atoms/user';
 import { useRecoilState } from 'recoil';
 import { getZIndex } from '@styles/zIndex';
+import { axiosInstance } from 'api';
 
 const NAV_MENU = ['Intro', 'Map', 'Donating'];
 const TOKEN_KEY = 'accessToken';
@@ -21,10 +22,9 @@ const Header = () => {
 
   const handleSuccess = async (accessToken) => {
     try {
-      const res = await axios.post(`/member/googleLogin`, {
+      const res = await axiosInstance.post(`/member/googleLogin`, {
         accessToken: accessToken,
       });
-      console.log('성공', res);
 
       setCurUserData({
         isLogin: true,

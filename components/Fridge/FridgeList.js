@@ -1,19 +1,21 @@
 import ListItem from '@components/Fridge/FridgeListItem';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 // LocList: 동사무소 위치 정보, setLoc => google map center location setter
-const FridgeList = ({ setCenterLoc, setShowDetail, visibleList }) => {
+const FridgeList = ({ visibleList, setCenterLoc }) => {
+  const router = useRouter();
   const onClickFridgeItem = useCallback(
     (info) => {
-      console.log('Clicked');
+      router.push(`/map?id=${info.id}`);
       setCenterLoc({
         lat: info.lat,
         lng: info.lng,
       });
-      setShowDetail(info.id);
     },
-    [setShowDetail, setCenterLoc]
+    [setCenterLoc]
   );
 
   return (
@@ -21,7 +23,6 @@ const FridgeList = ({ setCenterLoc, setShowDetail, visibleList }) => {
       <SearchArea placeholder="Search" />
       <VisibleList>
         {visibleList?.map((l) => (
-          // todo: selected -> 색상 변경
           <ListItem
             key={l.id}
             onClick={() => {
@@ -39,20 +40,16 @@ export default FridgeList;
 
 const ListWrapper = styled.div`
   width: 591px;
-  height: calc(100vh - 137px);
+  height: calc(100vh - 144px);
   padding-left: 80px;
-  /* padding-left: 80px;
-  padding-top: 50px; */
   background-color: ${({ theme }) => theme.palette.beige1};
 `;
 
 const SearchArea = styled.input`
   background-color: ${({ theme }) => theme.palette.secondary.main30};
   color: white;
-  margin-top: 50px;
-  margin-bottom: 5%;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin: 50px 51px 30px 0px;
+  padding: 0px 20px;
   font-size: 18px;
   width: 460px;
   height: 56px;
@@ -70,6 +67,6 @@ const SearchArea = styled.input`
 `;
 
 const VisibleList = styled.div`
-  height: calc(100vh - 267.5px);
+  height: calc(100vh - 273.5px);
   overflow-y: scroll;
 `;

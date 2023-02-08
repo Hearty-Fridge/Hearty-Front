@@ -1,44 +1,52 @@
 import { getFridgesById } from 'api/Fridges/useFridges';
-import styled from 'styled-components';
-import { useEffect } from 'react';
-import Image from 'next/image';
+import styled, { css } from 'styled-components';
+import { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-const FridgeDetail = ({ showDetail, setShow }) => {
-  const { data: detailData, refetch, isLoading } = getFridgesById(showDetail);
-  useEffect(() => {
-    refetch();
-  }, [showDetail]);
+const FridgeDetail = ({ fridgeId, setIsDetail }) => {
+  const router = useRouter();
+  const { data: fridgeDetailData, isLoading, error } = getFridgesById(fridgeId);
+
+  const onClickBtn = (to) => {
+    router.push(`/map?id=${fridgeId}&${to}=true`);
+  };
+
+  const onClickExitBtn = useCallback(() => {
+    router.push(`/map`);
+    setIsDetail(null);
+  }, [setIsDetail]);
+
   if (isLoading) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <Wrapper>
-        <GradientImage>
-          <img
-            src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${detailData.fridgeImage}`}
-          />
-        </GradientImage>
-        <ExitButton onClick={() => setShow(null)}>X</ExitButton>
-        <Info>
-          <Title>{detailData.name}</Title>
-          <Address>{detailData.address}</Address>
-          <BtnArea>
-            <Donate>Donate</Donate>
-            <Reserve>Reserve</Reserve>
-          </BtnArea>
-        </Info>
-        <ColoredHr />
-        <Sections>
-          <Section>
-            <div className="name">Food List</div>
-          </Section>
-          <Section>
-            <div className="name">Hearty Talk</div>
-          </Section>
-        </Sections>
-      </Wrapper>
-    );
+    return <Wrapper>Loading...</Wrapper>;
   }
+
+  return (
+    <Wrapper>
+      <GradientImage>
+        <img
+          src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${fridgeDetailData.fridgeImage}`}
+        />
+      </GradientImage>
+      <ExitButton onClick={onClickExitBtn}>X</ExitButton>
+      <Info>
+        <Title>{fridgeDetailData.name}</Title>
+        <Address>{fridgeDetailData.address}</Address>
+        <BtnArea>
+          <Donate onClick={() => onClickBtn('donate')}>Donate</Donate>
+          <Reserve onClick={() => onClickBtn('reserve')}>Reserve</Reserve>
+        </BtnArea>
+      </Info>
+      <ColoredHr />
+      <Sections>
+        <Section>
+          <div className="name">Food List</div>
+        </Section>
+        <Section>
+          <div className="name">Hearty Talk</div>
+        </Section>
+      </Sections>
+    </Wrapper>
+  );
 };
 
 export default FridgeDetail;
@@ -46,17 +54,20 @@ export default FridgeDetail;
 const Wrapper = styled.div`
   position: relative; //이걸 해줘야 img의 absolute가 제대로 들어감
   background-color: white;
-  width: 500px;
+  width: 591px;
+  height: calc(100vh - 144px);
   z-index: 1;
 `;
 
 const GradientImage = styled.div`
   position: absolute;
   top: 0px;
-  width: 100%;
+  width: 591px;
+  height: 374px;
   z-index: 2;
   & > img {
     width: 100%;
+    height: 374px;
   }
   ::after {
     display: block;
@@ -81,22 +92,26 @@ const ExitButton = styled.button`
   z-index: 10;
   background: none;
   border: none;
+  :hover {
+    background: gray;
+  }
 `;
 
 const ColoredHr = styled.hr`
   position: relative;
+  border: 1px ${({ theme }) => theme.palette.beige2} solid;
   margin-left: 42px;
   margin-right: 42px;
 `;
 
 const Info = styled.div`
+  width: 531px;
+  height: 238px;
   position: relative;
   z-index: 3;
   display: flex;
-  margin: 30px;
-  margin-top: 220px;
-  padding-top: 42px;
-  padding-bottom: 42px;
+  margin: 228px 30px 0px;
+  padding: 42px 0px;
   background-color: white;
   flex-direction: column;
   border-radius: 30px;
@@ -107,34 +122,38 @@ const Info = styled.div`
 const Title = styled.div`
   font-size: 36px;
   color: ${({ theme }) => theme.palette.secondary.main};
+  margin-bottom: 8px;
 `;
 
 const Address = styled.div`
   font-size: 16px;
   color: ${({ theme }) => theme.palette.secondary.main70};
+  margin-bottom: 21px;
 `;
 
 const BtnArea = styled.div`
   display: flex;
+  column-gap: 9px;
 `;
-const Donate = styled.button`
-  background-color: ${({ theme }) => theme.palette.primary};
-  color: white;
+
+const BtnStyle = css`
   border: none;
   width: 80px;
   height: 32px;
-  border-radius: 10px;
+  border-radius: 20px;
   font-size: 14px;
 `;
 
+const Donate = styled.button`
+  ${BtnStyle};
+  background-color: ${({ theme }) => theme.palette.primary};
+  color: white;
+`;
+
 const Reserve = styled.button`
+  ${BtnStyle}
   background-color: ${({ theme }) => theme.palette.beige1};
   color: ${({ theme }) => theme.palette.primary};
-  border: none;
-  width: 80px;
-  height: 32px;
-  border-radius: 10px;
-  font-size: 14px;
 `;
 
 const Sections = styled.div`

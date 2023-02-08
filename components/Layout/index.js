@@ -32,6 +32,7 @@ const Wrapper = styled.div`
 
 const FlexContainer = styled.div`
   display: flex;
+  flex-basis: fit-content;
 `;
 
 export default Layout;
