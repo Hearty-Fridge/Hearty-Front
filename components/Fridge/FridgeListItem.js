@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const ListItem = ({ onClick, info }) => {
-  console.log(info);
   return (
     <Wrapper onClick={onClick}>
       <ImgArea

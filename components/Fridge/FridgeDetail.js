@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-const FridgeDetail = ({ fridgeId, setIsDetail }) => {
+const FridgeDetail = ({ fridgeId, setIsDetail, setDetailData }) => {
   const router = useRouter();
   const { data: fridgeDetailData, isLoading, error } = getFridgesById(fridgeId);
 
@@ -54,7 +54,7 @@ export default FridgeDetail;
 const Wrapper = styled.div`
   position: relative; //이걸 해줘야 img의 absolute가 제대로 들어감
   background-color: white;
-  width: 591px;
+  min-width: 591px;
   height: calc(100vh - 144px);
   z-index: 1;
 `;

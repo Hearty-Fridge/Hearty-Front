@@ -12,7 +12,8 @@ import Donation from '@components/Fridge/Donation';
 const MapPage = () => {
   const router = useRouter();
   const { data, refetch } = getAllFridges();
-  const [isDetail, setIsDetail] = useState(null);
+  const [detailData, setDetailData] = useState(); // for 다른 컴포넌트로 정보를 넘겨주기 위해
+  const [isDetail, setIsDetail] = useState(false);
   const [isReserve, setIsReserve] = useState(false);
   const [isDonate, setIsDonate] = useState(false);
   const [centerLoc, setCenterLoc] = useState();
@@ -59,6 +60,11 @@ const MapPage = () => {
       } else {
         setIsDetail(null);
       }
+      if (router.query.donate) {
+        setIsDonate(true);
+      } else {
+        setIsDonate(false);
+      }
     }
   }, [router]);
 
@@ -89,10 +95,19 @@ const MapPage = () => {
       {centerLoc ? (
         <>
           <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
-          {isDetail && (
-            <FridgeDetail setIsDetail={setIsDetail} fridgeId={isDetail} />
+          {isDonate ? (
+            <Donation data={detailData} id={isDetail} />
+          ) : isReserve ? (
+            <Reservation />
+          ) : (
+            isDetail && (
+              <FridgeDetail
+                setIsDetail={setIsDetail}
+                setDetailData={setDetailData}
+                fridgeId={isDetail}
+              />
+            )
           )}
-          {/* <Donation /> */}
           <Map
             centerLoc={centerLoc}
             setVisibleListInBoundary={setVisibleListInBoundary}
