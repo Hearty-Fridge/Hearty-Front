@@ -51,6 +51,15 @@ export default function DonateForm({ id }) {
     [setSelectedImage]
   );
 
+  /* query sTring: {
+  "name": "string",
+  "amount": "string",
+  "category": "string",
+  "message": "string",
+  "fridgeId": 0,
+  "giverId": 0
+  } */
+
   const onHandleSubmit = (e) => {
     console.log(selectedImage);
     console.log(category);

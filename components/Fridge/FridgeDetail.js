@@ -54,7 +54,7 @@ export default FridgeDetail;
 const Wrapper = styled.div`
   position: relative; //이걸 해줘야 img의 absolute가 제대로 들어감
   background-color: white;
-  min-width: 591px;
+  min-width: 527px;
   height: calc(100vh - 144px);
   z-index: 1;
 `;
@@ -62,7 +62,7 @@ const Wrapper = styled.div`
 const GradientImage = styled.div`
   position: absolute;
   top: 0px;
-  width: 591px;
+  width: 527px;
   height: 374px;
   z-index: 2;
   & > img {
@@ -105,8 +105,8 @@ const ColoredHr = styled.hr`
 `;
 
 const Info = styled.div`
-  width: 531px;
-  height: 238px;
+  width: 466px;
+  height: 213px;
   position: relative;
   z-index: 3;
   display: flex;
@@ -120,7 +120,7 @@ const Info = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 36px;
+  font-size: 32px;
   color: ${({ theme }) => theme.palette.secondary.main};
   margin-bottom: 8px;
 `;

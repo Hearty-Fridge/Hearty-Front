@@ -25,18 +25,18 @@ const Wrapper = styled.div`
   display: flex;
   align-items: stretch;
   padding-left: 34px;
-  padding: 30px 30px;
-  margin-bottom: 10px;
-  width: 490px;
-  height: 150px;
+  padding: 20px;
+  margin-bottom: 16px;
+  width: 405px;
+  height: 120px;
   background-color: ${({ theme }) => theme.palette.background};
   border-radius: 10px;
 `;
 
 const ImgArea = styled.img`
   /* padding: 1%; */
-  width: 90px;
-  height: 90px;
+  width: 78px;
+  height: 78px;
   border-radius: 10px;
 `;
 
@@ -44,18 +44,18 @@ const InfoArea = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: 2%;
+  margin-left: 20px;
   width: 80%;
   .title {
-    font-size: 24px;
+    font-size: 20px;
     color: ${({ theme }) => theme.palette.secondary.main};
   }
   .loc {
-    font-size: 18px;
+    font-size: 14px;
     color: ${({ theme }) => theme.palette.secondary.main};
   }
   .status {
-    font-size: 16px;
+    font-size: 14px;
     color: ${({ theme }) => theme.palette.gray};
   }
 `;

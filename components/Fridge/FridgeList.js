@@ -39,7 +39,7 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
 export default FridgeList;
 
 const ListWrapper = styled.div`
-  width: 591px;
+  width: 516px;
   height: calc(100vh - 144px);
   padding-left: 80px;
   background-color: ${({ theme }) => theme.palette.beige1};
@@ -51,7 +51,7 @@ const SearchArea = styled.input`
   margin: 50px 51px 30px 0px;
   padding: 0px 20px;
   font-size: 18px;
-  width: 460px;
+  width: 384px;
   height: 56px;
   border: none;
   border-radius: 50px;
