@@ -9,6 +9,7 @@ import { userState } from 'atoms/user';
 import { useRecoilState } from 'recoil';
 import { getZIndex } from '@styles/zIndex';
 import { axiosInstance } from 'api';
+import { AiFillBell, AiFillMail } from 'react-icons/ai';
 
 const NAV_MENU = ['Intro', 'Map', 'Donating'];
 const TOKEN_KEY = 'accessToken';
@@ -66,20 +67,22 @@ const Header = () => {
         {curUserData.isLogin ? (
           <>
             <div>
-              <Image
+              {/* <Image
                 src="/image/message.png"
                 width={36}
                 height={36}
                 alt="message"
-              />
+              /> */}
+              <AiFillMail />
             </div>
             <div>
-              <Image
+              {/* <Image
                 src="/image/alarm.png"
                 width={36}
                 height={36}
                 alt="alarm"
-              />
+              /> */}
+              <AiFillBell />
             </div>
             <MyPageButton href="/mypage">My</MyPageButton>
           </>
