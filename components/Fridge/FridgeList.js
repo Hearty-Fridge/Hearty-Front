@@ -67,6 +67,6 @@ const SearchArea = styled.input`
 `;
 
 const VisibleList = styled.div`
-  height: calc(100vh - 273.5px);
+  height: calc(100vh - 280px);
   overflow-y: scroll;
 `;

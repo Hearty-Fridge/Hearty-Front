@@ -55,7 +55,7 @@ const Wrapper = styled.div`
   position: relative; //이걸 해줘야 img의 absolute가 제대로 들어감
   background-color: white;
   min-width: 527px;
-  height: calc(100vh - 144px);
+  height: calc(100vh - 137px);
   z-index: 1;
 `;
 

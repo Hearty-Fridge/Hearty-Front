@@ -6,7 +6,7 @@ const Donation = ({ id }) => {
   const { data } = getFridgesById(id);
   return (
     <Container>
-      {data.name}
+      {data?.name}
       <DonateForm id={id} />
     </Container>
   );
