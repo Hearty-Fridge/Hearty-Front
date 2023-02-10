@@ -2,6 +2,7 @@ import useInput from '@hooks/useInput';
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { usePostFoods } from 'api/Food/useFoods';
 
 const CATEGORY = [
   'Rice/Nooddle',
@@ -51,10 +52,25 @@ export default function DonateForm({ id }) {
     [setSelectedImage]
   );
 
+  /*
+{
+  "name": "string",
+  "amount": "string",
+  "category": "string",
+  "message": "string",
+  "fridgeId": 0,
+  // giverId는 어캄??
+  "giverId": 0
+}
+*/
+
   const onHandleSubmit = (e) => {
-    console.log(selectedImage);
-    console.log(category);
-    console.log(e);
+    // console.log('###################', e);
+    // console.log(selectedImage);
+    // console.log(category);
+    // console.log(e);
+    const data = { ...e, fridgeId: id, category: category[0] };
+    console.log(data);
   };
 
   // category
@@ -65,7 +81,7 @@ export default function DonateForm({ id }) {
         value={foodName}
         onChange={foodNameHandler}
         placeholder="Food Name"
-        {...register('foodName')}
+        {...register('name')}
       />
       <br />
       <label>음식 양 : </label>
@@ -73,7 +89,7 @@ export default function DonateForm({ id }) {
         value={foodAmount}
         onChange={foodAmountHandler}
         placeholder="Food Amount"
-        {...register('foodAmount')}
+        {...register('amount')}
       />
       {/* 캘린더? */}
       {/* 체크 박스 */}
@@ -111,7 +127,7 @@ export default function DonateForm({ id }) {
         value={heartyMessage}
         onChange={heartyMessageHandler}
         placeholder="Hearty Message"
-        {...register('heartyMessage')}
+        {...register('message')}
       />
       <button onClick={handleSubmit(onHandleSubmit)}>Submit</button>
     </form>
