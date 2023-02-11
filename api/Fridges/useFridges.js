@@ -6,7 +6,10 @@ export const getAllFridges = () => {
   return useQuery(
     ['fridges'],
     async () => {
-      const { data } = await axiosInstance.get(`/fridge/all`);
+      const { data } = await axiosInstance.request({
+        method: 'GET',
+        url: `/fridge/all`,
+      });
       return data.data;
     },
     {
@@ -21,7 +24,10 @@ export const getFridgesById = (id) => {
   return useQuery(
     ['fridgesById', id],
     async () => {
-      const { data } = await axiosInstance.get(`/fridge/getFridge?id=${id}`);
+      const { data } = await axiosInstance.request({
+        method: 'GET',
+        url: `/fridge/getFridge?id=${id}`,
+      });
       return data.data;
     },
     {
