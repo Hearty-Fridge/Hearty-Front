@@ -2,7 +2,7 @@ import useInput from '@hooks/useInput';
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { usePostFoods } from 'api/Food/useFoods';
+import { postFoods } from 'api/Food/useFoods';
 
 const CATEGORY = [
   'Rice/Nooddle',
@@ -69,8 +69,10 @@ export default function DonateForm({ id }) {
     // console.log(selectedImage);
     // console.log(category);
     // console.log(e);
-    const data = { ...e, fridgeId: id, category: category[0] };
+    const data = { ...e, fridgeId: id, category: category[0], giverId: 0 };
     console.log(data);
+    const res = postFoods(data);
+    console.log(res);
   };
 
   // category

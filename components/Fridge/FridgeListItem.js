@@ -8,10 +8,12 @@ const ListItem = ({ onClick, info }) => {
       />
       <InfoArea>
         <div className="title">{info.name}</div>
-        {Object.keys(info).includes('dist') && (
-          <div className="distance">{info.dist}m | </div>
-        )}
-        <div className="loc">{info.address}</div>
+        <div style={{ display: 'flex' }}>
+          {Object.keys(info).includes('dist') && (
+            <div className="distance">{info.dist}m | </div>
+          )}
+          <div className="loc">{info.address}</div>
+        </div>
         <div className="status">
           {/* Food Status: {info.foods.length} | Hearty Message: 0 */}
         </div>
