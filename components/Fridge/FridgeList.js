@@ -48,11 +48,11 @@ const ListWrapper = styled.div`
 const SearchArea = styled.input`
   background-color: ${({ theme }) => theme.palette.secondary.main30};
   color: white;
-  margin: 50px 51px 30px 0px;
+  margin: 50px 51px 39.4px 0px;
   padding: 0px 20px;
   font-size: 18px;
   width: 384px;
-  height: 56px;
+  height: 55px;
   border: none;
   border-radius: 50px;
   ::placeholder {
@@ -67,6 +67,6 @@ const SearchArea = styled.input`
 `;
 
 const VisibleList = styled.div`
-  height: calc(100vh - 273.5px);
+  height: calc(100vh - 290px);
   overflow-y: scroll;
 `;

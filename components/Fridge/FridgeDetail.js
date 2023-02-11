@@ -1,25 +1,44 @@
 import { getFridgesById } from 'api/Fridges/useFridges';
 import styled, { css } from 'styled-components';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { IoLocationSharp } from 'react-icons/io5';
 
-const FridgeDetail = ({ fridgeId, setIsDetail, setDetailData }) => {
+const DETAIL_MENU = ['foodList, heartyTalk'];
+
+const FridgeDetail = ({ isList, setIsList }) => {
   const router = useRouter();
-  const { data: fridgeDetailData, isLoading, error } = getFridgesById(fridgeId);
+  const [id, setId] = useState(-1);
+  const {
+    data: fridgeDetailData,
+    refetch,
+    isLoading,
+    error,
+  } = getFridgesById(router.query.id);
 
   const onClickBtn = (to) => {
-    router.push(`/map?id=${fridgeId}&${to}=true`);
+    router.push(`/map?id=${id}&${to}=true`);
   };
 
   const onClickExitBtn = useCallback(() => {
     router.push(`/map`);
-    setIsDetail(null);
-  }, [setIsDetail]);
+  }, []);
+
+  // if t == true이면 Food List를 눌렀을 때, 아니면 Hearty Talk을 눌렀을 때
+  const onClickMenuBtn = useCallback((t) => {
+    setIsList(t);
+  }, []);
+
+  useEffect(() => {
+    if (router.isReady) {
+      refetch();
+      setId(router.query.id);
+    }
+  }, [refetch, setId]);
 
   if (isLoading) {
     return <Wrapper>Loading...</Wrapper>;
   }
-
   return (
     <Wrapper>
       <GradientImage>
@@ -30,20 +49,31 @@ const FridgeDetail = ({ fridgeId, setIsDetail, setDetailData }) => {
       <ExitButton onClick={onClickExitBtn}>X</ExitButton>
       <Info>
         <Title>{fridgeDetailData.name}</Title>
-        <Address>{fridgeDetailData.address}</Address>
+        <Address>
+          <IoLocationSharp /> {fridgeDetailData.address}
+        </Address>
         <BtnArea>
           <Donate onClick={() => onClickBtn('donate')}>Donate</Donate>
           <Reserve onClick={() => onClickBtn('reserve')}>Reserve</Reserve>
         </BtnArea>
       </Info>
-      <ColoredHr />
       <Sections>
-        <Section>
-          <div className="name">Food List</div>
-        </Section>
-        <Section>
-          <div className="name">Hearty Talk</div>
-        </Section>
+        <Menu>
+          <div
+            className={`menu-btn ${isList ? 'active' : ''}`}
+            onClick={() => onClickMenuBtn(true)}
+          >
+            Food List
+          </div>
+          <div> | </div>
+          <div
+            className={`menu-btn ${isList ? '' : 'active'}`}
+            onClick={() => onClickMenuBtn(false)}
+          >
+            Hearty Talk
+          </div>
+        </Menu>
+        {isList ? <>Food List</> : <>Hearty Talk</>}
       </Sections>
     </Wrapper>
   );
@@ -54,7 +84,7 @@ export default FridgeDetail;
 const Wrapper = styled.div`
   position: relative; //이걸 해줘야 img의 absolute가 제대로 들어감
   background-color: white;
-  min-width: 527px;
+  min-width: 480px;
   height: calc(100vh - 144px);
   z-index: 1;
 `;
@@ -62,8 +92,8 @@ const Wrapper = styled.div`
 const GradientImage = styled.div`
   position: absolute;
   top: 0px;
-  width: 527px;
-  height: 374px;
+  width: 480px;
+  height: 193px;
   z-index: 2;
   & > img {
     width: 100%;
@@ -105,18 +135,19 @@ const ColoredHr = styled.hr`
 `;
 
 const Info = styled.div`
-  width: 466px;
-  height: 213px;
+  width: 423px;
+  height: 193px;
   position: relative;
   z-index: 3;
   display: flex;
-  margin: 228px 30px 0px;
+  margin: 188px 26px 0px 31px;
   padding: 42px 0px;
   background-color: white;
   flex-direction: column;
   border-radius: 30px;
   align-items: center;
   justify-content: center;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 25%);
 `;
 
 const Title = styled.div`
@@ -157,16 +188,27 @@ const Reserve = styled.button`
 `;
 
 const Sections = styled.div`
-  margin-left: 70px;
-  margin-right: 70px;
-`;
-
-const Section = styled.div`
+  margin: 12px 26px 0px 31px;
+  border-radius: 10px;
+  width: 423px;
+  height: 450px;
   .name {
     font-size: 24px;
     font-weight: 600;
     color: ${({ theme }) => theme.palette.secondary.main};
     margin-top: 24px;
     margin-bottom: 16px;
+  }
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 25%);
+`;
+
+const Menu = styled.div`
+  display: flex;
+  font-size: 24px;
+  column-gap: 16px;
+  padding: 26px 0px 0px 33px;
+  color: ${({ theme }) => theme.palette.secondary.main30};
+  .active {
+    color: ${({ theme }) => theme.palette.secondary.main};
   }
 `;

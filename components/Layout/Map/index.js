@@ -9,15 +9,19 @@ import getDistanceFromLatLonInKm from 'utils/getDIstance';
 import Donation from '@components/Fridge/Donation';
 
 // default centerLoc이랑 centerLoc이랑 따로 둬야 할 듯
-const MapPage = () => {
+const MapLayout = ({
+  children,
+  //   setCenterLoc,
+  //   visibleList,
+  //   setVisibleListInBoundary,
+}) => {
   const router = useRouter();
   const { data, refetch } = getAllFridges();
-  const [detailData, setDetailData] = useState();
-  const [isDetail, setIsDetail] = useState();
+  const [detailData, setDetailData] = useState(); // for 다른 컴포넌트로 정보를 넘겨주기 위해
+  const [isDetail, setIsDetail] = useState(false);
   const [isReserve, setIsReserve] = useState(false);
   const [isDonate, setIsDonate] = useState(false);
   const [centerLoc, setCenterLoc] = useState();
-  const [isList, setIsList] = useState(true);
   const [gpsLoc, setGpsLoc] = useState(null); // 거리를 구하기 위함
   const [visibleList, setVisibleList] = useState(null);
 
@@ -89,28 +93,14 @@ const MapPage = () => {
       setGpsLoc(tmpLoc);
       setCenterLoc(tmpLoc);
     }
-  }, [setGpsLoc, data]);
+  }, [setGpsLoc, setCenterLoc, data]);
 
   return (
     <Layout>
       {centerLoc ? (
         <>
           <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
-          {isDonate ? (
-            <Donation id={isDetail} />
-          ) : isReserve ? (
-            <Reservation />
-          ) : (
-            isDetail && (
-              <FridgeDetail
-                isList={isList}
-                setIsList={setIsList}
-                setIsDetail={setIsDetail}
-                setDetailData={setDetailData}
-                fridgeId={isDetail}
-              />
-            )
-          )}
+          {children}
           <Map
             centerLoc={centerLoc}
             setVisibleListInBoundary={setVisibleListInBoundary}
@@ -123,4 +113,4 @@ const MapPage = () => {
   );
 };
 
-export default MapPage;
+export default MapLayout;
