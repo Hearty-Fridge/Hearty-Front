@@ -1,15 +1,16 @@
 import ListItem from '@components/Fridge/FridgeListItem';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
 // LocList: 동사무소 위치 정보, setLoc => google map center location setter
 const FridgeList = ({ visibleList, setCenterLoc }) => {
   const router = useRouter();
+  const [id, setId] = useState(false);
   const onClickFridgeItem = useCallback(
     (info) => {
-      router.push(`/map?id=${info.id}`);
+      router.push(`/map?id=${info.fridgeId}`);
       setCenterLoc({
         lat: info.lat,
         lng: info.lng,
@@ -18,17 +19,22 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
     [setCenterLoc]
   );
 
+  useEffect(() => {
+    setId(router.query.id);
+  }, [setId, router.query.id]);
+
   return (
     <ListWrapper>
       <SearchArea placeholder="Search" />
       <VisibleList>
         {visibleList?.map((l) => (
           <ListItem
-            key={l.id}
+            key={l.fridgeId}
             onClick={() => {
               onClickFridgeItem(l);
             }}
             info={l}
+            activate={id === l.fridgeId.toString()}
           />
         ))}
       </VisibleList>
@@ -40,9 +46,10 @@ export default FridgeList;
 
 const ListWrapper = styled.div`
   width: 516px;
-  height: calc(100vh - 144px);
+  height: calc(100vh - 112px);
   padding-left: 80px;
-  background-color: ${({ theme }) => theme.palette.beige1};
+  background-color: ${({ theme }) => theme.palette.backgound};
+  /* background-color: #f8f8f8; */
 `;
 
 const SearchArea = styled.input`
@@ -67,6 +74,6 @@ const SearchArea = styled.input`
 `;
 
 const VisibleList = styled.div`
-  height: calc(100vh - 290px);
+  height: calc(100vh - 256px);
   overflow-y: scroll;
 `;

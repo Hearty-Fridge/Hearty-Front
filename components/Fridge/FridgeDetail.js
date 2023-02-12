@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IoLocationSharp } from 'react-icons/io5';
+import FoodList from '@components/Food/FoodList';
+import MessageList from '@components/Message/messageList';
 
 const DETAIL_MENU = ['foodList, heartyTalk'];
 
@@ -73,7 +75,13 @@ const FridgeDetail = ({ isList, setIsList }) => {
             Hearty Talk
           </div>
         </Menu>
-        {isList ? <>Food List</> : <>Hearty Talk</>}
+        <ContentWrapper>
+          {isList ? (
+            <FoodList data={fridgeDetailData.foodList} />
+          ) : (
+            <MessageList data={fridgeDetailData.messageList} />
+          )}
+        </ContentWrapper>
       </Sections>
     </Wrapper>
   );
@@ -85,7 +93,7 @@ const Wrapper = styled.div`
   position: relative; //이걸 해줘야 img의 absolute가 제대로 들어감
   background-color: white;
   min-width: 480px;
-  height: calc(100vh - 144px);
+  height: calc(100vh - 112px);
   z-index: 1;
 `;
 
@@ -125,13 +133,6 @@ const ExitButton = styled.button`
   :hover {
     background: gray;
   }
-`;
-
-const ColoredHr = styled.hr`
-  position: relative;
-  border: 1px ${({ theme }) => theme.palette.beige2} solid;
-  margin-left: 42px;
-  margin-right: 42px;
 `;
 
 const Info = styled.div`
@@ -191,8 +192,8 @@ const Sections = styled.div`
   margin: 12px 26px 0px 31px;
   border-radius: 10px;
   width: 423px;
-  height: 450px;
-  .name {
+  height: 517px;
+  & > .name {
     font-size: 24px;
     font-weight: 600;
     color: ${({ theme }) => theme.palette.secondary.main};
@@ -211,4 +212,10 @@ const Menu = styled.div`
   .active {
     color: ${({ theme }) => theme.palette.secondary.main};
   }
+`;
+
+const ContentWrapper = styled.div`
+  margin: 20px 0px 0px 20px;
+  height: 437px;
+  overflow-y: scroll;
 `;

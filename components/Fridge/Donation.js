@@ -1,4 +1,4 @@
-import DonateForm from '@components/Donation/DonateForm';
+import DonateForm from '@components/Form/DonateForm';
 import styled from 'styled-components';
 import { getFridgesById } from 'api/Fridges/useFridges';
 
@@ -13,7 +13,7 @@ const Donation = ({ id }) => {
 };
 
 const Container = styled.div`
-  min-width: 591px;
+  min-width: 480px;
 `;
 
 export default Donation;

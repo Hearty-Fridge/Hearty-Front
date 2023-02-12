@@ -1,21 +1,27 @@
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
-const ListItem = ({ onClick, info }) => {
+const ListItem = ({ onClick, info, activate, id, fridgeId }) => {
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper className={activate ? 'activate' : ''} onClick={onClick}>
       <ImgArea
         src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${info.fridgeImage}`}
       />
       <InfoArea>
-        <div className="title">{info.name}</div>
-        <div style={{ display: 'flex' }}>
+        <div className={`title ${activate ? 'activate' : ''}`}>{info.name}</div>
+        <div style={{ display: 'flex', flexFlow: 'wrap' }}>
           {Object.keys(info).includes('dist') && (
-            <div className="distance">{info.dist}m | </div>
+            <div
+              className="distance"
+              style={{ width: 'fit-content', minWidth: '60px' }}
+            >
+              {info.dist}m |{' '}
+            </div>
           )}
           <div className="loc">{info.address}</div>
         </div>
         <div className="status">
-          {/* Food Status: {info.foods.length} | Hearty Message: 0 */}
+          Food Status: {info.numFoods} | Hearty Message: {info.numMessages}
         </div>
       </InfoArea>
       <Prefer>★</Prefer>
@@ -31,10 +37,17 @@ const Wrapper = styled.div`
   padding-left: 34px;
   padding: 20px;
   margin-bottom: 16px;
-  width: 405px;
-  height: 120px;
-  background-color: ${({ theme }) => theme.palette.background};
+  margin-top: 2px;
+  margin-left: 2px;
+  width: 401px;
+  height: 116px;
+  background-color: ${({ theme }) => theme.palette.beigeWhite};
+  /* background-color: #ffffff; */
   border-radius: 10px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 25%);
+  &.activate {
+    background-color: white;
+  }
 `;
 
 const ImgArea = styled.img`
@@ -52,7 +65,11 @@ const InfoArea = styled.div`
   width: 80%;
   .title {
     font-size: 20px;
+    font-weight: 700;
     color: ${({ theme }) => theme.palette.secondary.main};
+    &.activate {
+      color: ${({ theme }) => theme.palette.primary};
+    }
   }
   .loc {
     font-size: 14px;
