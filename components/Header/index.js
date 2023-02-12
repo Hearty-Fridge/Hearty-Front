@@ -67,22 +67,10 @@ const Header = () => {
         {curUserData.isLogin ? (
           <>
             <div>
-              {/* <Image
-                src="/image/message.png"
-                width={36}
-                height={36}
-                alt="message"
-              /> */}
-              <AiFillMail />
+              <AiFillMail className="icon" />
             </div>
             <div>
-              {/* <Image
-                src="/image/alarm.png"
-                width={36}
-                height={36}
-                alt="alarm"
-              /> */}
-              <AiFillBell />
+              <AiFillBell className="icon" />
             </div>
             <MyPageButton href="/mypage">My</MyPageButton>
           </>
@@ -105,7 +93,7 @@ const StyledHeader = styled.header`
   left: 0;
   display: flex;
   width: 100%;
-  height: 137px;
+  height: 112px;
   align-items: center;
   justify-content: space-between;
   z-index: ${getZIndex('header')};
@@ -114,8 +102,8 @@ const StyledHeader = styled.header`
 const Navigation = styled.nav`
   display: flex;
   align-items: center;
-  font-size: 24px;
-  column-gap: 80px;
+  font-size: 20px;
+  column-gap: 72px;
 `;
 
 const NavLink = styled(Link)`
@@ -133,6 +121,10 @@ const InfoArea = styled.div`
   justify-content: end;
   font-size: 18px;
   column-gap: 48px;
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
 `;
 
 const LinkButtonStyle = css`
