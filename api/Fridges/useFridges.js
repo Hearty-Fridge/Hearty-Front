@@ -24,6 +24,9 @@ export const getFridgesById = (id) => {
   return useQuery(
     ['fridgesById', id],
     async () => {
+      if (id === undefined) {
+        return 0;
+      }
       const { data } = await axiosInstance.request({
         method: 'GET',
         url: `/fridge/getFridge?id=${id}`,
