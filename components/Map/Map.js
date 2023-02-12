@@ -64,7 +64,7 @@ export default Map;
 export const MapWrapper = styled.div`
   overflow: hidden;
   width: 100%;
-  height: calc(100vh - 144px);
+  height: calc(100vh - 112px);
   /* width: calc(100vw - 591px);
   height: calc(100vh - 137px); */
 `;

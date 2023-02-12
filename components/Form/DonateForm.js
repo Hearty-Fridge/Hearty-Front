@@ -69,10 +69,14 @@ export default function DonateForm({ id }) {
     // console.log(selectedImage);
     // console.log(category);
     // console.log(e);
-    const data = { ...e, fridgeId: id, category: category[0], giverId: 0 };
-    console.log(data);
+    const data = {
+      ...e,
+      fridgeId: id,
+      category: category[0],
+      giverId: 1,
+      expiration: new Date(),
+    };
     const res = postFoods(data);
-    console.log(res);
   };
 
   // category

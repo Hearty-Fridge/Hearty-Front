@@ -22,12 +22,12 @@ const Layout = ({ children }) => {
 };
 
 const WrapperStyle = css`
-  padding: 144px 80px 0;
+  padding: 112px 80px 0;
 `;
 
 const Wrapper = styled.div`
   // header를 fixed 로 변경하여 header의 높이만큼 padding-top 부여
-  padding-top: 144px;
+  padding-top: 112px;
 `;
 
 const FlexContainer = styled.div`
