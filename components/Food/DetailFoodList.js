@@ -22,7 +22,7 @@ const dummy = [
   },
 ];
 
-const FoodList = ({ data }) => {
+const DetailFoodList = ({ data }) => {
   return (
     <Table>
       <th style={{ width: '193px' }}>Name</th>
@@ -39,7 +39,7 @@ const FoodList = ({ data }) => {
   );
 };
 
-export default FoodList;
+export default DetailFoodList;
 
 const Table = styled.table`
   max-height: 356px;

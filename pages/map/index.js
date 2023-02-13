@@ -6,17 +6,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { getAllFridges } from 'api/Fridges/useFridges';
 import { useRouter } from 'next/router';
 import getDistanceFromLatLonInKm from 'utils/getDIstance';
-import Donation from '@components/Fridge/Donation';
-import Reservation from '@components/Fridge/Reservation';
 
 // default centerLoc이랑 centerLoc이랑 따로 둬야 할 듯
 const MapPage = () => {
   const router = useRouter();
   const { data, refetch } = getAllFridges();
-  const [detailData, setDetailData] = useState();
   const [isDetail, setIsDetail] = useState();
-  const [isReserve, setIsReserve] = useState(false);
-  const [isDonate, setIsDonate] = useState(false);
   const [centerLoc, setCenterLoc] = useState();
   const [isList, setIsList] = useState(true);
   const [gpsLoc, setGpsLoc] = useState(null); // 거리를 구하기 위함
@@ -60,18 +55,8 @@ const MapPage = () => {
       } else {
         setIsDetail(null);
       }
-      if (router.query.donate) {
-        setIsDonate(true);
-      } else {
-        setIsDonate(false);
-      }
-      if (router.query.reserve) {
-        setIsReserve(true);
-      } else {
-        setIsReserve(false);
-      }
     }
-  }, [router.query, setIsDetail, setIsDonate, setIsReserve]);
+  }, [router.query, setIsDetail]);
 
   useEffect(() => {
     // geolocation을 사용할 수 있다면
@@ -100,21 +85,7 @@ const MapPage = () => {
       {centerLoc ? (
         <>
           <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
-          {isDonate ? (
-            <Donation id={isDetail} />
-          ) : isReserve ? (
-            <Reservation id={isDetail} />
-          ) : (
-            isDetail && (
-              <FridgeDetail
-                isList={isList}
-                setIsList={setIsList}
-                setIsDetail={setIsDetail}
-                setDetailData={setDetailData}
-                fridgeId={isDetail}
-              />
-            )
-          )}
+          {isDetail && <FridgeDetail isList={isList} setIsList={setIsList} />}
           <Map
             centerLoc={centerLoc}
             setVisibleListInBoundary={setVisibleListInBoundary}

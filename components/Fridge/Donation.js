@@ -1,4 +1,4 @@
-import DonateForm from '@components/Form/DonateForm';
+import DonateForm from '@components/Modal/DonateForm';
 import styled from 'styled-components';
 import { getFridgesById } from 'api/Fridges/useFridges';
 

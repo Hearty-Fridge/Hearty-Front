@@ -3,14 +3,16 @@ import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IoLocationSharp } from 'react-icons/io5';
-import FoodList from '@components/Food/FoodList';
+import DetailFoodList from '@components/Food/DetailFoodList';
 import MessageList from '@components/Message/messageList';
-
-const DETAIL_MENU = ['foodList, heartyTalk'];
+import ReservationModal from '@components/Modal/ReservationModal';
+import DonationModal from '@components/Modal/DonationModal';
 
 const FridgeDetail = ({ isList, setIsList }) => {
   const router = useRouter();
   const [id, setId] = useState(-1);
+  const [isReservation, setIsReservation] = useState(false);
+  const [isDonation, setIsDonation] = useState(false);
   const {
     data: fridgeDetailData,
     refetch,
@@ -18,17 +20,31 @@ const FridgeDetail = ({ isList, setIsList }) => {
     error,
   } = getFridgesById(router.query.id);
 
-  const onClickBtn = (to) => {
-    router.push(`/map?id=${id}&${to}=true`);
-  };
+  const onClickBtn = useCallback(
+    (t) => {
+      if (t === 'donate') {
+        setIsDonation(true);
+        setIsReservation(false);
+      } else if (t === 'reserve') {
+        setIsReservation(true);
+        setIsDonation(false);
+      }
+    },
+    [setIsDonation, setIsReservation]
+  );
 
-  const onClickExitBtn = useCallback(() => {
-    router.push(`/map`);
-  }, []);
+  const onClickModal = () => {
+    setIsReservation(false);
+    setIsDonation(false);
+  };
 
   // if t == true이면 Food List를 눌렀을 때, 아니면 Hearty Talk을 눌렀을 때
   const onClickMenuBtn = useCallback((t) => {
     setIsList(t);
+  }, []);
+
+  const onClickExitBtn = useCallback(() => {
+    router.push('/map');
   }, []);
 
   useEffect(() => {
@@ -77,12 +93,22 @@ const FridgeDetail = ({ isList, setIsList }) => {
         </Menu>
         <ContentWrapper>
           {isList ? (
-            <FoodList data={fridgeDetailData.foodList} />
+            <DetailFoodList data={fridgeDetailData.foodList} />
           ) : (
             <MessageList data={fridgeDetailData.messageList} />
           )}
         </ContentWrapper>
       </Sections>
+      {isReservation && (
+        <ReservationModal
+          show={isReservation}
+          onCloseModal={onClickModal}
+          data={fridgeDetailData.foodList}
+        />
+      )}
+      {isDonation && (
+        <DonationModal show={isDonation} onCloseModal={onClickModal} />
+      )}
     </Wrapper>
   );
 };
