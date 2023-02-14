@@ -48,7 +48,7 @@ const Map = ({
         {allFridges?.map((m) => (
           <Marker
             onClick={() => onClickMarker(m.id, m.lat, m.lng)}
-            key={m.id}
+            key={m.fridgeId}
             color="blue"
             {...{ lat: m.lat, lng: m.lng }}
           />

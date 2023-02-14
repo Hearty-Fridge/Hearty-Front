@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import Modal from './Modal';
-import Food from '@components/Food/ReservationFood';
+import ReservationFood from '@components/Food/ReservationFood';
 
 const ReservationModal = ({ data, show, onCloseModal }) => {
   return (
@@ -13,7 +13,7 @@ const ReservationModal = ({ data, show, onCloseModal }) => {
         <Info>* You can make a reservation up to two foods per person.</Info>
         <FoodWrapper>
           {data?.map((food) => (
-            <Food data={food} />
+            <ReservationFood data={food} />
           ))}
         </FoodWrapper>
         <BtnWrapper>

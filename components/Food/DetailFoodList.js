@@ -23,18 +23,25 @@ const dummy = [
 ];
 
 const DetailFoodList = ({ data }) => {
+  if (!data) return '';
   return (
     <Table>
-      <th style={{ width: '193px' }}>Name</th>
-      <th style={{ width: '75px' }}>Amount</th>
-      <th>Expiration</th>
-      {data?.map((d) => (
-        <tr style={{ height: '34px' }}>
-          <td>{d.name}</td>
-          <td>{d.amount}</td>
-          <td>~{moment(d.expiration).format('YYYY.MM.DD')}</td>
+      <thead>
+        <tr>
+          <th style={{ width: '193px' }}>Name</th>
+          <th style={{ width: '75px' }}>Amount</th>
+          <th>Expiration</th>
         </tr>
-      ))}
+      </thead>
+      <tbody>
+        {data?.map((d) => (
+          <tr key={d.foodId} style={{ height: '34px' }}>
+            <td>{d.name}</td>
+            <td>{d.amount}</td>
+            <td>~{moment(d.expiration).format('YYYY.MM.DD')}</td>
+          </tr>
+        ))}
+      </tbody>
     </Table>
   );
 };

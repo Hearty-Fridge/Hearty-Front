@@ -155,7 +155,7 @@ export default function DonateForm({ id, setShow }) {
           <CategoryWrapper>
             {CATEGORY.map((c) => {
               return (
-                <label style={{ width: '33%' }}>
+                <label key={c} style={{ width: '33%' }}>
                   <input
                     type="checkbox"
                     onChange={checkBoxOnChange}

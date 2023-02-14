@@ -2,12 +2,15 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 
-const Food = ({ data }) => {
-  const [expLeft, setExpLeft] = useState(1);
+const ReservationFood = ({ data }) => {
+  const [expirationDate, setExpirationDate] = useState(
+    moment(data.expiration).format('YYYY.MM.DD')
+  );
+  const [expLeft, setExpLeft] = useState(100);
 
   // 남은 일자 계산
   useEffect(() => {
-    const exp = moment(data.expriration).format('YYYY.MM.DD').split('.');
+    const exp = moment(data.expiration).format('YYYY.MM.DD').split('.');
     const now = moment(new Date()).format('YYYY.MM.DD').split('.');
     var stDate = new Date(now[0], now[1], now[2]);
     var endDate = new Date(exp[0], exp[1], exp[2]);
@@ -27,16 +30,14 @@ const Food = ({ data }) => {
           <div className="foodName">{data.name}</div>
           {expLeft <= 1 && <Tag>{`${expLeft} day`}</Tag>}
         </div>
-        <div className="etc">
-          {`${data.amount} | ~${moment(data.expriration).format('YYYY.MM.DD')}`}
-        </div>
+        <div className="etc">{`${data.amount} | ~${expirationDate}`}</div>
         <div className="message">{data.message}</div>
       </Info>
     </FoodWrapper>
   );
 };
 
-export default Food;
+export default ReservationFood;
 
 const FoodWrapper = styled.div`
   display: flex;

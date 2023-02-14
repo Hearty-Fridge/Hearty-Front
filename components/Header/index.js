@@ -51,7 +51,7 @@ const Header = () => {
     <StyledHeader>
       <Navigation>
         <Link href="/">
-          <Image src="/image/Logo.png" width={145} height={111} />
+          <Image src="/image/Logo.png" alt="logo" width={145} height={111} />
         </Link>
         {NAV_MENU.map((navMenu) => (
           <NavLink

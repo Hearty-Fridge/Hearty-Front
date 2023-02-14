@@ -6,6 +6,7 @@ const ListItem = ({ onClick, info, activate, id, fridgeId }) => {
     <Wrapper className={activate ? 'activate' : ''} onClick={onClick}>
       <ImgArea
         src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${info.fridgeImage}`}
+        alt="fridge-image"
       />
       <InfoArea>
         <div className={`title ${activate ? 'activate' : ''}`}>{info.name}</div>
