@@ -107,7 +107,12 @@ const FridgeDetail = ({ isList, setIsList }) => {
         />
       )}
       {isDonation && (
-        <DonationModal show={isDonation} onCloseModal={onClickModal} />
+        <DonationModal
+          id={id}
+          show={isDonation}
+          setShow={setIsDonation}
+          onCloseModal={onClickModal}
+        />
       )}
     </Wrapper>
   );

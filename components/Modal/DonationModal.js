@@ -1,11 +1,10 @@
 import styled, { css } from 'styled-components';
-import Modal from './modal';
+import Modal from './Modal';
 import Food from '@components/Food/ReservationFood';
 import DonateForm from '@components/Form/DonateForm';
 
-const DonationModal = ({ data, show, onCloseModal }) => {
+const DonationModal = ({ id, show, setShow, onCloseModal }) => {
   // category
-
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
       <Container>
@@ -14,7 +13,7 @@ const DonationModal = ({ data, show, onCloseModal }) => {
           <Exit onClick={onCloseModal}>X</Exit>
         </Top>
         <Info>???????????????</Info>
-        <DonateForm />
+        <DonateForm id={id} setShow={setShow} />
       </Container>
     </Modal>
   );

@@ -4,6 +4,13 @@ import styled, { css } from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { postFoods } from 'api/Food/useFoods';
 import moment from 'moment';
+import Calendar from '@components/Calendar/Calendar';
+import { getFridgesById } from 'api/Fridges/useFridges';
+
+// import './calendar.module.css';
+import 'react-datepicker/dist/react-datepicker.css';
+// import './calendar.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const FORM_SECTIONS = [
   {
@@ -61,13 +68,16 @@ const CATEGORY = [
   'Etc',
 ];
 
-export default function DonateForm({ id }) {
+export default function DonateForm({ id, setShow }) {
+  const { refetch } = getFridgesById(id);
   const { register, handleSubmit } = useForm();
   const [foodName, foodNameHandler] = useInput();
   const [foodAmount, foodAmountHandler] = useInput();
   const [heartyMessage, heartyMessageHandler] = useInput();
   const [selectedImage, setSelectedImage] = useState();
   const [category, setCategory] = useState([]);
+  // const [show, setShow] = useState(false);
+  const [expirationDate, setExpirationDate] = useState(new Date());
 
   const checkBoxOnChange = useCallback(
     (e) => {
@@ -92,25 +102,25 @@ export default function DonateForm({ id }) {
     [setSelectedImage]
   );
 
-  const onHandleSubmit = (e) => {
-    // console.log('###################', e);
-    // console.log(selectedImage);
-    // console.log(category);
-    // console.log(e);
+  const onHandleSubmit = async (e) => {
+    console.log(e);
     const data = {
       ...e,
+      expiration: expirationDate,
       fridgeId: id,
       category: category[0],
       giverId: 1,
-      expiration: new Date(),
     };
-    const res = postFoods(data);
+    const res = await postFoods(data);
+    console.log(res);
+    setShow(false);
+    refetch();
   };
 
   // category
   return (
-    <Container>
-      <StyledForm>
+    <StyledForm onSubmit={handleSubmit(onHandleSubmit)}>
+      <Container>
         <Section>
           <div className="name">음식명</div>
           <input
@@ -122,6 +132,15 @@ export default function DonateForm({ id }) {
         </Section>
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
+          <div className="name">권장 섭취 기간</div>
+          <Calendar
+            expirationDate={expirationDate}
+            setExpirationDate={setExpirationDate}
+          />
+          {/* <input value={date} onClick={handleClick} /> */}
+        </Section>
+        <hr style={{ marginBottom: '36px', width: '690px' }} />
+        <Section>
           <div className="name">음식량</div>
           <input
             value={foodAmount}
@@ -130,15 +149,13 @@ export default function DonateForm({ id }) {
             {...register('amount')}
           />
         </Section>
-        {/* 캘린더? */}
-        {/* 체크 박스 */}
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
           <div className="name">음식 종류</div>
           <CategoryWrapper>
             {CATEGORY.map((c) => {
               return (
-                <div style={{ width: '33%' }}>
+                <label style={{ width: '33%' }}>
                   <input
                     type="checkbox"
                     onChange={checkBoxOnChange}
@@ -146,7 +163,7 @@ export default function DonateForm({ id }) {
                     value={c}
                   />
                   {c}
-                </div>
+                </label>
               );
             })}
           </CategoryWrapper>
@@ -179,24 +196,29 @@ export default function DonateForm({ id }) {
             {...register('message')}
           />
         </Section>
-
         {/* 쪽지 남기기 */}
-        {/* <button onClick={handleSubmit(onHandleSubmit)}>Submit</button> */}
-      </StyledForm>
+      </Container>
       <BtnWrapper>
-        <button className="cancel">cancel</button>
-        <button className="submit">submit</button>
+        <button type="button" className="cancel">
+          cancel
+        </button>
+        <button type="submit" className="submit">
+          Submit
+        </button>
+        {/* <input type="submit" className="submit">
+          submit
+        </input> */}
       </BtnWrapper>
-    </Container>
+    </StyledForm>
   );
 }
 
-const Container = styled.div`
+const StyledForm = styled.form`
   width: 745px;
   height: 670px;
 `;
 
-const StyledForm = styled.form`
+const Container = styled.div`
   width: 745px;
   height: 606px;
   overflow-y: scroll;
@@ -212,9 +234,11 @@ const Section = styled.div`
     font-weight: 700;
     color: ${({ theme }) => theme.palette.secondary.main};
   }
+  div > div > input,
   & > input {
     margin-top: 24px;
-    width: 690px;
+    margin-left: 2px;
+    width: 688px;
     height: 61px;
     padding: 20px;
     font-size: 18px;
