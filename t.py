@@ -2,35 +2,35 @@ import sys
 import heapq as hq
 input = sys.stdin.readline
 
-def dijkstra(src, dst):
-    visited = [2e9 for _ in range(N+1)]
+dx = [-1,1,0,0]
+dy = [0,0,1,-1]
+
+def dijkstra(src):
+    visited = [[2e9 for _ in range(N)] for _ in range(M)]
     h = []
-    visited[src] = 0
-    hq.heappush(h, [0, src])
+    visited[src[0]][src[1]] = 0
+    hq.heappush(h, [0, src[0], src[1]])
 
     while h:
+        # cur[0]: cost, cur[1]: x, cur[2]: y
         cur = hq.heappop(h)
-        if visited[cur[1]] < cur[0]:
+        if visited[cur[1]][cur[2]] < cur[0]:
             continue
-        for info in ls[cur[1]]:
-            next_weight = cur[0] + info[1]
-            if visited[info[0]] > next_weight:
-                visited[info[0]] = next_weight
-                hq.heappush(h, [next_weight, info[0]])
-
-    return visited[dst]
+        for i in range(4):
+            nx = cur[1] + dx[i]
+            ny = cur[2] + dy[i]
+            if 0<=nx<M and 0<=ny<N and visited[nx][ny] == 2e9:
+                next_weight = cur[0]
+                if ls[nx][ny] == '1':
+                    next_weight += 1
+                if visited[nx][ny] > next_weight:
+                    visited[nx][ny] = next_weight
+                    hq.heappush(h, [next_weight, nx, ny])
+    return visited[M-1][N-1]
 
 
 N, M = map(int,input().split())
 
-ls = [[] for _ in range(N+1)]
+ls = [input().rstrip() for _ in range(M)]
 
-
-for i in range(N-1):
-    t = list(map(int,input().split()))
-    ls[t[0]].append([t[1], t[2]])
-    ls[t[1]].append([t[0], t[2]])
-
-for _ in range(M):
-    t = list(map(int,input().split()))
-    print(dijkstra(t[0], t[1]))
+print(dijkstra([0,0]))

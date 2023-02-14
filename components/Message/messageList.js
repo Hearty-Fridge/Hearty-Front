@@ -7,7 +7,7 @@ const MessageList = ({ data }) => {
     <>
       {data.map((d) => (
         <Container>
-          <div claaName="message">{d.message}</div>
+          <div className="message">{d.message}</div>
           <div className="date">{moment(d.sendTime).format('YYYY.MM.DD')}</div>
         </Container>
       ))}

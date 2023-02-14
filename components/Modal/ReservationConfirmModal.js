@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import Modal from './modal';
+import Modal from './Modal';
 import Food from '@components/Food/ReservationFood';
 
 const ReservationContirmModal = ({ data, show, onCloseModal }) => {
