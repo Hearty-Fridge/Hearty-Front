@@ -9,7 +9,7 @@ import { userState } from 'atoms/user';
 import { useRecoilState } from 'recoil';
 import { getZIndex } from '@styles/zIndex';
 
-const NAV_MENU = ['Intro', 'Map', 'Donating'];
+const NAV_MENU = ['Intro', '|', 'Map', '|', 'Donating'];
 const TOKEN_KEY = 'accessToken';
 
 const Header = () => {
@@ -50,17 +50,22 @@ const Header = () => {
   return (
     <StyledHeader>
       <Navigation>
-        <Link href="/">
-          <Image src="/image/Logo.png" width={145} height={111} />
-        </Link>
+        <Logo>
+          <Link href="/">
+            <Image src="/image/Logo.png" width={145} height={111} />
+          </Link>
+        </Logo>
         {NAV_MENU.map((navMenu) => (
-          <NavLink
-            key={navMenu}
-            selected={currentPath === navMenu.toLowerCase()}
-            href={`/${navMenu.toLowerCase()}`}
-          >
-            {navMenu}
-          </NavLink>
+          <>
+            <NavLink
+              key={navMenu}
+              selected={currentPath === navMenu.toLowerCase()}
+              href={`/${navMenu.toLowerCase()}`}
+            >
+              {navMenu}
+            </NavLink>
+            {/* <Bar>|</Bar> */}
+          </>
         ))}
       </Navigation>
       <InfoArea>
@@ -103,7 +108,7 @@ const StyledHeader = styled.header`
   left: 0;
   display: flex;
   width: 100%;
-  height: 137px;
+  height: 111px;
   align-items: center;
   justify-content: space-between;
   z-index: ${getZIndex('header')};
@@ -112,8 +117,12 @@ const StyledHeader = styled.header`
 const Navigation = styled.nav`
   display: flex;
   align-items: center;
-  font-size: 24px;
-  column-gap: 80px;
+  font-size: 20px;
+  column-gap: 33px;
+`;
+
+const Logo = styled.div`
+  margin-right: 33px;
 `;
 
 const NavLink = styled(Link)`
@@ -123,6 +132,10 @@ const NavLink = styled(Link)`
     css`
       font-weight: 800;
     `};
+`;
+
+const Bar = styled.div`
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 const InfoArea = styled.div`
