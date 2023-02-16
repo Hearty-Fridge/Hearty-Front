@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
 
 const Wrapper = styled.div`
   // header를 fixed 로 변경하여 header의 높이만큼 padding-top 부여
-  padding: 144px 80px 0;
+  padding: 86px 80px 0;
 `;
 
 export default Layout;
