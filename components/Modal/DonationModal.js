@@ -12,7 +12,6 @@ const DonationModal = ({ id, show, setShow, onCloseModal }) => {
           <Title>Donation</Title>
           <Exit onClick={onCloseModal}>X</Exit>
         </Top>
-        <Info>???????????????</Info>
         <DonateForm id={id} setShow={setShow} />
       </Container>
     </Modal>

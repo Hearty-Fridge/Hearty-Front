@@ -10,7 +10,7 @@ import DonationModal from '@components/Modal/DonationModal';
 
 const FridgeDetail = ({ isList, setIsList }) => {
   const router = useRouter();
-  const [id, setId] = useState(-1);
+  const [id, setId] = useState(null);
   const [isReservation, setIsReservation] = useState(false);
   const [isDonation, setIsDonation] = useState(false);
   const {
@@ -48,11 +48,11 @@ const FridgeDetail = ({ isList, setIsList }) => {
   }, []);
 
   useEffect(() => {
-    if (router.isReady) {
+    if (id && router.isReady) {
       refetch();
       setId(router.query.id);
     }
-  }, [refetch, setId]);
+  }, [setId, router.query.id]);
 
   if (isLoading) {
     return <Wrapper>Loading...</Wrapper>;
@@ -61,14 +61,14 @@ const FridgeDetail = ({ isList, setIsList }) => {
     <Wrapper>
       <GradientImage>
         <img
-          src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${fridgeDetailData.fridgeImage}`}
+          src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${fridgeDetailData.fridgeInfo.fridgeImage}`}
         />
       </GradientImage>
       <ExitButton onClick={onClickExitBtn}>X</ExitButton>
       <Info>
-        <Title>{fridgeDetailData.name}</Title>
+        <Title>{fridgeDetailData.fridgeInfo.fridgeName}</Title>
         <Address>
-          <IoLocationSharp /> {fridgeDetailData.address}
+          <IoLocationSharp /> {fridgeDetailData.fridgeInfo.fridgeAddress}
         </Address>
         <BtnArea>
           <Donate onClick={() => onClickBtn('donate')}>Donate</Donate>

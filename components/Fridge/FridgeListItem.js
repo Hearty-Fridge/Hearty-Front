@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-const ListItem = ({ onClick, info, activate, id, fridgeId }) => {
+const ListItem = ({ onClick, info, activate }) => {
   return (
     <Wrapper className={activate ? 'activate' : ''} onClick={onClick}>
       <ImgArea

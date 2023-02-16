@@ -2,10 +2,11 @@ import useInput from '@hooks/useInput';
 import { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { postFoods } from 'api/Food/useFoods';
+import useFoodsMutation, { postFoods } from 'api/Food/useFoods';
 import moment from 'moment';
 import Calendar from '@components/Calendar/Calendar';
 import { getFridgesById } from 'api/Fridges/useFridges';
+import { IoCamera } from 'react-icons/io5';
 
 // import './calendar.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -75,26 +76,21 @@ export default function DonateForm({ id, setShow }) {
   const [foodAmount, foodAmountHandler] = useInput();
   const [heartyMessage, heartyMessageHandler] = useInput();
   const [selectedImage, setSelectedImage] = useState();
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState();
   // const [show, setShow] = useState(false);
   const [expirationDate, setExpirationDate] = useState(new Date());
+  const { mutate } = useFoodsMutation();
 
   const checkBoxOnChange = useCallback(
     (e) => {
       const curCategory = e.target.value;
-      if (category.find((c) => c === curCategory)) {
-        setCategory(category.filter((c) => c !== curCategory));
-      } else {
-        setCategory([...category, curCategory]);
-      }
-      console.log(category);
+      setCategory(curCategory);
     },
     [category, setCategory]
   );
 
   const selectedImageChange = useCallback(
     (e) => {
-      console.log(e);
       if (e.target.files && e.target.files.length > 0) {
         setSelectedImage(e.target.files[0]);
       }
@@ -108,11 +104,10 @@ export default function DonateForm({ id, setShow }) {
       ...e,
       expiration: expirationDate,
       fridgeId: id,
-      category: category[0],
+      category: category,
       giverId: 1,
     };
-    const res = await postFoods(data);
-    console.log(res);
+    mutate(data);
     setShow(false);
     refetch();
   };
@@ -156,13 +151,13 @@ export default function DonateForm({ id, setShow }) {
             {CATEGORY.map((c) => {
               return (
                 <label key={c} style={{ width: '33%' }}>
-                  <input
-                    type="checkbox"
+                  <Radio
+                    type="radio"
                     onChange={checkBoxOnChange}
-                    name={c}
+                    name="category"
                     value={c}
                   />
-                  {c}
+                  <span>{c}</span>
                 </label>
               );
             })}
@@ -171,12 +166,18 @@ export default function DonateForm({ id, setShow }) {
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
           <div className="name">음식 사진</div>
-          <input
-            accept="image/*"
-            type="file"
-            onChange={selectedImageChange}
-            // {...register('image')}
-          />
+          <Info>사진을 선택하지 않으면, 기본 이미지가 선택됩니다.</Info>
+          <label>
+            <input
+              accept="image/*"
+              type="file"
+              onChange={selectedImageChange}
+              style={{ display: 'none' }}
+            />
+            <InputImage>
+              <IoCamera />
+            </InputImage>
+          </label>
           {selectedImage && (
             <>
               <div>
@@ -189,6 +190,7 @@ export default function DonateForm({ id, setShow }) {
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
           <div className="name">쪽지 남기기</div>
+          <Info>잘 먹으라고 인사하세요~!~!</Info>
           <input
             value={heartyMessage}
             onChange={heartyMessageHandler}
@@ -196,18 +198,14 @@ export default function DonateForm({ id, setShow }) {
             {...register('message')}
           />
         </Section>
-        {/* 쪽지 남기기 */}
       </Container>
       <BtnWrapper>
         <button type="button" className="cancel">
-          cancel
+          Cancel
         </button>
         <button type="submit" className="submit">
           Submit
         </button>
-        {/* <input type="submit" className="submit">
-          submit
-        </input> */}
       </BtnWrapper>
     </StyledForm>
   );
@@ -283,4 +281,39 @@ const CategoryWrapper = styled.div`
   max-width: 670px;
   height: 169px;
   flex-wrap: wrap;
+`;
+
+const Info = styled.div`
+  font-size: 16px;
+  color: ${({ theme }) => theme.palette.secondary.main70};
+`;
+
+const InputImage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  background-color: ${({ theme }) => theme.palette.secondary.main30};
+  border-radius: 10px;
+  margin-top: 24px;
+  margin-bottom: 36px;
+  & > svg {
+    width: 48px;
+    height: 48px;
+    color: white;
+  }
+`;
+
+const Radio = styled.input`
+  margin-right: 8px;
+  vertical-align: middle;
+  appearance: none;
+  border: max(2px, 0.1em) solid gray;
+  /* border-radius: 50%; */
+  width: 1.25em;
+  height: 1.25em;
+  :checked {
+    border: 0.4em solid tomato;
+  }
 `;

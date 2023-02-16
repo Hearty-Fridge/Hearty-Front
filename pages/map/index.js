@@ -11,7 +11,7 @@ import getDistanceFromLatLonInKm from 'utils/getDIstance';
 const MapPage = () => {
   const router = useRouter();
   const { data, refetch } = getAllFridges();
-  const [isDetail, setIsDetail] = useState();
+  const [detail, setDetail] = useState();
   const [centerLoc, setCenterLoc] = useState();
   const [isList, setIsList] = useState(true);
   const [gpsLoc, setGpsLoc] = useState(null); // 거리를 구하기 위함
@@ -29,71 +29,58 @@ const MapPage = () => {
       ) {
         // GPSLoc이 null이면 gps를 불러오지 못함
         // -> 현재 위치의 lat과 lng를 알 수 없음.
-        tmp.push({
-          ...elem,
-          dist: getDistanceFromLatLonInKm({
-            lat1: elem.lat,
-            lng1: elem.lng,
-            lat2: gpsLoc.lat,
-            lng2: gpsLoc.lng,
-          }),
-        });
+        if (gpsLoc) {
+          tmp.push({
+            ...elem,
+            dist: getDistanceFromLatLonInKm({
+              lat1: elem.lat,
+              lng1: elem.lng,
+              lat2: gpsLoc?.lat,
+              lng2: gpsLoc?.lng,
+            }),
+          });
+          tmp.sort((a, b) => {
+            return parseFloat(a.dist) - parseFloat(b.dist);
+          });
+        }
       }
     });
-
     // 오름차순 정렬
-    tmp.sort((a, b) => {
-      return parseFloat(a.dist) - parseFloat(b.dist);
-    });
     setVisibleList(tmp);
   };
 
   useEffect(() => {
     if (router.isReady) {
       if (router.query.id) {
-        setIsDetail(router.query.id);
+        setDetail(router.query.id);
       } else {
-        setIsDetail(null);
+        setDetail(null);
       }
     }
-  }, [router.query, setIsDetail]);
+  }, [router.query, setDetail]);
 
-  useEffect(() => {
-    // geolocation을 사용할 수 있다면
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const tmpLoc = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        setGpsLoc(tmpLoc);
-        setCenterLoc(tmpLoc);
-      });
-    } else {
-      // default : 서울 시청
-      const tmpLoc = {
-        lat: 37.330689,
-        lng: 126.5930664,
-      };
-      setGpsLoc(tmpLoc);
-      setCenterLoc(tmpLoc);
-    }
-  }, [setGpsLoc, data]);
+  const onMapLoad = ({ map, maps }) => {
+    navigator?.geolocation.getCurrentPosition(
+      ({ coords: { latitude: lat, longitude: lng } }) => {
+        const pos = { lat, lng };
+        setGpsLoc(pos);
+        setCenterLoc(pos);
+      }
+    );
+  };
 
   return (
     <Layout>
-      {centerLoc ? (
-        <>
-          <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
-          {isDetail && <FridgeDetail isList={isList} setIsList={setIsList} />}
-          <Map
-            centerLoc={centerLoc}
-            setVisibleListInBoundary={setVisibleListInBoundary}
-          />
-        </>
-      ) : (
-        <>Loading Page</>
-      )}
+      <FridgeList setCenterLoc={setCenterLoc} visibleList={visibleList} />
+      {detail && <FridgeDetail isList={isList} setIsList={setIsList} />}
+      <Map
+        centerLoc={centerLoc}
+        setCenterLoc={setCenterLoc}
+        setVisibleListInBoundary={setVisibleListInBoundary}
+        onMapLoad={onMapLoad}
+        detail={detail}
+        setDetail={setDetail}
+      />
     </Layout>
   );
 };
