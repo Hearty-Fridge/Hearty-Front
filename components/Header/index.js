@@ -27,6 +27,7 @@ const Header = () => {
       console.log('성공', res);
 
       setCurUserData({
+        id: res.data.id,
         isLogin: true,
         name: res.data.name,
         email: res.data.email,
