@@ -40,7 +40,7 @@ export default Home;
 const IndicatorWrapper = styled.div`
   position: fixed;
   top: 50%;
-  right: 0;
+  right: 80px;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;

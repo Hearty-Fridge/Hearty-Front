@@ -3,25 +3,23 @@ import styled from 'styled-components';
 export const HomeP1 = ({ className }) => {
   return (
     <Wrapper className={className}>
+      <BackImg1 />
       <Title>
         Let’s donate <br /> with hearty fridge!
       </Title>
-      <Flex>
-        <SubTitle>
-          <How>How?</How>
-          The expression is a simple sentence of <br />
-          promoting a healthy life and the welfare of all <br />
-          generations, e and the welfare of.
-        </SubTitle>
-        <BackImg />
-      </Flex>
+      {/* <BackImg1 /> */}
+      <SubTitle>
+        <How>How?</How>
+        The expression is a simple sentence of <br />
+        promoting a healthy life and the welfare of all <br />
+        generations, e and the welfare of.
+      </SubTitle>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  margin-top: 86.2px;
-  /* height: 943px; */
+  height: 1023px;
 `;
 const Title = styled.div`
   font-family: 'Playfair Display';
@@ -69,9 +67,11 @@ const How = styled.div`
   border-color: ${({ theme }) => theme.palette.accent};
 `;
 
-const BackImg = styled.div`
+const BackImg1 = styled.div`
   /* position: absolute; */
   position: relative;
+  padding-left: 132px;
+  float: right;
   width: 425px;
   height: 334px;
   background-color: white;
