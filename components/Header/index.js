@@ -3,13 +3,13 @@ import { useMemo } from 'react';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
 import { userState } from 'atoms/user';
 import { useRecoilState } from 'recoil';
 import { getZIndex } from '@styles/zIndex';
 
-const NAV_MENU = ['Intro', '|', 'Map', '|', 'Donating'];
+const NAV_MENU = ['Intro', '|', 'Map'];
 const TOKEN_KEY = 'accessToken';
 
 const Header = () => {
@@ -47,6 +47,10 @@ const Header = () => {
     // flow: 'auth-code',
   });
 
+  // const logout = () => {
+  //   googleLogout();
+  // };
+
   return (
     <StyledHeader>
       <Navigation>
@@ -64,34 +68,19 @@ const Header = () => {
             >
               {navMenu}
             </NavLink>
-            {/* <Bar>|</Bar> */}
           </>
         ))}
       </Navigation>
       <InfoArea>
         {curUserData.isLogin ? (
           <>
-            <div>
-              <Image
-                src="/image/message.png"
-                width={36}
-                height={36}
-                alt="message"
-              />
-            </div>
-            <div>
-              <Image
-                src="/image/alarm.png"
-                width={36}
-                height={36}
-                alt="alarm"
-              />
-            </div>
-            <MyPageButton href="/mypage">My</MyPageButton>
+            <Image src="/image/alarm.png" width={24} height={30} alt="alarm" />
+            <LogOutButton onClick={googleLogout()}>Log out</LogOutButton>
+            <MyPageButton href="/mypage">MY</MyPageButton>
           </>
         ) : (
           <>
-            <LogInButton onClick={login}>Login</LogInButton>
+            <LogInButton onClick={login}>Log in</LogInButton>
           </>
         )}
       </InfoArea>
@@ -135,10 +124,6 @@ const NavLink = styled(Link)`
     `};
 `;
 
-const Bar = styled.div`
-  color: ${({ theme }) => theme.palette.secondary.main};
-`;
-
 const InfoArea = styled.div`
   display: flex;
   align-items: center;
@@ -164,8 +149,26 @@ const LogInButton = styled.button`
   background-color: ${({ theme }) => theme.palette.accent};
 `;
 
+const LogOutButton = styled.button`
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  color: ${({ theme }) => theme.palette.gray};
+  background-color: ${({ theme }) => theme.palette.background};
+`;
+
 const MyPageButton = styled(Link)`
   ${LinkButtonStyle}
-  min-width: 107px;
+  cursor: pointer;
+  min-width: 92.32px;
+  outline: none;
+  border: none;
+  font-size: 14px;
   background-color: ${({ theme }) => theme.palette.primary};
 `;
