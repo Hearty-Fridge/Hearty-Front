@@ -2,43 +2,46 @@ import styled from 'styled-components';
 
 const ProfileData = () => {
   return (
-    <Wrapper>
-      <Wrap>
-        <UserImg />
-        <UserName>윙스</UserName>
-        <UserMail>hyunyoung2203@gmail.com</UserMail>
-      </Wrap>
-      <Bar />
-      <Wrap>
-        <Title>Record</Title>
-        <RecData>
-          <RecFlex>
-            <div>전체 냉장고 거래</div>
-            <div>27회</div>
-          </RecFlex>
-          <RecFlex>
-            <div>마음 주기</div>
-            <div>27회</div>
-          </RecFlex>
-          <RecFlex>
-            <div>마음 받기</div>
-            <div>27회</div>
-          </RecFlex>
-        </RecData>
-      </Wrap>
-      <Bar />
-      <Wrap>
-        <Title>Certification</Title>
-        <Card>
-          <CardM>수급자 인증이 완료되었습니다!</CardM>
-          <CardD>2022.03.21 ~ 2023.03.21</CardD>
-          <Flex>
-            <CardB>취소하기</CardB>
-          </Flex>
-        </Card>
-      </Wrap>
-      {/* <SignDate>가입일 2020.06.12</SignDate> */}
-    </Wrapper>
+    <>
+      {' '}
+      <Wrapper>
+        <Wrap>
+          <UserImg />
+          <UserName>윙스</UserName>
+          <UserMail>hyunyoung2203@gmail.com</UserMail>
+        </Wrap>
+        <Bar />
+        <Wrap>
+          <Title>Record</Title>
+          <RecData>
+            <RecFlex>
+              <div>전체 냉장고 거래</div>
+              <div>27회</div>
+            </RecFlex>
+            <RecFlex>
+              <div>마음 주기</div>
+              <div>27회</div>
+            </RecFlex>
+            <RecFlex>
+              <div>마음 받기</div>
+              <div>27회</div>
+            </RecFlex>
+          </RecData>
+        </Wrap>
+        <Bar />
+        <Wrap>
+          <Title>Certification</Title>
+          <Card>
+            <CardM>수급자 인증이 완료되었습니다!</CardM>
+            <CardD>2022.03.21 ~ 2023.03.21</CardD>
+            <Flex>
+              <CardB>취소하기</CardB>
+            </Flex>
+          </Card>
+        </Wrap>
+      </Wrapper>
+      <SignDate>가입일 2020.06.12</SignDate>
+    </>
   );
 };
 
@@ -123,7 +126,7 @@ const CardM = styled.div`
   font-size: 18px;
   line-height: 21px;
 
-  color: #594c48;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 const CardD = styled.div`
   padding-bottom: 22px;
@@ -131,7 +134,7 @@ const CardD = styled.div`
   font-size: 14px;
   line-height: 17px;
 
-  color: #594c48;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 const Flex = styled.div`
   display: flex;
@@ -148,6 +151,16 @@ const CardB = styled.button`
   text-align: center;
   color: white;
   border: none;
+`;
+
+const SignDate = styled.div`
+  float: bottom;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+
+  color: rgba(89, 76, 72, 0.5);
 `;
 
 const Bar = styled.hr`
