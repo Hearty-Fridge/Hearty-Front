@@ -101,7 +101,7 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   z-index: ${getZIndex('header')};
-  background-color: ${({ theme }) => theme.palette.background};
+  background-color: #ffffff;
 `;
 
 const Navigation = styled.nav`

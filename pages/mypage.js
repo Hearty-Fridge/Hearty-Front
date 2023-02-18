@@ -1,5 +1,7 @@
 import Layout from '@components/Layout';
 import MypageComponent from '@components/Mypage';
+import styled from 'styled-components';
+import Header from '@components/Header';
 // import { axiosInstance } from 'api';
 // import { userState } from 'atoms/user';
 // import { useRecoilState } from 'recoil';
@@ -21,10 +23,17 @@ import MypageComponent from '@components/Mypage';
 
 const MyPage = ({ res }) => {
   return (
-    <Layout>
+    <MypageWrap>
+      <Header />
       <MypageComponent />
-    </Layout>
+    </MypageWrap>
   );
 };
+
+const MypageWrap = styled.div`
+  padding: 111px 80px;
+  height: 100vh;
+  background-color: #f8f8f8;
+`;
 
 export default MyPage;
