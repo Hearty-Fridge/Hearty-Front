@@ -10,10 +10,10 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
   const [id, setId] = useState(false);
   const onClickFridgeItem = useCallback(
     (info) => {
-      router.push(`/map?id=${info.fridgeId}`);
+      router.push(`/map?id=${info.fridgeInfo.fridgeId}`);
       setCenterLoc({
-        lat: info.lat,
-        lng: info.lng,
+        lat: info.fridgeInfo.lat,
+        lng: info.fridgeInfo.lng,
       });
     },
     [setCenterLoc]
@@ -29,12 +29,12 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
       <VisibleList>
         {visibleList?.map((l) => (
           <ListItem
-            key={l.fridgeId}
+            key={l.fridgeInfo.fridgeId}
             onClick={() => {
               onClickFridgeItem(l);
             }}
             info={l}
-            activate={id === l.fridgeId.toString()}
+            activate={id === l.fridgeInfo.fridgeId.toString()}
           />
         ))}
       </VisibleList>

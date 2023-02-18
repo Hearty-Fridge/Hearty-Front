@@ -10,7 +10,7 @@ const ReservationFood = ({ data }) => {
 
   // 남은 일자 계산
   useEffect(() => {
-    const exp = moment(data.expiration).format('YYYY.MM.DD').split('.');
+    const exp = moment(data.food.expiration).format('YYYY.MM.DD').split('.');
     const now = moment(new Date()).format('YYYY.MM.DD').split('.');
     var stDate = new Date(now[0], now[1], now[2]);
     var endDate = new Date(exp[0], exp[1], exp[2]);
@@ -27,11 +27,11 @@ const ReservationFood = ({ data }) => {
         <div
           style={{ display: 'flex', columnGap: '12px', alignItems: 'center' }}
         >
-          <div className="foodName">{data.name}</div>
+          <div className="foodName">{data.food.name}</div>
           {expLeft <= 1 && <Tag>{`${expLeft} day`}</Tag>}
         </div>
-        <div className="etc">{`${data.amount} | ~${expirationDate}`}</div>
-        <div className="message">{data.message}</div>
+        <div className="etc">{`${data.food.amount} | ~${expirationDate}`}</div>
+        <div className="message">{data.food.message}</div>
       </Info>
     </FoodWrapper>
   );

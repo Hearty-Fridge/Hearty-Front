@@ -1,27 +1,6 @@
 import styled from 'styled-components';
 import moment from 'moment';
 
-const dummy = [
-  {
-    id: 0,
-    name: '유기농 계란',
-    amount: '1개',
-    expiration: '~2023.03.24',
-  },
-  {
-    id: 1,
-    name: '핫도그',
-    amount: '2개',
-    expiration: '~2023.03.24',
-  },
-  {
-    id: 2,
-    name: '치킨',
-    amount: '1개',
-    expiration: '~2023.03.24',
-  },
-];
-
 const DetailFoodList = ({ data }) => {
   if (!data) return '';
   return (
@@ -35,10 +14,10 @@ const DetailFoodList = ({ data }) => {
       </thead>
       <tbody>
         {data?.map((d) => (
-          <tr key={d.foodId} style={{ height: '34px' }}>
-            <td>{d.name}</td>
-            <td>{d.amount}</td>
-            <td>~{moment(d.expiration).format('YYYY.MM.DD')}</td>
+          <tr key={d.giveId} style={{ height: '34px' }}>
+            <td>{d.food.name}</td>
+            <td>{d.food.amount}</td>
+            <td>{`~ ${moment(d.food.expiration).format('YYYY.MM.DD')}`}</td>
           </tr>
         ))}
       </tbody>

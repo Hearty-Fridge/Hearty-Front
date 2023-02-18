@@ -5,11 +5,13 @@ const ListItem = ({ onClick, info, activate }) => {
   return (
     <Wrapper className={activate ? 'activate' : ''} onClick={onClick}>
       <ImgArea
-        src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${info.fridgeImage}`}
+        src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${info.fridgeInfo.fridgeImage}`}
         alt="fridge-image"
       />
       <InfoArea>
-        <div className={`title ${activate ? 'activate' : ''}`}>{info.name}</div>
+        <div className={`title ${activate ? 'activate' : ''}`}>
+          {info.fridgeInfo.fridgeName}
+        </div>
         <div style={{ display: 'flex', flexFlow: 'wrap' }}>
           {Object.keys(info).includes('dist') && (
             <div
@@ -19,7 +21,7 @@ const ListItem = ({ onClick, info, activate }) => {
               {info.dist}m |{' '}
             </div>
           )}
-          <div className="loc">{info.address}</div>
+          <div className="loc">{info.fridgeInfo.fridgeAddress}</div>
         </div>
         <div className="status">
           Food Status: {info.numFoods} | Hearty Message: {info.numMessages}

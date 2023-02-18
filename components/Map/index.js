@@ -12,7 +12,7 @@ const Map = ({
   setVisibleListInBoundary,
   onMapLoad,
 }) => {
-  const { data: allFridges } = getAllFridges();
+  const { data: allFridges } = getAllFridges({ id: 1 });
   const router = useRouter();
   const [marker, setMarker] = useState(null);
   const [mapBounds, setMapBounds] = useState(null);
@@ -61,12 +61,18 @@ const Map = ({
           });
         }}
       >
-        {allFridges?.map((m) => (
+        {allFridges?.fridgeList.map((m) => (
           <Marker
-            onClick={() => onClickMarker(m.fridgeId, m.lat, m.lng)}
-            key={m.fridgeId}
+            onClick={() =>
+              onClickMarker(
+                m.fridgeInfo.fridgeId,
+                m.fridgeInfo.lat,
+                m.fridgeInfo.lng
+              )
+            }
+            key={m.fridgeInfo.fridgeId}
             color="blue"
-            {...{ lat: m.lat, lng: m.lng }}
+            {...{ lat: m.fridgeInfo.lat, lng: m.fridgeInfo.lng }}
           />
         ))}
         {marker && <Marker color="red" {...marker} />}

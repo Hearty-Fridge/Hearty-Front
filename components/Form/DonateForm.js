@@ -1,5 +1,5 @@
 import useInput from '@hooks/useInput';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useForm } from 'react-hook-form';
 import useFoodsMutation, { postFoods } from 'api/Food/useFoods';
@@ -7,6 +7,7 @@ import moment from 'moment';
 import Calendar from '@components/Calendar/Calendar';
 import { getFridgesById } from 'api/Fridges/useFridges';
 import { IoCamera } from 'react-icons/io5';
+import { Controller } from 'react-hook-form';
 
 // import './calendar.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -71,23 +72,20 @@ const CATEGORY = [
 
 export default function DonateForm({ id, setShow }) {
   const { refetch } = getFridgesById(id);
-  const { register, handleSubmit } = useForm();
-  const [foodName, foodNameHandler] = useInput();
-  const [foodAmount, foodAmountHandler] = useInput();
-  const [heartyMessage, heartyMessageHandler] = useInput();
   const [selectedImage, setSelectedImage] = useState();
-  const [category, setCategory] = useState();
+  const { register, handleSubmit, formState, reset, control } = useForm({
+    defaultValues: {
+      foodName: '',
+      foodAmount: '',
+      message: '',
+      selectedImage: '',
+      category: '',
+    },
+  });
+  const { errors } = formState;
   // const [show, setShow] = useState(false);
   const [expirationDate, setExpirationDate] = useState(new Date());
   const { mutate } = useFoodsMutation();
-
-  const checkBoxOnChange = useCallback(
-    (e) => {
-      const curCategory = e.target.value;
-      setCategory(curCategory);
-    },
-    [category, setCategory]
-  );
 
   const selectedImageChange = useCallback(
     (e) => {
@@ -100,72 +98,124 @@ export default function DonateForm({ id, setShow }) {
 
   const onHandleSubmit = async (e) => {
     console.log(e);
-    const data = {
-      ...e,
-      expiration: expirationDate,
-      fridgeId: id,
-      category: category,
-      giverId: 1,
-    };
-    mutate(data);
-    setShow(false);
-    refetch();
+    // const data = {
+    //   ...e,
+    //   expiration: expirationDate,
+    //   fridgeId: id,
+    //   category: category,
+    //   giverId: 1,
+    // };
+    // mutate(data);
+    // setShow(false);
+    // refetch();
   };
+  useEffect(() => {
+    const close = (e) => {
+      if (e.key === 'Escape') {
+        setShow(false);
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
 
   // category
   return (
     <StyledForm onSubmit={handleSubmit(onHandleSubmit)}>
       <Container>
         <Section>
-          <div className="name">음식명</div>
+          <SectionName>
+            <div className="name">음식명</div>
+            <div className="error">
+              {errors.foodName && errors.foodName.message}
+            </div>
+          </SectionName>
           <input
-            value={foodName}
-            onChange={foodNameHandler}
             placeholder="Food Name"
-            {...register('name')}
-          />
-        </Section>
-        <hr style={{ marginBottom: '36px', width: '690px' }} />
-        <Section>
-          <div className="name">권장 섭취 기간</div>
-          <Calendar
-            expirationDate={expirationDate}
-            setExpirationDate={setExpirationDate}
-          />
-          {/* <input value={date} onClick={handleClick} /> */}
-        </Section>
-        <hr style={{ marginBottom: '36px', width: '690px' }} />
-        <Section>
-          <div className="name">음식량</div>
-          <input
-            value={foodAmount}
-            onChange={foodAmountHandler}
-            placeholder="Food Amount"
-            {...register('amount')}
-          />
-        </Section>
-        <hr style={{ marginBottom: '36px', width: '690px' }} />
-        <Section>
-          <div className="name">음식 종류</div>
-          <CategoryWrapper>
-            {CATEGORY.map((c) => {
-              return (
-                <label key={c} style={{ width: '33%' }}>
-                  <Radio
-                    type="radio"
-                    onChange={checkBoxOnChange}
-                    name="category"
-                    value={c}
-                  />
-                  <span>{c}</span>
-                </label>
-              );
+            {...register('foodName', {
+              required: '음식명을 입력해주세요.',
             })}
-          </CategoryWrapper>
+          />
         </Section>
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
-          <div className="name">음식 사진</div>
+          <SectionName>
+            <div className="name">권장 섭취 기간</div>
+            <div className="error">
+              {errors.expirationDate && errors.expirationDate.message}
+            </div>
+          </SectionName>
+          <Controller
+            name="expirationDate"
+            control={control}
+            rules={{
+              required: '권장 섭취 기간을 입력해주세요.',
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Calendar
+                expirationDate={value}
+                setExpirationDate={(value) => {
+                  onChange(value);
+                }}
+              />
+            )}
+          />
+        </Section>
+        <hr style={{ marginBottom: '36px', width: '690px' }} />
+        <Section>
+          <SectionName>
+            <div className="name">음식량</div>
+            <div className="error">
+              {errors.foodAmount && errors.foodAmount.message}
+            </div>
+          </SectionName>
+          <input
+            placeholder="Food Amount"
+            {...register('foodAmount', {
+              required: '음식량을 입력해주세요.',
+            })}
+          />
+        </Section>
+        <hr style={{ marginBottom: '36px', width: '690px' }} />
+        <Section>
+          <SectionName>
+            <div className="name">음식 종류</div>
+            <div className="error">
+              {errors.category && errors.category.message}
+            </div>
+          </SectionName>
+          <Controller
+            name="category"
+            control={control}
+            rules={{
+              required: '음식 종류를 선택해주세요.',
+            }}
+            render={({ field: { onChange, value } }) => (
+              <CategoryWrapper>
+                {CATEGORY.map((c) => {
+                  return (
+                    <label key={c} style={{ width: '33%' }}>
+                      <Radio
+                        type="radio"
+                        onChange={(value) => {
+                          onChange(value);
+                        }}
+                        name="category"
+                        value={c}
+                      />
+                      <span>{c}</span>
+                    </label>
+                  );
+                })}
+              </CategoryWrapper>
+            )}
+          />
+        </Section>
+        <hr style={{ marginBottom: '36px', width: '690px' }} />
+        <Section>
+          <SectionName>
+            <div className="name">음식 사진</div>
+          </SectionName>
           <Info>사진을 선택하지 않으면, 기본 이미지가 선택됩니다.</Info>
           <label>
             <input
@@ -178,6 +228,7 @@ export default function DonateForm({ id, setShow }) {
               <IoCamera />
             </InputImage>
           </label>
+          {/* todo */}
           {selectedImage && (
             <>
               <div>
@@ -189,15 +240,18 @@ export default function DonateForm({ id, setShow }) {
         </Section>
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
-          <div className="name">쪽지 남기기</div>
+          <SectionName>
+            <div className="name">쪽지 남기기</div>
+          </SectionName>
           <Info>잘 먹으라고 인사하세요~!~!</Info>
-          <input
-            value={heartyMessage}
-            onChange={heartyMessageHandler}
-            placeholder="Hearty Message"
-            {...register('message')}
-          />
+          <input placeholder="Hearty Message" {...register('message')} />
         </Section>
+        {/* <input
+            value={foodName}
+            onChange={foodNameHandler}
+            placeholder="Food Name"
+            {...register('name')}
+          /> */}
       </Container>
       <BtnWrapper>
         <button type="button" className="cancel">
@@ -227,11 +281,6 @@ const Container = styled.div`
 const Section = styled.div`
   width: 690px;
   min-height: 151px;
-  & > .name {
-    font-size: 24px;
-    font-weight: 700;
-    color: ${({ theme }) => theme.palette.secondary.main};
-  }
   div > div > input,
   & > input {
     margin-top: 24px;
@@ -315,5 +364,19 @@ const Radio = styled.input`
   height: 1.25em;
   :checked {
     border: 0.4em solid tomato;
+  }
+`;
+
+const SectionName = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 24px;
+  .name {
+    font-size: 24px;
+    font-weight: 700;
+    color: ${({ theme }) => theme.palette.secondary.main};
+  }
+  .error {
+    color: ${({ theme }) => theme.palette.error};
   }
 `;
