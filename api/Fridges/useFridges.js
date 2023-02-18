@@ -2,13 +2,13 @@ import axios from 'axios';
 import { axiosInstance } from 'api/axiosInstance';
 import { useQuery } from 'react-query';
 
-export const getAllFridges = () => {
+export const getAllFridges = ({ id }) => {
   return useQuery(
-    ['fridges'],
+    ['fridges', id],
     async () => {
       const { data } = await axiosInstance.request({
         method: 'GET',
-        url: `/fridge/all`,
+        url: `/fridge/getAll?memberId=${id}`,
       });
       return data.data;
     },
@@ -24,12 +24,12 @@ export const getFridgesById = (id) => {
   return useQuery(
     ['fridgesById', id],
     async () => {
-      if (id === undefined) {
+      if (id === undefined || id === null) {
         return 0;
       }
       const { data } = await axiosInstance.request({
         method: 'GET',
-        url: `/fridge/getFridge?id=${id}`,
+        url: `/fridge/getFridge2?fridgeId=${id}`,
       });
       return data.data;
     },
