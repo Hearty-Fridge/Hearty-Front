@@ -151,6 +151,7 @@ const CardB = styled.button`
   text-align: center;
   color: white;
   border: none;
+  cursor: pointer;
 `;
 
 const SignDate = styled.div`

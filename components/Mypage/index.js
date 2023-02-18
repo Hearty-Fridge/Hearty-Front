@@ -3,7 +3,11 @@ import { userState } from 'atoms/user';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+
 import ProfileData from './ProfileData';
+import ReservationData from './ReservationData';
+import GnTData from './GnTData';
+import MsgData from './MsgData';
 
 const MypageComponent = () => {
   const userStateAtom = useRecoilValue(userState);
@@ -27,9 +31,15 @@ const MypageComponent = () => {
         <ProfileData />
       </ProfileBox>
       <DataBox>
-        <ReservationBox />
-        <GnTBox />
-        <MessageBox />
+        <ReservationBox>
+          <ReservationData />
+        </ReservationBox>
+        <GnTBox>
+          <GnTData />
+        </GnTBox>
+        <MessageBox>
+          <MsgData />
+        </MessageBox>
       </DataBox>
     </Boxes>
   );
