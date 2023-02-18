@@ -1,7 +1,26 @@
+import { axiosInstance } from 'api';
+import { userState } from 'atoms/user';
+import { useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import ProfileData from './ProfileData';
 
 const MypageComponent = () => {
+  const userStateAtom = useRecoilValue(userState);
+  const { data } = useQuery(
+    ['getProfile', userStateAtom.memberId],
+    async () =>
+      await axiosInstance.get(
+        `/member/getProfile2?memberId=${userStateAtom.memberId}`
+      ),
+    { enabled: !!userStateAtom.memberId }
+  );
+
+  console.log(data);
+  if (!data) {
+    return null;
+  }
+
   return (
     <Boxes>
       <ProfileBox>

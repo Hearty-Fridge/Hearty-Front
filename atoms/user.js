@@ -3,7 +3,7 @@ const { atom } = require('recoil');
 export const userState = atom({
   key: 'userState',
   default: {
-    id: 0,
+    memberId: null,
     isLogin: false,
     email: '',
     name: '',
