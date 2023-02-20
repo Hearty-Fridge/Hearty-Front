@@ -10,6 +10,23 @@ export const getAllFridges = ({ id }) => {
         method: 'GET',
         url: `/fridge/getAll?memberId=${id}`,
       });
+
+      var idx = 0;
+      for (let i = 0; i < data.data.fridgeList.length; ++i) {
+        if (idx === data.data.bookmarks.length) {
+          data.data.fridgeList[i].isBookmarked = false;
+        } else {
+          data.data.fridgeList[i].isBookmarked =
+            data.data.fridgeList[i].fridgeInfo.fridgeId ===
+            data.data.bookmarks[idx];
+          if (
+            data.data.fridgeList[i].isBookmarked &&
+            idx != data.data.bookmarks.length - 1
+          ) {
+            idx += 1;
+          }
+        }
+      }
       return data.data;
     },
     {
