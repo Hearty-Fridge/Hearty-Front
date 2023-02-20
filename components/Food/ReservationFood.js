@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 
-const ReservationFood = ({ data }) => {
-  const [expirationDate, setExpirationDate] = useState(
+const ReservationFood = ({ data, onClickCheck }) => {
+  const [expirationDate] = useState(
     moment(data.expiration).format('YYYY.MM.DD')
   );
   const [expLeft, setExpLeft] = useState(100);
@@ -21,7 +21,11 @@ const ReservationFood = ({ data }) => {
 
   return (
     <FoodWrapper>
-      <FoodCheckbox type="checkbox" />
+      <FoodCheckbox
+        id={`reserve-${data.food.id}`}
+        type="checkbox"
+        onClick={(obj) => onClickCheck(obj, data.food)}
+      />
       <FoodPhoto />
       <Info>
         <div

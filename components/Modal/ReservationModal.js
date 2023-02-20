@@ -1,24 +1,71 @@
 import styled, { css } from 'styled-components';
 import Modal from './Modal';
 import ReservationFood from '@components/Food/ReservationFood';
+import { IoCloseSharp } from 'react-icons/io5';
+import { useCallback, useEffect } from 'react';
 
-const ReservationModal = ({ data, show, onCloseModal }) => {
+const ReservationModal = ({
+  data,
+  show,
+  onCloseModal,
+  reservationList,
+  setReservationList,
+  handleSubmit,
+}) => {
+  const onClickCheck = useCallback(
+    (obj, food) => {
+      if (reservationList.find((l) => l.id === food.id)) {
+        setReservationList(reservationList.filter((l) => l.id !== food.id));
+      } else {
+        if (reservationList.length == 2) {
+          alert('2개까지 선택할 수 있습니다.');
+          obj.target.checked = false;
+        } else {
+          setReservationList(() => [...reservationList, food]);
+        }
+      }
+    },
+    [setReservationList, reservationList]
+  );
+
+  useEffect(() => {
+    reservationList.forEach((elem) => {
+      const d = document.getElementById(`reserve-${elem.id}`);
+      d.checked = true;
+    });
+  }, []);
+
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
       <Container>
         <Top>
           <Title>Reservation</Title>
-          <Exit onClick={onCloseModal}>X</Exit>
+          <Exit onClick={onCloseModal}>
+            <IoCloseSharp
+              style={{
+                width: '41px',
+                height: '41px',
+              }}
+            />
+          </Exit>
         </Top>
         <Info>* You can make a reservation up to two foods per person.</Info>
         <FoodWrapper>
           {data?.map((food) => (
-            <ReservationFood data={food} />
+            <ReservationFood
+              key={food.food.id}
+              data={food}
+              onClickCheck={onClickCheck}
+            />
           ))}
         </FoodWrapper>
         <BtnWrapper>
-          <button className="cancel">cancel</button>
-          <button className="submit">submit</button>
+          <button type="button" className="cancel" onClick={onCloseModal}>
+            Cancel
+          </button>
+          <button className="submit" onClick={handleSubmit}>
+            Confirm
+          </button>
         </BtnWrapper>
       </Container>
     </Modal>

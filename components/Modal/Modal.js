@@ -3,6 +3,16 @@ import { useCallback, useEffect } from 'react';
 import ModalContainer from './ModalContainer';
 
 const Modal = ({ children, show, onCloseModal }) => {
+  useEffect(() => {
+    const close = (e) => {
+      if (e.key === 'Escape') {
+        onCloseModal();
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
+
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
@@ -33,7 +43,7 @@ const Container = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   background-color: #000000cc;
   z-index: 1001;

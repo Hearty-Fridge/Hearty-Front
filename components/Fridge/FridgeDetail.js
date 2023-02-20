@@ -7,12 +7,16 @@ import DetailFoodList from '@components/Food/DetailFoodList';
 import MessageList from '@components/Message/messageList';
 import ReservationModal from '@components/Modal/ReservationModal';
 import DonationModal from '@components/Modal/DonationModal';
+import ConfirmModal from '@components/Modal/ConfirmModal';
 
 const FridgeDetail = ({ isList, setIsList }) => {
   const router = useRouter();
   const [id, setId] = useState(null);
   const [isReservation, setIsReservation] = useState(false);
   const [isDonation, setIsDonation] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [reservationList, setReservationList] = useState([]);
+
   const {
     data: fridgeDetailData,
     refetch,
@@ -33,9 +37,21 @@ const FridgeDetail = ({ isList, setIsList }) => {
     [setIsDonation, setIsReservation]
   );
 
-  const onClickModal = () => {
+  const onCloseModal = () => {
+    setReservationList([]);
     setIsReservation(false);
     setIsDonation(false);
+    setIsConfirm(false);
+  };
+
+  const ReservationHandleSubmit = () => {
+    setIsReservation(false);
+    setIsConfirm(true);
+  };
+
+  const showReservation = () => {
+    setIsReservation(true);
+    setIsConfirm(false);
   };
 
   // if t == true이면 Food List를 눌렀을 때, 아니면 Hearty Talk을 눌렀을 때
@@ -102,8 +118,20 @@ const FridgeDetail = ({ isList, setIsList }) => {
       {isReservation && (
         <ReservationModal
           show={isReservation}
-          onCloseModal={onClickModal}
+          onCloseModal={onCloseModal}
           data={fridgeDetailData.foodList}
+          reservationList={reservationList}
+          setReservationList={setReservationList}
+          handleSubmit={ReservationHandleSubmit}
+        />
+      )}
+      {isConfirm && (
+        <ConfirmModal
+          data={reservationList}
+          loc={fridgeDetailData.fridgeInfo.fridgeName}
+          show={isConfirm}
+          onCloseModal={onCloseModal}
+          showReservation={showReservation}
         />
       )}
       {isDonation && (
@@ -111,7 +139,7 @@ const FridgeDetail = ({ isList, setIsList }) => {
           id={id}
           show={isDonation}
           setShow={setIsDonation}
-          onCloseModal={onClickModal}
+          onCloseModal={onCloseModal}
         />
       )}
     </Wrapper>
