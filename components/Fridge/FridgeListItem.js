@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
+import { IoStarSharp, IoStarOutline } from 'react-icons/io5';
 
 const ListItem = ({ onClick, info, activate }) => {
   return (
@@ -18,7 +18,10 @@ const ListItem = ({ onClick, info, activate }) => {
               className="distance"
               style={{ width: 'fit-content', minWidth: '60px' }}
             >
-              {info.dist}m |{' '}
+              {info.dist >= 1000
+                ? `${(info.dist / 1000).toFixed(2)}km`
+                : `${info.dist}m`}{' '}
+              |{' '}
             </div>
           )}
           <div className="loc">{info.fridgeInfo.fridgeAddress}</div>
@@ -27,7 +30,7 @@ const ListItem = ({ onClick, info, activate }) => {
           Food Status: {info.numFoods} | Hearty Message: {info.numMessages}
         </div>
       </InfoArea>
-      <Prefer>★</Prefer>
+      <Prefer>{info.isBookmarked ? <IoStarSharp /> : <IoStarOutline />}</Prefer>
     </Wrapper>
   );
 };
