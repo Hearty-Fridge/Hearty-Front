@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { axiosInstance } from 'api/axiosInstance';
 import { useQuery } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 
 export const getAllFridges = ({ id }) => {
   return useQuery(
@@ -10,24 +11,10 @@ export const getAllFridges = ({ id }) => {
         method: 'GET',
         url: `/fridge/getAll?memberId=${id}`,
       });
-
-      var idx = 0;
-      for (let i = 0; i < data.data.fridgeList.length; ++i) {
-        if (idx === data.data.bookmarks.length) {
-          data.data.fridgeList[i].isBookmarked = false;
-        } else {
-          data.data.fridgeList[i].isBookmarked =
-            data.data.fridgeList[i].fridgeInfo.fridgeId ===
-            data.data.bookmarks[idx];
-          if (
-            data.data.fridgeList[i].isBookmarked &&
-            idx != data.data.bookmarks.length - 1
-          ) {
-            idx += 1;
-          }
-        }
-      }
       return data.data;
+    },
+    {
+      refetchOnWindowFocus: true,
     },
     {
       onError: (e) => {
@@ -56,4 +43,55 @@ export const getFridgesById = (id) => {
       },
     }
   );
+};
+
+const addBookmark = ({ memberId, fridgeId, state }) => {
+  if (state) {
+    return axiosInstance.request({
+      method: 'DELETE',
+      url: `/bookmark/delBookmark?memberId=${memberId}&fridgeId=${fridgeId}`,
+    });
+  } else {
+    return axiosInstance.request({
+      method: 'POST',
+      url: `/bookmark/addBookmark?memberId=${memberId}&fridgeId=${fridgeId}`,
+    });
+  }
+};
+
+export const useBookmarkMutation = (id) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: addBookmark,
+    // mutate 요청이 성공한 후 queryClient.invalidateQueries 함수를 통해
+    // useTodosQuery에서 불러온 API Response의 Cache를 초기화
+
+    // onMutate는 addBookmark가 실행되기 전에 실행됨.
+    onMutate: async (newData) => {
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey: ['fridges', id] });
+
+      // Snapshot the previous value
+      const previousData = queryClient.getQueryData(['fridges', id]);
+
+      const data = previousData;
+      data.fridgeList[parseInt(newData.fridgeId)].isBookmark =
+        !data.fridgeList[parseInt(newData.fridgeId)].isBookmark;
+      // Optimistically update to the new value
+      queryClient.setQueryData(['fridges', id], data);
+
+      // Return a context object with the snapshotted value
+      // 얘는 에러가 났을 때 onError의 context로 들어감.
+      return { previousData };
+    },
+    onError: (err, newData, context) => {
+      console.log(err);
+      queryClient.setQueryData(['fridges', id], context.previousData);
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['fridges', id] });
+    },
+  });
 };

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { IoStarSharp, IoStarOutline } from 'react-icons/io5';
 
-const ListItem = ({ onClick, info, activate }) => {
+const ListItem = ({ onClick, info, activate, onClickBookmark }) => {
   return (
     <Wrapper className={activate ? 'activate' : ''} onClick={onClick}>
       <ImgArea
@@ -30,7 +30,9 @@ const ListItem = ({ onClick, info, activate }) => {
           Food Status: {info.numFoods} | Hearty Message: {info.numMessages}
         </div>
       </InfoArea>
-      <Prefer>{info.isBookmarked ? <IoStarSharp /> : <IoStarOutline />}</Prefer>
+      <Prefer onClick={onClickBookmark}>
+        {info.isBookmark ? <IoStarSharp /> : <IoStarOutline />}
+      </Prefer>
     </Wrapper>
   );
 };

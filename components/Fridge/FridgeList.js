@@ -2,12 +2,14 @@ import ListItem from '@components/Fridge/FridgeListItem';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
+import { useBookmarkMutation } from 'api/Fridges/useFridges';
 
 // LocList: 동사무소 위치 정보, setLoc => google map center location setter
 const FridgeList = ({ visibleList, setCenterLoc }) => {
   const router = useRouter();
   const [id, setId] = useState(false);
+  // 1 : memberId
+  const { mutate } = useBookmarkMutation(1);
   const onClickFridgeItem = useCallback(
     (info) => {
       router.push(`/map?id=${info.fridgeInfo.fridgeId}`);
@@ -19,6 +21,14 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
     [setCenterLoc]
   );
 
+  const onClickBookmark = (d) => {
+    mutate({
+      memberId: 1,
+      fridgeId: id,
+      state: d.isBookmark,
+    });
+  };
+
   useEffect(() => {
     setId(router.query.id);
   }, [setId, router.query.id]);
@@ -29,10 +39,12 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
       <VisibleList>
         {visibleList?.map((l) => (
           <ListItem
+            id={id}
             key={l.fridgeInfo.fridgeId}
             onClick={() => {
               onClickFridgeItem(l);
             }}
+            onClickBookmark={() => onClickBookmark(l)}
             info={l}
             activate={id === l.fridgeInfo.fridgeId.toString()}
           />

@@ -6,19 +6,13 @@ import { Marker } from './Marker';
 import { getAllFridges } from 'api/Fridges/useFridges';
 import { useRouter } from 'next/router';
 
-const Map = ({
-  centerLoc,
-  setCenterLoc,
-  setVisibleListInBoundary,
-  onMapLoad,
-}) => {
+const Map = ({ centerLoc, setCenterLoc, onMapLoad, handleBoundsChanged }) => {
   const { data: allFridges } = getAllFridges({ id: 1 });
   const router = useRouter();
   const [marker, setMarker] = useState(null);
-  const [mapBounds, setMapBounds] = useState(null);
 
   const handleApiLoadded = ({ map, maps }) => {
-    onMapLoad(map);
+    onMapLoad({ map: map });
   };
 
   // 클릭하면 마커 생성
@@ -51,14 +45,9 @@ const Map = ({
         onGoogleApiLoaded={handleApiLoadded}
         onClick={onClickMap}
         center={centerLoc}
-        bounds={mapBounds}
-        onChange={(e) => {
-          setVisibleListInBoundary({
-            minLat: e.bounds.se.lat,
-            maxLat: e.bounds.nw.lat,
-            minLng: e.bounds.nw.lng,
-            maxLng: e.bounds.se.lng,
-          });
+        onChange={() => {
+          console.log(1);
+          handleBoundsChanged();
         }}
       >
         {allFridges?.fridgeList.map((m) => (

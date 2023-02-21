@@ -1,4 +1,4 @@
-import { getFridgesById } from 'api/Fridges/useFridges';
+import { getFridgesById, useBookmarkMutation } from 'api/Fridges/useFridges';
 import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -21,8 +21,9 @@ const FridgeDetail = ({ isList, setIsList }) => {
     data: fridgeDetailData,
     refetch,
     isLoading,
-    error,
   } = getFridgesById(router.query.id);
+
+  const { mutate } = useBookmarkMutation();
 
   const onClickBtn = useCallback(
     (t) => {
@@ -207,7 +208,8 @@ const Info = styled.div`
   border-radius: 30px;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 25%);
+  border: 1px solid ${({ theme }) => theme.palette.beige2};
+  box-shadow: 0px 0px 20 rgba(0, 0, 0, 5%);
 `;
 
 const Title = styled.div`
