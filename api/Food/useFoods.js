@@ -1,22 +1,29 @@
 import { axiosInstance } from 'api/axiosInstance';
 import { useMutation, useQueryClient } from 'react-query';
 
-const fetcher = (body) =>
+const giveFood = (body) =>
   axiosInstance.request({
     method: 'POST',
     url: '/give/giveFood',
     data: body,
   });
 
+export const testTakeFood = ({ memberId, giveId }) => {
+  axiosInstance.request({
+    method: 'POST',
+    url: `/take/takeFood?memberId=${memberId}&giveId=${giveId}`,
+  });
+};
+
 const useFoodsMutation = () => {
   // mutation 성공 후 `useTodosQuery`로 관리되는 서버 상태를 다시 불러오기 위한
   // Cache 초기화를 위해 사용될 queryClient 객체
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: fetcher,
+    mutationFn: giveFood,
     // mutate 요청이 성공한 후 queryClient.invalidateQueries 함수를 통해
     // useTodosQuery에서 불러온 API Response의 Cache를 초기화
-    // onSuccess: () => queryClient.invalidateQueries('giveFood'),
+    onSuccess: () => queryClient.invalidateQueries('giveFood'),
     onMutate: async (newData) => {
       // Cancel any outgoing refetches
       // (so they don't overwrite our optimistic update)

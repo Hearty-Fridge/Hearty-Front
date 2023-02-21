@@ -2,8 +2,19 @@ import styled, { css } from 'styled-components';
 import Modal from './Modal';
 import { IoLocationSharp } from 'react-icons/io5';
 import ConfirmFood from '@components/Food/ConfirmFood';
+import { testTakeFood } from 'api/Food/useFoods';
 
 const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
+  // authorization이 생기면 수정해야 함.
+  const onHandleSubmit = () => {
+    for (let i = 0; i < data.length; i++) {
+      const d = {
+        memberId: 2,
+        giveId: data[i].giveId,
+      };
+      const res = testTakeFood(d);
+    }
+  };
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
       <Container>
@@ -17,7 +28,7 @@ const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
         </Info>
         <FoodWrapper>
           {data?.map((t) => (
-            <ConfirmFood data={t} />
+            <ConfirmFood data={t.food} />
           ))}
           <Notification>
             <div>Please leave a message</div>
@@ -28,7 +39,9 @@ const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
           <button className="cancel" onClick={showReservation}>
             Back
           </button>
-          <button className="submit">Submit</button>
+          <button className="submit" onClick={onHandleSubmit}>
+            Submit
+          </button>
         </BtnWrapper>
       </Container>
     </Modal>

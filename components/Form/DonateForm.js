@@ -2,56 +2,13 @@ import useInput from '@hooks/useInput';
 import { useCallback, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useForm } from 'react-hook-form';
-import useFoodsMutation, { postFoods } from 'api/Food/useFoods';
-import moment from 'moment';
+import useFoodsMutation from 'api/Food/useFoods';
 import Calendar from '@components/Calendar/Calendar';
 import { getFridgesById } from 'api/Fridges/useFridges';
 import { IoCamera } from 'react-icons/io5';
 import { Controller } from 'react-hook-form';
 
-// import './calendar.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
-// import './calendar.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-
-const FORM_SECTIONS = [
-  {
-    name: '음식명',
-    placeholder: '음식명을 입력해주세요.',
-    isRequired: true,
-    isInput: true,
-  },
-  {
-    name: '권장 섭취 기간',
-    placeholder: moment().format('LL'),
-    isRequired: true,
-    isInput: true,
-  },
-  {
-    name: '음식량',
-    placeholder: '음식량을 입력해주세요.',
-    isRequired: true,
-    isInput: true,
-  },
-  {
-    name: '음식 종류',
-    placeholder: '음식 종류를 입력해주세요.',
-    isRequired: true,
-    isInput: true,
-  },
-  {
-    name: '음식사진',
-    placeholder: '음식량을 입력해주세요.',
-    isRequired: true,
-    isInput: true,
-  },
-  {
-    name: '음식량',
-    placeholder: '음식량을 입력해주세요.',
-    isRequired: true,
-    isInput: true,
-  },
-];
 
 const CATEGORY = [
   'Rice/Nooddle',
@@ -84,7 +41,6 @@ export default function DonateForm({ id, setShow }) {
   });
   const { errors } = formState;
   // const [show, setShow] = useState(false);
-  const [expirationDate, setExpirationDate] = useState(new Date());
   const { mutate } = useFoodsMutation();
 
   const selectedImageChange = useCallback(
@@ -97,6 +53,8 @@ export default function DonateForm({ id, setShow }) {
   );
 
   const onHandleSubmit = async (e) => {
+    // const formData = new FormData();
+    // formData.append('images~~~', e.selectecImage);
     console.log(e);
     // const data = {
     //   ...e,
@@ -109,15 +67,6 @@ export default function DonateForm({ id, setShow }) {
     // setShow(false);
     // refetch();
   };
-  useEffect(() => {
-    const close = (e) => {
-      if (e.key === 'Escape') {
-        setShow(false);
-      }
-    };
-    window.addEventListener('keydown', close);
-    return () => window.removeEventListener('keydown', close);
-  }, []);
 
   // category
   return (
@@ -246,15 +195,9 @@ export default function DonateForm({ id, setShow }) {
           <Info>잘 먹으라고 인사하세요~!~!</Info>
           <input placeholder="Hearty Message" {...register('message')} />
         </Section>
-        {/* <input
-            value={foodName}
-            onChange={foodNameHandler}
-            placeholder="Food Name"
-            {...register('name')}
-          /> */}
       </Container>
       <BtnWrapper>
-        <button type="button" className="cancel">
+        <button type="button" className="cancel" onClick={() => setShow(false)}>
           Cancel
         </button>
         <button type="submit" className="submit">

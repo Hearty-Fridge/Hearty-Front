@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const ReservationFood = ({ data, onClickCheck }) => {
   const [expirationDate] = useState(
-    moment(data.expiration).format('YYYY.MM.DD')
+    moment(data.food.expiration).format('YYYY.MM.DD')
   );
   const [expLeft, setExpLeft] = useState(100);
 
@@ -24,7 +24,7 @@ const ReservationFood = ({ data, onClickCheck }) => {
       <FoodCheckbox
         id={`reserve-${data.food.id}`}
         type="checkbox"
-        onClick={(obj) => onClickCheck(obj, data.food)}
+        onClick={(obj) => onClickCheck(obj, data)}
       />
       <FoodPhoto />
       <Info>

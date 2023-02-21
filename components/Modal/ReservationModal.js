@@ -14,8 +14,10 @@ const ReservationModal = ({
 }) => {
   const onClickCheck = useCallback(
     (obj, food) => {
-      if (reservationList.find((l) => l.id === food.id)) {
-        setReservationList(reservationList.filter((l) => l.id !== food.id));
+      if (reservationList.find((l) => l.giveId === food.food.id)) {
+        setReservationList(
+          reservationList.filter((l) => l.giveId !== food.food.id)
+        );
       } else {
         if (reservationList.length == 2) {
           alert('2개까지 선택할 수 있습니다.');

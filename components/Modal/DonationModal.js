@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import Modal from './Modal';
 import Food from '@components/Food/ReservationFood';
 import DonateForm from '@components/Form/DonateForm';
+import { IoCloseSharp } from 'react-icons/io5';
 
 const DonationModal = ({ id, show, setShow, onCloseModal }) => {
   // category
@@ -10,7 +11,14 @@ const DonationModal = ({ id, show, setShow, onCloseModal }) => {
       <Container>
         <Top>
           <Title>Donation</Title>
-          <Exit onClick={onCloseModal}>X</Exit>
+          <Exit onClick={onCloseModal}>
+            <IoCloseSharp
+              style={{
+                width: '41px',
+                height: '41px',
+              }}
+            />
+          </Exit>
         </Top>
         <DonateForm id={id} setShow={setShow} />
       </Container>

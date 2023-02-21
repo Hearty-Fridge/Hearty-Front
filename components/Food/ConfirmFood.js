@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import moment from 'moment';
 
 const ConfirmFood = ({ data }) => {
   return (
@@ -6,7 +7,9 @@ const ConfirmFood = ({ data }) => {
       <FoodImg></FoodImg>
       <FoodInfo>
         <Name>{data.name}</Name>
-        <Detail>{`${data.amount} | ${data.expiration}`}</Detail>
+        <Detail>{`${data.amount} | ~${moment(data.expiration).format(
+          'YYYY.MM.DD'
+        )}`}</Detail>
         <div>{data.message}</div>
       </FoodInfo>
     </FoodWrapper>
@@ -30,8 +33,8 @@ const FoodWrapper = styled.div`
 `;
 
 const FoodImg = styled.div`
-  width: 120px;
-  height: 120px;
+  min-width: 120px;
+  min-height: 120px;
   background-color: ${({ theme }) => theme.palette.secondary.main30};
 `;
 
