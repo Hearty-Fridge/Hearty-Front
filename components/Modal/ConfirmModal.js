@@ -14,6 +14,7 @@ const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
       };
       const res = testTakeFood(d);
     }
+    onCloseModal();
   };
   return (
     <Modal show={show} onCloseModal={onCloseModal}>

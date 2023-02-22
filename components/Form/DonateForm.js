@@ -7,6 +7,7 @@ import Calendar from '@components/Calendar/Calendar';
 import { getFridgesById } from 'api/Fridges/useFridges';
 import { IoCamera } from 'react-icons/io5';
 import { Controller } from 'react-hook-form';
+import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -28,7 +29,8 @@ const CATEGORY = [
 ];
 
 export default function DonateForm({ id, setShow }) {
-  const { refetch } = getFridgesById(id);
+  console.log(id);
+  const { refetch } = getFridgesById({ fridgeId: id, memberId: 1 });
   const [selectedImage, setSelectedImage] = useState();
   const { register, handleSubmit, formState, reset, control } = useForm({
     defaultValues: {
@@ -53,19 +55,21 @@ export default function DonateForm({ id, setShow }) {
   );
 
   const onHandleSubmit = async (e) => {
-    // const formData = new FormData();
-    // formData.append('images~~~', e.selectecImage);
-    console.log(e);
-    // const data = {
-    //   ...e,
-    //   expiration: expirationDate,
-    //   fridgeId: id,
-    //   category: category,
-    //   giverId: 1,
-    // };
-    // mutate(data);
-    // setShow(false);
-    // refetch();
+    const formData = new FormData();
+    formData.append('name', e.foodName);
+    formData.append(
+      'expiration',
+      moment(e.expirationDate).format('YYYY-MM-DDTHH:mm:ss')
+    );
+    formData.append('amount', e.foodAmount);
+    formData.append('category', e.category);
+    formData.append('message', e.message);
+    formData.append('fridgeId', 160);
+    formData.append('giverId', 1);
+    formData.append('images', selectedImage);
+    mutate(formData);
+    setShow(false);
+    refetch();
   };
 
   // category
@@ -302,7 +306,6 @@ const Radio = styled.input`
   vertical-align: middle;
   appearance: none;
   border: max(2px, 0.1em) solid gray;
-  /* border-radius: 50%; */
   width: 1.25em;
   height: 1.25em;
   :checked {

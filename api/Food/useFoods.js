@@ -1,18 +1,26 @@
 import { axiosInstance } from 'api/axiosInstance';
 import { useMutation, useQueryClient } from 'react-query';
+import axios from 'axios';
 
 const giveFood = (body) =>
-  axiosInstance.request({
-    method: 'POST',
-    url: '/give/giveFood',
-    data: body,
+  axios.post('/api/v1/give/giveFood', body, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
 export const testTakeFood = ({ memberId, giveId }) => {
-  axiosInstance.request({
-    method: 'POST',
-    url: `/take/takeFood?memberId=${memberId}&giveId=${giveId}`,
-  });
+  const data = axiosInstance
+    .request({
+      method: 'POST',
+      url: `/take/takeFood?memberId=${memberId}&giveId=${giveId}`,
+    })
+    .then(() => {
+      console.log('Success');
+    })
+    .catch((e) => {
+      alert(e.response.data.message);
+    });
 };
 
 const useFoodsMutation = () => {
@@ -24,26 +32,14 @@ const useFoodsMutation = () => {
     // mutate 요청이 성공한 후 queryClient.invalidateQueries 함수를 통해
     // useTodosQuery에서 불러온 API Response의 Cache를 초기화
     onSuccess: () => queryClient.invalidateQueries('giveFood'),
-    onMutate: async (newData) => {
-      // Cancel any outgoing refetches
-      // (so they don't overwrite our optimistic update)
-      await queryClient.cancelQueries({ queryKey: ['giveFood'] });
-
-      // Snapshot the previous value
-      const previousData = queryClient.getQueryData(['giveFood']);
-
-      // Optimistically update to the new value
-      queryClient.setQueryData(['giveFood'], (old) => [...old, newData]);
-
-      // Return a context object with the snapshotted value
-      return { previousData };
-    },
+    onMutate: async (newData) => {},
     onError: (err, newData, context) => {
       queryClient.setQueryData(['giveFood'], context.previousData);
     },
     // Always refetch after error or success:
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['giveFood'] });
+      console.log('Settled!');
+      // queryClient.invalidateQueries({ queryKey: ['giveFood'] });
     },
   });
 };

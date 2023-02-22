@@ -58,6 +58,7 @@ const ReservationModal = ({
               key={food.food.id}
               data={food}
               onClickCheck={onClickCheck}
+              disabled={food.isReserved}
             />
           ))}
         </FoodWrapper>
