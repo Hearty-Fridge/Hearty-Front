@@ -24,7 +24,7 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
   const onClickBookmark = (d) => {
     mutate({
       memberId: 1,
-      fridgeId: id,
+      fridgeId: d.fridgeInfo.fridgeId,
       state: d.isBookmark,
     });
   };
@@ -39,7 +39,7 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
       <VisibleList>
         {visibleList?.map((l) => (
           <ListItem
-            id={id}
+            id={l.fridgeInfo.fridgeId}
             key={l.fridgeInfo.fridgeId}
             onClick={() => {
               onClickFridgeItem(l);
