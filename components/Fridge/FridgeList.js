@@ -3,9 +3,15 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useBookmarkMutation } from 'api/Fridges/useFridges';
+import { IoStarSharp } from 'react-icons/io5';
 
 // LocList: 동사무소 위치 정보, setLoc => google map center location setter
-const FridgeList = ({ visibleList, setCenterLoc }) => {
+const FridgeList = ({
+  visibleList,
+  setCenterLoc,
+  isFavorite,
+  setIsFavorite,
+}) => {
   const router = useRouter();
   const [id, setId] = useState(false);
   // 1 : memberId
@@ -29,12 +35,31 @@ const FridgeList = ({ visibleList, setCenterLoc }) => {
     });
   };
 
+  const onClickNav = (flag) => {
+    setIsFavorite(flag);
+  };
+
   useEffect(() => {
     setId(router.query.id);
   }, [setId, router.query.id]);
 
   return (
     <ListWrapper>
+      <InnerNav>
+        <div
+          className={isFavorite ? '' : 'activate'}
+          onClick={() => onClickNav(false)}
+        >
+          Map
+        </div>
+        <div> | </div>
+        <div
+          className={isFavorite ? 'activate' : ''}
+          onClick={() => onClickNav(true)}
+        >
+          My Fridge <IoStarSharp />
+        </div>
+      </InnerNav>
       <SearchArea placeholder="Search" />
       <VisibleList>
         {visibleList?.map((l) => (
@@ -64,10 +89,23 @@ const ListWrapper = styled.div`
   /* background-color: #f8f8f8; */
 `;
 
+const InnerNav = styled.div`
+  display: flex;
+  column-gap: 17px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-left: 20px;
+  margin-top: 30px;
+  color: ${({ theme }) => theme.palette.secondary.main30};
+  .activate {
+    color: ${({ theme }) => theme.palette.secondary.main};
+  }
+`;
+
 const SearchArea = styled.input`
   background-color: ${({ theme }) => theme.palette.secondary.main30};
   color: white;
-  margin: 50px 51px 39.4px 0px;
+  margin: 24px 51px 16px 0px;
   padding: 0px 20px;
   font-size: 18px;
   width: 384px;
@@ -86,6 +124,6 @@ const SearchArea = styled.input`
 `;
 
 const VisibleList = styled.div`
-  height: calc(100vh - 256px);
+  height: calc(100vh - 268px);
   overflow-y: scroll;
 `;

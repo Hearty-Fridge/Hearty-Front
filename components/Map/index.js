@@ -1,23 +1,27 @@
 import GoogleMapReact from 'google-map-react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { useCallback, useState, useEffect, useRef, forwardRef } from 'react';
 import styled from 'styled-components';
 import { Marker } from './Marker';
 import { getAllFridges } from 'api/Fridges/useFridges';
 import { useRouter } from 'next/router';
 
-const Map = ({ centerLoc, setCenterLoc, onMapLoad, handleBoundsChanged }) => {
-  const { data: allFridges } = getAllFridges({ id: 1 });
+const Map = ({
+  centerLoc,
+  setCenterLoc,
+  onMapLoad,
+  visibleList,
+  handleBoundsChanged,
+}) => {
+  const [userMarker, setUserMarker] = useState(null);
   const router = useRouter();
-  const [marker, setMarker] = useState(null);
 
   const handleApiLoadded = ({ map, maps }) => {
     onMapLoad({ map: map });
   };
 
-  // 클릭하면 마커 생성
+  // 클릭하면 마커 생성z\
   const onClickMap = useCallback((e) => {
-    setMarker({ lat: e.lat, lng: e.lng });
+    setUserMarker({ lat: e.lat, lng: e.lng });
   }, []);
 
   const onClickMarker = useCallback((id, lat, lng) => {
@@ -27,9 +31,9 @@ const Map = ({ centerLoc, setCenterLoc, onMapLoad, handleBoundsChanged }) => {
 
   useEffect(() => {
     if (centerLoc) {
-      setMarker({ lat: centerLoc.lat, lng: centerLoc.lng });
+      setUserMarker({ lat: centerLoc.lat, lng: centerLoc.lng });
     }
-  }, [centerLoc, setMarker]);
+  }, [centerLoc, setUserMarker]);
 
   return (
     <MapWrapper>
@@ -46,11 +50,10 @@ const Map = ({ centerLoc, setCenterLoc, onMapLoad, handleBoundsChanged }) => {
         onClick={onClickMap}
         center={centerLoc}
         onChange={() => {
-          console.log(1);
           handleBoundsChanged();
         }}
       >
-        {allFridges?.fridgeList.map((m) => (
+        {visibleList?.map((m) => (
           <Marker
             onClick={() =>
               onClickMarker(
@@ -64,7 +67,7 @@ const Map = ({ centerLoc, setCenterLoc, onMapLoad, handleBoundsChanged }) => {
             {...{ lat: m.fridgeInfo.lat, lng: m.fridgeInfo.lng }}
           />
         ))}
-        {marker && <Marker color="red" {...marker} />}
+        {userMarker && <Marker color="red" {...userMarker} />}
       </GoogleMapReact>
     </MapWrapper>
   );

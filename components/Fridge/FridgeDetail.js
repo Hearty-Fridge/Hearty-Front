@@ -3,15 +3,17 @@ import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IoLocationSharp } from 'react-icons/io5';
+import { IoStarSharp, IoStarOutline } from 'react-icons/io5';
 import DetailFoodList from '@components/Food/DetailFoodList';
 import MessageList from '@components/Message/messageList';
 import ReservationModal from '@components/Modal/ReservationModal';
 import DonationModal from '@components/Modal/DonationModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 
-const FridgeDetail = ({ isList, setIsList }) => {
+const FridgeDetail = () => {
   const router = useRouter();
   const [id, setId] = useState(null);
+  const [isList, setIsList] = useState(true);
   const [isReservation, setIsReservation] = useState(false);
   const [isDonation, setIsDonation] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
@@ -82,6 +84,7 @@ const FridgeDetail = ({ isList, setIsList }) => {
         />
       </GradientImage>
       <ExitButton onClick={onClickExitBtn}>X</ExitButton>
+      <Bookmark>{<IoStarSharp />}</Bookmark>
       <Info>
         <Title>{fridgeDetailData.fridgeInfo.fridgeName}</Title>
         <Address>
@@ -195,17 +198,35 @@ const ExitButton = styled.button`
   }
 `;
 
+const Bookmark = styled.div`
+  text-align: center;
+  float: right;
+  position: relative;
+  width: 40px;
+  height: 48px;
+  background-color: white;
+  border-radius: 10% 10% 0px 0px;
+  margin: 158px 26px -18px 31px;
+  z-index: 4;
+  svg {
+    color: ${({ theme }) => theme.palette.primary};
+    margin-top: 4px;
+    width: 20px;
+    height: 20px;
+  }
+`;
+
 const Info = styled.div`
   width: 423px;
   height: 193px;
   position: relative;
   z-index: 3;
   display: flex;
-  margin: 188px 26px 0px 31px;
+  margin: -20px 26px 0px 31px;
   padding: 42px 0px;
   background-color: white;
   flex-direction: column;
-  border-radius: 30px;
+  border-radius: 10px;
   align-items: center;
   justify-content: center;
   border: 1px solid ${({ theme }) => theme.palette.beige2};
@@ -214,6 +235,7 @@ const Info = styled.div`
 
 const Title = styled.div`
   font-size: 32px;
+  font-weight: 700;
   color: ${({ theme }) => theme.palette.secondary.main};
   margin-bottom: 8px;
 `;
@@ -261,12 +283,14 @@ const Sections = styled.div`
     margin-top: 24px;
     margin-bottom: 16px;
   }
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 25%);
+  border: 1px solid ${({ theme }) => theme.palette.beige1};
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 5%);
 `;
 
 const Menu = styled.div`
   display: flex;
   font-size: 24px;
+  font-weight: 600;
   column-gap: 16px;
   padding: 26px 0px 0px 33px;
   color: ${({ theme }) => theme.palette.secondary.main30};
