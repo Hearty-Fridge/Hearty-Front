@@ -9,6 +9,7 @@ import MessageList from '@components/Message/messageList';
 import ReservationModal from '@components/Modal/ReservationModal';
 import DonationModal from '@components/Modal/DonationModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
+import { addBookmark } from 'api/Fridges/useFridges';
 
 const FridgeDetail = () => {
   const router = useRouter();
@@ -23,9 +24,12 @@ const FridgeDetail = () => {
     data: fridgeDetailData,
     refetch,
     isLoading,
-  } = getFridgesById(router.query.id);
+  } = getFridgesById({ fridgeId: router.query.id, memberId: 1 });
 
-  const { mutate } = useBookmarkMutation();
+  const { mutate } = useBookmarkMutation({
+    fridgeId: router.query.id,
+    memberId: 1,
+  });
 
   const onClickBtn = useCallback(
     (t) => {
@@ -84,7 +88,19 @@ const FridgeDetail = () => {
         />
       </GradientImage>
       <ExitButton onClick={onClickExitBtn}>X</ExitButton>
-      <Bookmark>{<IoStarSharp />}</Bookmark>
+      {/* onClick 구현 */}
+      <Bookmark
+        onClick={() => {
+          addBookmark({
+            memberId: 1,
+            fridgeId: router.query.id,
+            state: fridgeDetailData.isBookmark,
+          });
+          refetch();
+        }}
+      >
+        {fridgeDetailData.isBookmark ? <IoStarSharp /> : <IoStarOutline />}
+      </Bookmark>
       <Info>
         <Title>{fridgeDetailData.fridgeInfo.fridgeName}</Title>
         <Address>

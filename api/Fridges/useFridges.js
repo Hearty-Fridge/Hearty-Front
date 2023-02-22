@@ -24,16 +24,16 @@ export const getAllFridges = ({ id }) => {
   );
 };
 
-export const getFridgesById = (id) => {
+export const getFridgesById = ({ fridgeId, memberId }) => {
   return useQuery(
-    ['fridgesById', id],
+    ['fridgesById', fridgeId, memberId],
     async () => {
-      if (id === undefined || id === null) {
+      if (fridgeId === undefined || fridgeId === null) {
         return 0;
       }
       const { data } = await axiosInstance.request({
         method: 'GET',
-        url: `/fridge/getFridge2?fridgeId=${id}`,
+        url: `/fridge/getFridge2?fridgeId=${fridgeId}&memberId=${memberId}`,
       });
       return data.data;
     },
@@ -45,7 +45,7 @@ export const getFridgesById = (id) => {
   );
 };
 
-const addBookmark = ({ memberId, fridgeId, state }) => {
+export const addBookmark = ({ memberId, fridgeId, state }) => {
   if (state) {
     return axiosInstance.request({
       method: 'DELETE',
@@ -63,26 +63,17 @@ export const useBookmarkMutation = (id) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: addBookmark,
-    // mutate 요청이 성공한 후 queryClient.invalidateQueries 함수를 통해
-    // useTodosQuery에서 불러온 API Response의 Cache를 초기화
 
-    // onMutate는 addBookmark가 실행되기 전에 실행됨.
     onMutate: async (newData) => {
-      // Cancel any outgoing refetches
-      // (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({ queryKey: ['fridges', id] });
 
-      // Snapshot the previous value
       const previousData = queryClient.getQueryData(['fridges', id]);
 
       const data = previousData;
       data.fridgeList[parseInt(newData.fridgeId)].isBookmark =
         !data.fridgeList[parseInt(newData.fridgeId)].isBookmark;
-      // Optimistically update to the new value
       queryClient.setQueryData(['fridges', id], data);
 
-      // Return a context object with the snapshotted value
-      // 얘는 에러가 났을 때 onError의 context로 들어감.
       return { previousData };
     },
     onError: (err, newData, context) => {

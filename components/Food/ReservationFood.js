@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 
-const ReservationFood = ({ data, onClickCheck }) => {
+const ReservationFood = ({ data, onClickCheck, disabled }) => {
   const [expirationDate] = useState(
     moment(data.food.expiration).format('YYYY.MM.DD')
   );
@@ -20,19 +20,23 @@ const ReservationFood = ({ data, onClickCheck }) => {
   }, [setExpLeft]);
 
   return (
-    <FoodWrapper>
-      <FoodCheckbox
-        id={`reserve-${data.food.id}`}
-        type="checkbox"
-        onClick={(obj) => onClickCheck(obj, data)}
-      />
-      <FoodPhoto />
-      <Info>
+    <FoodWrapper disabled={disabled}>
+      <div style={{ height: '63px', display: 'flex', alignItems: 'center' }}>
+        <FoodCheckbox
+          id={`reserve-${data.food.id}`}
+          type="checkbox"
+          disabled={disabled}
+          onClick={(obj) => onClickCheck(obj, data)}
+        />
+      </div>
+      <FoodPhoto disabled={disabled} />
+
+      <Info disabled={disabled}>
         <div
           style={{ display: 'flex', columnGap: '12px', alignItems: 'center' }}
         >
           <div className="foodName">{data.food.name}</div>
-          {expLeft <= 1 && <Tag>{`${expLeft} day`}</Tag>}
+          {expLeft == 1 && <Tag>{`${expLeft} day`}</Tag>}
         </div>
         <div className="etc">{`${data.food.amount} | ~${expirationDate}`}</div>
         <div className="message">{data.food.message}</div>
@@ -49,16 +53,33 @@ const FoodWrapper = styled.div`
   border-top: solid 1px ${({ theme }) => theme.palette.beige2};
   padding-top: 18px;
   column-gap: 20px;
+  background-color: ${(props) =>
+    props.disabled ? props.theme.palette.background : ''};
+  :hover {
+    background-color: ${(props) =>
+      props.disabled ? '' : props.theme.palette.beige1};
+  }
 `;
 
 const FoodCheckbox = styled.input`
-  height: 63px;
+  vertical-align: middle;
+  width: 1.25em;
+  height: 1.25em;
+  appearance: none;
+  border: max(2px, 0.1em) solid gray;
+  :checked {
+    content: '✓';
+    border: 0.4em solid tomato;
+  }
+  :disabled {
+    background-color: gray;
+  }
 `;
 
 const FoodPhoto = styled.div`
   min-width: 63px;
   height: 63px;
-  background-color: red;
+  background-color: ${(props) => (props.disabled ? '#f8f8f8B3' : 'red')};
 `;
 
 const Info = styled.div`
@@ -68,14 +89,23 @@ const Info = styled.div`
   .foodName {
     font-size: 18px;
     font-weight: 700;
-    color: ${({ theme }) => theme.palette.primary};
+    color: ${(props) =>
+      props.disabled
+        ? props.theme.palette.secondary.main50
+        : props.theme.palette.primary};
   }
   .etc {
     font-weight: 600;
-    color: ${({ theme }) => theme.palette.secondary.main};
+    color: ${(props) =>
+      props.disabled
+        ? props.theme.palette.secondary.main50
+        : props.theme.palette.secondary.main};
   }
   .message {
-    color: ${({ theme }) => theme.palette.secondary.main30};
+    color: ${(props) =>
+      props.disabled
+        ? props.theme.palette.secondary.main50
+        : props.theme.palette.secondary.main30};
   }
 `;
 
