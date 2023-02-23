@@ -160,6 +160,11 @@ const ControlMonth = styled.div`
   }
 `;
 
+// react-datepicker__day
+// react-datepicker__day--023
+// react-datepicker__day--keyboard-selected
+// react-datepicker__day--today
+
 const DatePickerContainer = styled.div`
   .react-datepicker {
     font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
@@ -181,6 +186,7 @@ const DatePickerContainer = styled.div`
   .react-datepicker__day--today {
     font-weight: 500;
     border: 1px solid ${({ theme }) => theme.palette.primary};
+    background-color: white;
     color: ${({ theme }) => theme.palette.primary};
     border-radius: 100px;
   }
