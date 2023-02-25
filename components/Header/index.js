@@ -8,6 +8,7 @@ import axios from 'axios';
 import { userState } from 'atoms/user';
 import { useRecoilState } from 'recoil';
 import { getZIndex } from '@styles/zIndex';
+import { AiFillBell, AiFillMail } from 'react-icons/ai';
 
 const NAV_MENU = ['Intro', '|', 'Map'];
 const TOKEN_KEY = 'accessToken';
@@ -74,9 +75,13 @@ const Header = () => {
       <InfoArea>
         {curUserData.isLogin ? (
           <>
-            <Image src="/image/alarm.png" width={24} height={30} alt="alarm" />
-            <LogOutButton onClick={googleLogout()}>Log out</LogOutButton>
-            <MyPageButton href="/mypage">MY</MyPageButton>
+            <div>
+              <AiFillMail className="icon" />
+            </div>
+            <div>
+              <AiFillBell className="icon" />
+            </div>
+            <MyPageButton href="/mypage">My</MyPageButton>
           </>
         ) : (
           <>
@@ -130,6 +135,10 @@ const InfoArea = styled.div`
   justify-content: end;
   font-size: 18px;
   column-gap: 48px;
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
 `;
 
 const LinkButtonStyle = css`
