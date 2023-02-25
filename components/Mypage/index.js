@@ -21,9 +21,9 @@ const MypageComponent = () => {
   );
 
   console.log(data);
-  if (!data) {
-    return null;
-  }
+  // if (!data) {
+  //   return null;
+  // }
 
   return (
     <Boxes>

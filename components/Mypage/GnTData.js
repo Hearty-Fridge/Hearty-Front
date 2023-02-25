@@ -4,7 +4,7 @@ const GnTData = () => {
   return (
     <Wrapper>
       <Title>Give & Take</Title>
-      <SubTitle>내가 어쩌구한 내역을 확인할 수 있어요</SubTitle>
+      <SubTitle>내가 기부하고 수급한 내역을 확인할 수 있어요</SubTitle>
       <Table>
         <TH>
           <THTxt>Time</THTxt>
