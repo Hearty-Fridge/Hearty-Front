@@ -21,14 +21,19 @@ const MypageComponent = () => {
   );
 
   console.log(data);
+
   if (!data) {
     return null;
   }
 
+  const user = data.data.data.profile;
+  const gives = data.data.data.gives;
+  const takes = data.data.data.takes;
+
   return (
     <Boxes>
       <ProfileBox>
-        <ProfileData />
+        <ProfileData user={user} gives={gives} takes={takes} />
       </ProfileBox>
       <DataBox>
         <ReservationBox>
