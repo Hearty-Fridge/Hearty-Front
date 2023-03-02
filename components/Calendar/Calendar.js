@@ -1,13 +1,24 @@
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import { getYear, getMonth } from 'date-fns';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 const Calendar = ({ expirationDate, setExpirationDate }) => {
   const calRef = useRef();
   const [curDate, setCurDate] = useState(expirationDate);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const years = [...Array(100).keys()].map((key) => key + 1990);
+  const handleYearChange = (year) => {
+    const newDate = new Date(selectedDate);
+    newDate.setFullYear(year);
+    setSelectedDate(newDate);
+  };
+
+  useEffect(() => {
+    if(expirationDate)
+      setSelectedDate(expirationDate);
+  }, [expirationDate]);
+
   const months = [
     'Jan',
     'Feb',
@@ -25,6 +36,8 @@ const Calendar = ({ expirationDate, setExpirationDate }) => {
   return (
     <DatePickerContainer>
       <DatePicker
+        selected={selectedDate}
+        onChange={(date2) => setSelectedDate(date2)}
         renderCustomHeader={({
           date,
           changeYear,
@@ -35,18 +48,12 @@ const Calendar = ({ expirationDate, setExpirationDate }) => {
           nextMonthButtonDisabled,
         }) => (
           <Container>
-            <YearControl name="year">
-              {years.map((y) => {
-                return (
-                  <option
-                    key={y}
-                    value={y}
-                    onChange={({ target: { value } }) => changeYear(value)}
-                  >
-                    {getYear(date)}
-                  </option>
-                );
-              })}
+            <YearControl name="year" value={selectedDate.getFullYear()} onChange={(e) => {handleYearChange(e.target.value); changeYear(e.target.value)}}>
+            {Array.from({ length: 50 }, (_, i) => i + 2023).map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
             </YearControl>
             <ControlMonth>
               <button
@@ -68,10 +75,7 @@ const Calendar = ({ expirationDate, setExpirationDate }) => {
           </Container>
         )}
         ref={calRef}
-        // style={{ zIndex: '1100' }}
         closeOnScroll={(e) => e.target === document}
-        selected={expirationDate}
-        onChange={(selectedDate) => setExpirationDate(selectedDate)}
         dateFormat="yyyy-MM-dd"
         shouldCloseOnSelect={false}
       >
