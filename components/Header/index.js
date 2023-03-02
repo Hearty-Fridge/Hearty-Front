@@ -22,7 +22,7 @@ const Header = () => {
 
   const handleSuccess = async (accessToken) => {
     try {
-      const res = await axios.post(`/member/googleLogin`, {
+      const res = await axios.post(`/api/v1/member/googleLogin`, {
         accessToken: accessToken,
       });
       console.log('성공', res);
