@@ -1,9 +1,36 @@
 import styled from 'styled-components';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
 
 const MsgData = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: false,
+    dotsClass: 'dots_custom',
+  };
+
   return (
     <Wrapper>
-      <Title>My Hearty Fridge</Title>
+      <Title>Hearty Messages</Title>
+
+      <Slider {...settings}>
+        <div>
+          <Card>1</Card>
+        </div>
+        <div>
+          <Card>2</Card>
+        </div>
+        <div>
+          <Card>3</Card>
+        </div>
+        <div>
+          <Card>4</Card>
+        </div>
+      </Slider>
     </Wrapper>
   );
 };
@@ -19,6 +46,17 @@ const Title = styled.div`
   line-height: 29px;
 
   color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
+const Card = styled.div`
+  width: 310px;
+  padding: 50px;
+  height: 198.96px;
+
+  background: #f8f8f8;
+
+  border: 1px solid #f1eae0;
+  border-radius: 10px;
 `;
 
 export default MsgData;

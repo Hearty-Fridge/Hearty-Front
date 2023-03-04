@@ -33,3 +33,39 @@ a {
     color-scheme: dark;
   }
 }
+
+/* slick-slider dots_custom */
+.dots_custom {
+  padding: 0;
+  width: 130px;
+  height: 10px;
+  text-align: center;
+  margin-top: 25px;
+  margin-left: 433px;
+}
+
+.dots_custom li {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  /*margin: 1px;*/
+  padding: 0;
+  cursor: pointer;
+}
+
+.dots_custom li button {
+  border: none;
+  background: #f1eae0;
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  padding: 0;
+}
+
+.dots_custom li.slick-active button {
+  background: #f2916e;
+}

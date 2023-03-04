@@ -41,7 +41,7 @@ const MypageComponent = () => {
           <ReservationData reserv={reserv} />
         </ReservationBox>
         <GnTBox>
-          <GnTData />
+          <GnTData gives={gives} takes={takes} />
         </GnTBox>
         <MessageBox>
           <MsgData />
