@@ -1,37 +1,37 @@
 import styled from 'styled-components';
 
-// GNT_LIST = [
-//   {
-//     gnt: 'Take',
-//     time: '2023.02.12',
-//     food: '군고구마',
-//     location: {
-//       main: '서울시 노원구 공릉동 123',
-//       sub: '공릉 1동 주민센터 냉장고',
-//     },
-//     message: '',
-//   },
-//   {
-//     gnt: 'Give',
-//     time: '2023.02.14',
-//     food: '우유',
-//     location: {
-//       main: '서울시 노원구 공릉동 123',
-//       sub: '공릉 1동 주민센터 냉장고',
-//     },
-//     message: '맛있게 잘먹었어요!',
-//   },
-//   {
-//     gnt: 'Take',
-//     time: '2023.02.14',
-//     food: '계란',
-//     location: {
-//       main: '서울시 노원구 공릉동 123',
-//       sub: '공릉 1동 주민센터 냉장고',
-//     },
-//     message: '맛있게 잘먹었어요!',
-//   },
-// ];
+const GNT_LIST = [
+  {
+    gnt: 'Take',
+    time: '2023.02.12',
+    food: '군고구마',
+    location: {
+      main: '서울시 노원구 공릉동 123',
+      sub: '공릉 1동 주민센터 냉장고',
+    },
+    message: '',
+  },
+  {
+    gnt: 'Give',
+    time: '2023.02.14',
+    food: '우유',
+    location: {
+      main: '서울시 노원구 공릉동 123',
+      sub: '공릉 1동 주민센터 냉장고',
+    },
+    message: '맛있게 잘먹었어요!',
+  },
+  {
+    gnt: 'Take',
+    time: '2023.02.14',
+    food: '계란',
+    location: {
+      main: '서울시 노원구 공릉동 123',
+      sub: '공릉 1동 주민센터 냉장고',
+    },
+    message: '맛있게 잘먹었어요!',
+  },
+];
 
 const GnTData = () => {
   return (
@@ -44,19 +44,20 @@ const GnTData = () => {
           <THTxt>Food</THTxt>
           <THTxt>Location</THTxt>
         </TH>
-        {/* {GNT_LIST.map((item) => (
+        {GNT_LIST.map((item) => (
           <TD key={item}>
-            <Time>{item.time}</Time>
+            <TagTake>Take</TagTake>
+            <TDTxt>{item.time}</TDTxt>
             <TDTxt>{item.food}</TDTxt>
             <LocBox>
               <TDTxt>{item.location.main}</TDTxt>
               <TDSubTxt>{item.location.sub}</TDSubTxt>
             </LocBox>
             <Buttons>
-              <Btn>Leave a Message</Btn>
+              <OnBtn>Leave a Message</OnBtn>
             </Buttons>
           </TD>
-        ))} */}
+        ))}
       </Table>
     </Wrapper>
   );
@@ -112,15 +113,36 @@ const TD = styled.div`
   width: 966px;
   height: 70px;
 `;
-const Time = styled.div`
-  width: 185px;
-  font-weight: 800;
-  font-size: 24px;
-  line-height: 29px;
-  color: ${({ theme }) => theme.palette.accent};
+const TagTake = styled.div`
+  margin-right: 28px;
+  padding: 4px 10px;
+  width: 46px;
+  height: 22px;
+  font-weight: 500;
+  font-size: 12px;
+
+  background: #a6cda5;
+  border-radius: 5px;
+  color: white;
+
+  text-align: center;
+`;
+const TagGive = styled.div`
+  margin-right: 28px;
+  padding: 4px 10px;
+  width: 46px;
+  height: 22px;
+  font-weight: 500;
+  font-size: 12px;
+
+  background: #d6a9a9;
+  border-radius: 5px;
+  color: white;
+
+  text-align: center;
 `;
 const TDTxt = styled.div`
-  width: 185px;
+  width: 215px;
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
@@ -143,24 +165,24 @@ const Buttons = styled.div`
   width: 194px;
   column-gap: 23px;
 `;
-const BtnCancel = styled.button`
-  width: 84px;
-  height: 37px;
-  text-align: center;
-  color: ${({ theme }) => theme.palette.primary};
-
-  background-color: white;
-  border: 1px solid #f2916e;
-  border-radius: 10px;
-`;
-const BtnCheck = styled.button`
-  width: 84px;
+const OnBtn = styled.button`
+  width: 148px;
   height: 37px;
   text-align: center;
   color: white;
-
+  font-size: 16px;
   background-color: ${({ theme }) => theme.palette.primary};
   border: 1px solid #f2916e;
+  border-radius: 10px;
+`;
+const OffBtn = styled.button`
+  width: 148px;
+  height: 37px;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  background: rgba(89, 76, 72, 0.3);
+  border: 1px solid white;
   border-radius: 10px;
 `;
 

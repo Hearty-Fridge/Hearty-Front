@@ -27,6 +27,7 @@ const MypageComponent = () => {
   }
 
   const user = data.data.data.profile;
+  const reserv = data.data.data.reservations;
   const gives = data.data.data.gives;
   const takes = data.data.data.takes;
 
@@ -37,7 +38,7 @@ const MypageComponent = () => {
       </ProfileBox>
       <DataBox>
         <ReservationBox>
-          <ReservationData />
+          <ReservationData reserv={reserv} />
         </ReservationBox>
         <GnTBox>
           <GnTData />

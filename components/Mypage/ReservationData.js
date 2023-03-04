@@ -1,25 +1,8 @@
 import styled from 'styled-components';
 
-const RESERV_LIST = [
-  {
-    time: '21:23',
-    food: '페퍼로니 피자',
-    location: {
-      main: '서울시 노원구 공릉동 123',
-      sub: '공릉 1동 주민센터 냉장고',
-    },
-  },
-  {
-    time: '29:40',
-    food: '유기농 계란',
-    location: {
-      main: '서울시 노원구 공릉동 123',
-      sub: '공릉 1동 주민센터 냉장고',
-    },
-  },
-];
+// 2023-03-02T12:16:14.362085
 
-const ReservationData = () => {
+const ReservationData = ({ reserv }) => {
   return (
     <>
       <Wrapper>
@@ -30,13 +13,16 @@ const ReservationData = () => {
             <THTxt>Food</THTxt>
             <THTxt>Location</THTxt>
           </TH>
-          {RESERV_LIST.map((reserv) => (
-            <TD key={reserv}>
-              <Time>{reserv.time}</Time>
-              <TDTxt>{reserv.food}</TDTxt>
+          {reserv.map((item) => (
+            <TD key={item}>
+              <Time>
+                {new Date(item.takeTime).getHours()}:
+                {new Date(item.takeTime).getMinutes()}
+              </Time>
+              <TDTxt>{item.foodName}</TDTxt>
               <LocBox>
-                <TDTxt>{reserv.location.main}</TDTxt>
-                <TDSubTxt>{reserv.location.sub}</TDSubTxt>
+                <TDTxt>{item.fridgeName}</TDTxt>
+                <TDSubTxt>{item.fridgeName}</TDSubTxt>
               </LocBox>
               <Buttons>
                 <BtnCancel>Cancel</BtnCancel>
@@ -132,6 +118,7 @@ const BtnCancel = styled.button`
   background-color: white;
   border: 1px solid #f2916e;
   border-radius: 10px;
+  font-size: 16px;
 `;
 const BtnCheck = styled.button`
   width: 84px;
@@ -142,5 +129,6 @@ const BtnCheck = styled.button`
   background-color: ${({ theme }) => theme.palette.primary};
   border: 1px solid #f2916e;
   border-radius: 10px;
+  font-size: 16px;
 `;
 export default ReservationData;
