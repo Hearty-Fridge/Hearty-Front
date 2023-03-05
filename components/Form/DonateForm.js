@@ -1,4 +1,3 @@
-import useInput from '@hooks/useInput';
 import { useCallback, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useForm } from 'react-hook-form';
@@ -29,7 +28,6 @@ const CATEGORY = [
 ];
 
 export default function DonateForm({ id, setShow }) {
-  console.log(id);
   const { refetch } = getFridgesById({ fridgeId: id, memberId: 1 });
   const [selectedImage, setSelectedImage] = useState();
   const { register, handleSubmit, formState, reset, control } = useForm({
@@ -42,7 +40,6 @@ export default function DonateForm({ id, setShow }) {
     },
   });
   const { errors } = formState;
-  // const [show, setShow] = useState(false);
   const { mutate } = useFoodsMutation();
 
   const selectedImageChange = useCallback(
@@ -64,8 +61,8 @@ export default function DonateForm({ id, setShow }) {
     formData.append('amount', e.foodAmount);
     formData.append('category', e.category);
     formData.append('message', e.message);
-    formData.append('fridgeId', 160);
-    formData.append('giverId', 1);
+    formData.append('fridgeId', id);
+    formData.append('giverId', 11);
     formData.append('images', selectedImage);
     mutate(formData);
     setShow(false);
@@ -170,26 +167,32 @@ export default function DonateForm({ id, setShow }) {
             <div className="name">음식 사진</div>
           </SectionName>
           <Info>사진을 선택하지 않으면, 기본 이미지가 선택됩니다.</Info>
-          <label>
+          <label style={{ cursor: 'pointer', display: 'inline-block' }}>
             <input
               accept="image/*"
               type="file"
               onChange={selectedImageChange}
+              disabled={selectedImage}
               style={{ display: 'none' }}
             />
-            <InputImage>
-              <IoCamera />
-            </InputImage>
-          </label>
-          {/* todo */}
-          {selectedImage && (
-            <>
-              <div>
+            {selectedImage ? (
+              <InputImage>
                 <img src={URL.createObjectURL(selectedImage)} alt="Thumb" />
-              </div>
-              <button onClick={() => setSelectedImage(null)}>Remove</button>
-            </>
-          )}
+                <RemoveButton
+                  onClick={(e) => {
+                    setSelectedImage(null);
+                    event.preventDefault();
+                  }}
+                >
+                  Remove
+                </RemoveButton>
+              </InputImage>
+            ) : (
+              <InputImage>
+                <IoCamera />
+              </InputImage>
+            )}
+          </label>
         </Section>
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
@@ -286,6 +289,7 @@ const Info = styled.div`
 
 const InputImage = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   width: 150px;
@@ -294,11 +298,22 @@ const InputImage = styled.div`
   border-radius: 10px;
   margin-top: 24px;
   margin-bottom: 36px;
+  & > img {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+  }
   & > svg {
     width: 48px;
     height: 48px;
     color: white;
   }
+`;
+
+const RemoveButton = styled.button`
+  position: absolute;
+  top: 0px;
+  right: 0px;
 `;
 
 const Radio = styled.input`
