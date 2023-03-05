@@ -1,5 +1,5 @@
 import { axiosInstance } from 'api/axiosInstance';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 import axios from 'axios';
 
 const giveFood = (body) =>
@@ -42,6 +42,27 @@ const useFoodsMutation = () => {
       // queryClient.invalidateQueries({ queryKey: ['giveFood'] });
     },
   });
+};
+
+export const getFoodImageById = ({ giveId }) => {
+  return useQuery(
+    ['foodImage', giveId],
+    async () => {
+      if (giveId === undefined) {
+        return 0;
+      }
+      const {data} = await axiosInstance.request({
+        method : 'GET',
+        url: `/image/findImagesByGive?giveId=${giveId}`,
+      })
+      return data.data;
+    },
+    {
+      onError: (e) => {
+        console.log(e);
+      },
+    }
+  );
 };
 
 export const postFoods = async (body) => {

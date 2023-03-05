@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { axiosInstance } from 'api/axiosInstance';
 import { useQuery } from 'react-query';
 import { useQueryClient, useMutation } from 'react-query';
@@ -46,6 +45,7 @@ export const getFridgesById = ({ fridgeId, memberId }) => {
 };
 
 export const addBookmark = ({ memberId, fridgeId, state }) => {
+  console.log(memberId, fridgeId, state);
   if (state) {
     return axiosInstance.request({
       method: 'DELETE',
@@ -59,30 +59,61 @@ export const addBookmark = ({ memberId, fridgeId, state }) => {
   }
 };
 
-export const useBookmarkMutation = (id) => {
+export const useBookmarkMutation = (fridgeNum, memberId) => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: addBookmark,
 
     onMutate: async (newData) => {
-      await queryClient.cancelQueries({ queryKey: ['fridges', id] });
+      const [fridgesQueryKey, fridgeQueryKey] = [
+        ['fridges', memberId],
+        ['fridgesById', fridgeNum.toString(), memberId]
+      ]
 
-      const previousData = queryClient.getQueryData(['fridges', id]);
+      const previousData = {
+        fridges: queryClient.getQueriesData(fridgesQueryKey),
+        fridge: queryClient.getQueriesData(fridgeQueryKey),
+      }
 
-      const data = previousData;
-      data.fridgeList[parseInt(newData.fridgeId)].isBookmark =
-        !data.fridgeList[parseInt(newData.fridgeId)].isBookmark;
-      queryClient.setQueryData(['fridges', id], data);
+      const fridgesData = previousData.fridges[0][1];
+      const fridgeData = previousData.fridge[0][1];
 
-      return { previousData };
+      await Promise.all([
+        queryClient.cancelQueries(fridgesQueryKey),
+        queryClient.cancelQueries(fridgeQueryKey),
+      ])
+
+      const fridgeIndex = fridgesData.fridgeList.findIndex(
+        (fridge) => fridge.fridgeInfo.fridgeId === newData.fridgeId
+      ) + 1;
+
+      if(fridgeIndex >= 1){
+        fridgesData.fridgeList[fridgeIndex].isBookmark = !newData.state;
+        queryClient.setQueryData(fridgesQueryKey, fridgesData);
+      }
+
+      if(fridgeData) {
+        fridgeData.isBookmark = !newData.state;
+        queryClient.setQueryData(fridgeQueryKey, fridgeData);
+      }
+
+      return {previousData};
+
     },
+
     onError: (err, newData, context) => {
       console.log(err);
-      queryClient.setQueryData(['fridges', id], context.previousData);
+      queryClient.setQueryData(['fridges', memberId], context.previousData.fridges);
+      queryClient.setQueryData(
+        ['fridgesById', fridgeNum, memberId],
+        context.previousData.fridge
+      );
     },
     // Always refetch after error or success:
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['fridges', id] });
+      queryClient.invalidateQueries(['fridges', memberId]);
+      queryClient.invalidateQueries(['fridgesById', fridgeNum, memberId]);
     },
   });
 };

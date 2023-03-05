@@ -15,7 +15,6 @@ const FridgeList = ({
   const router = useRouter();
   const [id, setId] = useState(false);
   // 1 : memberId
-  const { mutate } = useBookmarkMutation(1);
   const onClickFridgeItem = useCallback(
     (info) => {
       router.push(`/map?id=${info.fridgeInfo.fridgeId}`);
@@ -26,14 +25,6 @@ const FridgeList = ({
     },
     [setCenterLoc]
   );
-
-  const onClickBookmark = (d) => {
-    mutate({
-      memberId: 1,
-      fridgeId: d.fridgeInfo.fridgeId,
-      state: d.isBookmark,
-    });
-  };
 
   const onClickNav = (flag) => {
     setIsFavorite(flag);
@@ -69,7 +60,6 @@ const FridgeList = ({
             onClick={() => {
               onClickFridgeItem(l);
             }}
-            onClickBookmark={() => onClickBookmark(l)}
             info={l}
             activate={id === l.fridgeInfo.fridgeId.toString()}
           />

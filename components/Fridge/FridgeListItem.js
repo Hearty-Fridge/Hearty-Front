@@ -1,7 +1,18 @@
 import styled from 'styled-components';
 import { IoStarSharp, IoStarOutline } from 'react-icons/io5';
+import { useBookmarkMutation } from 'api/Fridges/useFridges';
 
-const ListItem = ({ onClick, info, activate, onClickBookmark }) => {
+const ListItem = ({ id, onClick, info, activate }) => {
+  const { mutate } = useBookmarkMutation(id, 1);
+
+  const onClickBookmark = () => {
+    mutate({
+      memberId: 1,
+      fridgeId: id,
+      state: info.isBookmark,
+    });
+  };
+
   return (
     <Wrapper className={activate ? 'activate' : ''} onClick={onClick}>
       <ImgArea
@@ -13,7 +24,7 @@ const ListItem = ({ onClick, info, activate, onClickBookmark }) => {
           {info.fridgeInfo.fridgeName}
         </div>
         <div style={{ display: 'flex', flexFlow: 'wrap' }}>
-          {Object.keys(info).includes('dist') && (
+          {Object.keys(info).includes('dist') && info.dist && (
             <div
               className="distance"
               style={{ width: 'fit-content', minWidth: '60px' }}

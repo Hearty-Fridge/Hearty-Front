@@ -11,9 +11,8 @@ import DonationModal from '@components/Modal/DonationModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 import { addBookmark } from 'api/Fridges/useFridges';
 
-const FridgeDetail = () => {
+const FridgeDetail = ({id}) => {
   const router = useRouter();
-  const [id, setId] = useState(null);
   const [isList, setIsList] = useState(true);
   const [isReservation, setIsReservation] = useState(false);
   const [isDonation, setIsDonation] = useState(false);
@@ -24,12 +23,9 @@ const FridgeDetail = () => {
     data: fridgeDetailData,
     refetch,
     isLoading,
-  } = getFridgesById({ fridgeId: router.query.id, memberId: 1 });
+  } = getFridgesById({ fridgeId: id, memberId: 1 });
 
-  const { mutate } = useBookmarkMutation({
-    fridgeId: router.query.id,
-    memberId: 1,
-  });
+  const { mutate } = useBookmarkMutation(id, 1);
 
   const onClickBtn = useCallback(
     (t) => {
@@ -70,13 +66,6 @@ const FridgeDetail = () => {
     router.push('/map');
   }, []);
 
-  useEffect(() => {
-    if (id && router.isReady) {
-      refetch();
-      setId(router.query.id);
-    }
-  }, [setId, router.query.id]);
-
   if (isLoading) {
     return <Wrapper>Loading...</Wrapper>;
   }
@@ -91,12 +80,11 @@ const FridgeDetail = () => {
       {/* onClick 구현 */}
       <Bookmark
         onClick={() => {
-          addBookmark({
+          mutate({
             memberId: 1,
-            fridgeId: router.query.id,
+            fridgeId: id,
             state: fridgeDetailData.isBookmark,
           });
-          refetch();
         }}
       >
         {fridgeDetailData.isBookmark ? <IoStarSharp /> : <IoStarOutline />}
@@ -273,6 +261,7 @@ const BtnStyle = css`
   height: 32px;
   border-radius: 20px;
   font-size: 14px;
+  outline: none;
 `;
 
 const Donate = styled.button`

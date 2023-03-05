@@ -22,10 +22,11 @@ const MapPage = () => {
   const { data, refetch } = getAllFridges({ id: 1 });
 
   const setVisibleListInBoundary = useCallback(() => {
-    const minLat = boundsRef.current?.Ua.lo;
-    const maxLat = boundsRef.current?.Ua.hi;
-    const minLng = boundsRef.current?.Ia.lo;
-    const maxLng = boundsRef.current?.Ia.hi;
+    // 이 부분 업데이트 될 때마다 Ka , Va 저 부분 바뀌는거 같음
+    const minLat = boundsRef.current?.Va.lo;
+    const maxLat = boundsRef.current?.Va.hi;
+    const minLng = boundsRef.current?.Ka.lo;
+    const maxLng = boundsRef.current?.Ka.hi;
 
     const tmp = data?.fridgeList
       .filter(
@@ -113,7 +114,7 @@ const MapPage = () => {
         isFavorite={isFavorite}
         setIsFavorite={setIsFavorite}
       />
-      {detail && <FridgeDetail />}
+      {detail && <FridgeDetail id={detail}/>}
       <Map
         centerLoc={centerLoc}
         setCenterLoc={setCenterLoc}
