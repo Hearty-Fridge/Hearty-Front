@@ -45,7 +45,6 @@ export const getFridgesById = ({ fridgeId, memberId }) => {
 };
 
 export const addBookmark = ({ memberId, fridgeId, state }) => {
-  console.log(memberId, fridgeId, state);
   if (state) {
     return axiosInstance.request({
       method: 'DELETE',
@@ -66,15 +65,16 @@ export const useBookmarkMutation = (fridgeNum, memberId) => {
     mutationFn: addBookmark,
 
     onMutate: async (newData) => {
+      console.log(newData);
       const [fridgesQueryKey, fridgeQueryKey] = [
         ['fridges', memberId],
-        ['fridgesById', fridgeNum.toString(), memberId]
-      ]
+        ['fridgesById', fridgeNum.toString(), memberId],
+      ];
 
       const previousData = {
         fridges: queryClient.getQueriesData(fridgesQueryKey),
         fridge: queryClient.getQueriesData(fridgeQueryKey),
-      }
+      };
 
       const fridgesData = previousData.fridges[0][1];
       const fridgeData = previousData.fridge[0][1];
@@ -82,29 +82,32 @@ export const useBookmarkMutation = (fridgeNum, memberId) => {
       await Promise.all([
         queryClient.cancelQueries(fridgesQueryKey),
         queryClient.cancelQueries(fridgeQueryKey),
-      ])
+      ]);
 
-      const fridgeIndex = fridgesData.fridgeList.findIndex(
-        (fridge) => fridge.fridgeInfo.fridgeId === newData.fridgeId
-      ) + 1;
+      const fridgeIndex =
+        fridgesData.fridgeList.findIndex(
+          (fridge) => fridge.fridgeInfo.fridgeId === newData.fridgeId
+        ) + 1;
 
-      if(fridgeIndex >= 1){
+      if (fridgeIndex >= 1) {
         fridgesData.fridgeList[fridgeIndex].isBookmark = !newData.state;
         queryClient.setQueryData(fridgesQueryKey, fridgesData);
       }
 
-      if(fridgeData) {
+      if (fridgeData) {
         fridgeData.isBookmark = !newData.state;
         queryClient.setQueryData(fridgeQueryKey, fridgeData);
       }
 
-      return {previousData};
-
+      return { previousData };
     },
 
     onError: (err, newData, context) => {
       console.log(err);
-      queryClient.setQueryData(['fridges', memberId], context.previousData.fridges);
+      queryClient.setQueryData(
+        ['fridges', memberId],
+        context.previousData.fridges
+      );
       queryClient.setQueryData(
         ['fridgesById', fridgeNum, memberId],
         context.previousData.fridge
