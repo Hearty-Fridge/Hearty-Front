@@ -1,14 +1,23 @@
 import { axiosInstance } from 'api/axiosInstance';
 import { useQuery } from 'react-query';
 import { useQueryClient, useMutation } from 'react-query';
+import { useRecoilState } from 'recoil';
+import { userState } from 'atoms/user';
 
-export const getAllFridges = ({ id }) => {
+export const getAllFridges = () => {
+  const token = localStorage.getItem('accessToken');
+  if (!token) {
+    return { isLoading: false, error: 'Access token is missing' };
+  }
   return useQuery(
-    ['fridges', id],
+    ['fridges'],
     async () => {
       const { data } = await axiosInstance.request({
         method: 'GET',
-        url: `/fridge/getAll?memberId=${id}`,
+        url: `/fridge/getAll`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       return data.data;
     },
@@ -23,16 +32,23 @@ export const getAllFridges = ({ id }) => {
   );
 };
 
-export const getFridgesById = ({ fridgeId, memberId }) => {
+export const getFridgesById = ({ fridgeId }) => {
+  const token = localStorage.getItem('accessToken');
+  if (!token) {
+    return { isLoading: false, error: 'Access token is missing' };
+  }
   return useQuery(
-    ['fridgesById', fridgeId, memberId],
+    ['fridgesById', fridgeId],
     async () => {
       if (fridgeId === undefined || fridgeId === null) {
         return 0;
       }
       const { data } = await axiosInstance.request({
         method: 'GET',
-        url: `/fridge/getFridge2?fridgeId=${fridgeId}&memberId=${memberId}`,
+        url: `/fridge/getFridge2?fridgeId=${fridgeId}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       return data.data;
     },
@@ -44,21 +60,31 @@ export const getFridgesById = ({ fridgeId, memberId }) => {
   );
 };
 
-export const addBookmark = ({ memberId, fridgeId, state }) => {
+export const addBookmark = ({ fridgeId, state }) => {
+  const token = localStorage.getItem('accessToken');
+  if (!token) {
+    return { isLoading: false, error: 'Access token is missing' };
+  }
   if (state) {
     return axiosInstance.request({
       method: 'DELETE',
-      url: `/bookmark/delBookmark?memberId=${memberId}&fridgeId=${fridgeId}`,
+      url: `/bookmark/delBookmark?fridgeId=${fridgeId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   } else {
     return axiosInstance.request({
       method: 'POST',
-      url: `/bookmark/addBookmark?memberId=${memberId}&fridgeId=${fridgeId}`,
+      url: `/bookmark/addBookmark?fridgeId=${fridgeId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 };
 
-export const useBookmarkMutation = (fridgeNum, memberId) => {
+export const useBookmarkMutation = (fridgeNum) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -67,8 +93,8 @@ export const useBookmarkMutation = (fridgeNum, memberId) => {
     onMutate: async (newData) => {
       console.log(newData);
       const [fridgesQueryKey, fridgeQueryKey] = [
-        ['fridges', memberId],
-        ['fridgesById', fridgeNum.toString(), memberId],
+        ['fridges'],
+        ['fridgesById', fridgeNum.toString()],
       ];
 
       const previousData = {
@@ -104,19 +130,16 @@ export const useBookmarkMutation = (fridgeNum, memberId) => {
 
     onError: (err, newData, context) => {
       console.log(err);
+      queryClient.setQueryData(['fridges'], context.previousData.fridges);
       queryClient.setQueryData(
-        ['fridges', memberId],
-        context.previousData.fridges
-      );
-      queryClient.setQueryData(
-        ['fridgesById', fridgeNum, memberId],
+        ['fridgesById', fridgeNum],
         context.previousData.fridge
       );
     },
     // Always refetch after error or success:
     onSettled: () => {
-      queryClient.invalidateQueries(['fridges', memberId]);
-      queryClient.invalidateQueries(['fridgesById', fridgeNum, memberId]);
+      queryClient.invalidateQueries(['fridges']);
+      queryClient.invalidateQueries(['fridgesById', fridgeNum]);
     },
   });
 };

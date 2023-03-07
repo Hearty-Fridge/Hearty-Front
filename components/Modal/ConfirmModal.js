@@ -9,7 +9,6 @@ const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
   const onHandleSubmit = () => {
     for (let i = 0; i < data.length; i++) {
       const d = {
-        memberId: 2,
         giveId: data[i].giveId,
       };
       const res = testTakeFood(d);

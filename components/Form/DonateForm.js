@@ -35,13 +35,13 @@ export default function DonateForm({ id, setShow }) {
       foodName: '',
       foodAmount: '',
       message: '',
-      selectedImage: '',
+      selectedImage: null,
       category: '',
+      expirationDate: new Date(),
     },
   });
   const { errors } = formState;
-  const { mutate } = useFoodsMutation();
-
+  const { mutate } = useFoodsMutation({ fridgeId: id });
   const selectedImageChange = useCallback(
     (e) => {
       if (e.target.files && e.target.files.length > 0) {
@@ -63,7 +63,7 @@ export default function DonateForm({ id, setShow }) {
     formData.append('message', e.message);
     formData.append('fridgeId', id);
     formData.append('giverId', 11);
-    formData.append('images', selectedImage);
+    if (selectedImage) formData.append('images', selectedImage);
     mutate(formData);
     setShow(false);
     refetch();
@@ -166,7 +166,7 @@ export default function DonateForm({ id, setShow }) {
           <SectionName>
             <div className="name">음식 사진</div>
           </SectionName>
-          <Info>사진을 선택하지 않으면, 기본 이미지가 선택됩니다.</Info>
+          <Info>사진을 입력해주세요</Info>
           <label style={{ cursor: 'pointer', display: 'inline-block' }}>
             <input
               accept="image/*"
@@ -174,14 +174,16 @@ export default function DonateForm({ id, setShow }) {
               onChange={selectedImageChange}
               disabled={selectedImage}
               style={{ display: 'none' }}
+              required
             />
             {selectedImage ? (
               <InputImage>
                 <img src={URL.createObjectURL(selectedImage)} alt="Thumb" />
                 <RemoveButton
+                  type="button"
                   onClick={(e) => {
                     setSelectedImage(null);
-                    event.preventDefault();
+                    e.preventDefault();
                   }}
                 >
                   Remove

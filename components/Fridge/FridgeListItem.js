@@ -7,7 +7,6 @@ const ListItem = ({ id, onClick, info, activate }) => {
 
   const onClickBookmark = () => {
     mutate({
-      memberId: 1,
       fridgeId: id,
       state: info.isBookmark,
     });

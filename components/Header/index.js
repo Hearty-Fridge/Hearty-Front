@@ -28,6 +28,7 @@ const Header = () => {
       });
 
       setCurUserData({
+        memberId: res.data.memberId,
         isLogin: true,
         name: res.data.name,
         email: res.data.email,

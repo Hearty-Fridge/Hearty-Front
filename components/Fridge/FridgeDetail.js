@@ -11,7 +11,7 @@ import DonationModal from '@components/Modal/DonationModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 import { addBookmark } from 'api/Fridges/useFridges';
 
-const FridgeDetail = ({id}) => {
+const FridgeDetail = ({ id }) => {
   const router = useRouter();
   const [isList, setIsList] = useState(true);
   const [isReservation, setIsReservation] = useState(false);
@@ -23,9 +23,9 @@ const FridgeDetail = ({id}) => {
     data: fridgeDetailData,
     refetch,
     isLoading,
-  } = getFridgesById({ fridgeId: id, memberId: 1 });
+  } = getFridgesById({ fridgeId: id });
 
-  const { mutate } = useBookmarkMutation(id, 1);
+  const { mutate } = useBookmarkMutation(id);
 
   const onClickBtn = useCallback(
     (t) => {

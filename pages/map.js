@@ -114,7 +114,7 @@ const MapPage = () => {
         isFavorite={isFavorite}
         setIsFavorite={setIsFavorite}
       />
-      {detail && <FridgeDetail id={detail}/>}
+      {detail && <FridgeDetail id={detail} />}
       <Map
         centerLoc={centerLoc}
         setCenterLoc={setCenterLoc}
