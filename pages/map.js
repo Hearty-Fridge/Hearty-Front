@@ -12,6 +12,17 @@ const MapPage = () => {
   const mapRef = useRef(null);
   const boundsRef = useRef(null);
 
+  let token = null;
+  if (typeof window !== 'undefined') {
+    token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('Please Login!');
+      router.push('/');
+    }
+  } else {
+    return 0;
+  }
+
   const [detail, setDetail] = useState(null);
   const [centerLoc, setCenterLoc] = useState(null);
   const [gpsLoc, setGpsLoc] = useState(null);
@@ -19,7 +30,7 @@ const MapPage = () => {
   const [marker, setMarker] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const { data, refetch } = getAllFridges({ id: 1 });
+  const { data, refetch } = getAllFridges({ token: token });
 
   const setVisibleListInBoundary = useCallback(() => {
     // 이 부분 업데이트 될 때마다 Ka , Va 저 부분 바뀌는거 같음

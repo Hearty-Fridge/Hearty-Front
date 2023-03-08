@@ -2,15 +2,11 @@ import { axiosInstance } from 'api/axiosInstance';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import axios from 'axios';
 
-const giveFood = (body) => {
-  const token = localStorage.getItem('accessToken');
+const giveFood = (body, token) => {
   if (!token) {
     return { isLoading: false, error: 'Access token is missing' };
   }
 
-  // const formData = new FormData();
-  // console.log(formData);
-  // 이게 되면 아래에서 적용하기!
   axiosInstance.post('/give/giveFood', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -33,19 +29,98 @@ const useFoodsMutation = ({ fridgeId }) => {
       for (const [key, value] of newData.entries()) {
         obj[key] = value;
       }
+      console.log(obj);
+
+      const [fridgesQueryKey, fridgeQueryKey] = [
+        ['fridges'],
+        ['fridgesById', fridgeId.toString()],
+      ];
+
+      const previousData = {
+        fridges: queryClient.getQueriesData(fridgesQueryKey),
+        fridge: queryClient.getQueriesData(fridgeQueryKey),
+      };
+
+      const fridgesData = previousData.fridges[0][1];
+      const fridgeData = previousData.fridge[0][1];
+
+      await Promise.all([
+        queryClient.cancelQueries(fridgesQueryKey),
+        queryClient.cancelQueries(fridgeQueryKey),
+      ]);
+
+      // FridgesById, FriedgeId
+      // data.foodList에 하나 추가
+
+      // giveId: 32
+      // giveTime: "2023-03-08T05:42:10.225321"
+      // ▶ food 6 items
+      // id: 32
+      // name: "바닐라 라떼"
+      // category: "Drink/Coffee"
+      // message: ""
+      // amount: "200ml"
+      // expiration: "2023-03-08T14:41:44"
+      // fridgeName: "공릉1동 자치회관"
+      // isReserved: false
+      fridgeData.foodList.push({
+        giveId: -1,
+        giveTime: new Date(),
+        food: {
+          id: -1,
+          name: obj.name,
+          category: obj.category,
+          message: obj.message,
+          amount: obj.amount,
+          expiration: obj.expiration,
+        },
+        fridgeName: fridgeData.fridgeInfo.fridgeName,
+        isReserved: true,
+      });
+      // giveId
+      // message
+      // messageId
+      // sendTime
+
+      fridgeData.messageList.push({
+        giveId: -1,
+        message: obj.message,
+        messageId: -1,
+        sendTime: new Date(),
+      });
+      // Fridges에
+      // data.fridges[fridgeId-1]
+      // numFood +=1
+      // numMessages += 1
+      fridgesData.fridgeList[fridgeId - 1].numFoods += 1;
+      fridgesData.fridgeList[fridgeId - 1].numMessages += 1;
+      console.log(fridgesData.fridgeList[fridgeId - 1]);
+
+      queryClient.setQueryData(fridgesQueryKey, fridgesData);
+      queryClient.setQueryData(fridgeQueryKey, fridgeData);
+
+      return { previousData };
     },
     onError: (err, newData, context) => {
-      queryClient.setQueryData(['giveFood'], context.previousData);
+      console.log(err);
+      queryClient.setQueryData(['fridges'], context.previousData.fridges);
+      queryClient.setQueryData(
+        ['fridgesById', fridgeId],
+        context.previousData.fridge
+      );
     },
     // Always refetch after error or success:
     onSettled: () => {
-      console.log('Settled!');
-      // queryClient.invalidateQueries({ queryKey: ['giveFood'] });
+      queryClient.invalidateQueries(['fridges']);
+      queryClient.invalidateQueries(['fridgesById', fridgeId]);
     },
   });
 };
 
-export const getFoodImageById = ({ giveId }) => {
+export const getFoodImageById = ({ giveId, token }) => {
+  if (!token) {
+    return { isLoading: false, error: 'Access token is missing' };
+  }
   return useQuery(
     ['foodImage', giveId],
     async () => {
@@ -55,6 +130,9 @@ export const getFoodImageById = ({ giveId }) => {
       const { data } = await axiosInstance.request({
         method: 'GET',
         url: `/image/findImagesByGive?giveId=${giveId}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       return data.data;
     },
@@ -64,15 +142,6 @@ export const getFoodImageById = ({ giveId }) => {
       },
     }
   );
-};
-
-export const postFoods = async (body) => {
-  const { data } = await axiosInstance.request({
-    method: 'POST',
-    url: '/give/giveFood',
-    data: body,
-  });
-  return data;
 };
 
 export default useFoodsMutation;

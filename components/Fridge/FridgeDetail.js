@@ -13,6 +13,7 @@ import { addBookmark } from 'api/Fridges/useFridges';
 
 const FridgeDetail = ({ id }) => {
   const router = useRouter();
+  const token = localStorage.getItem('accessToken');
   const [isList, setIsList] = useState(true);
   const [isReservation, setIsReservation] = useState(false);
   const [isDonation, setIsDonation] = useState(false);
@@ -23,7 +24,7 @@ const FridgeDetail = ({ id }) => {
     data: fridgeDetailData,
     refetch,
     isLoading,
-  } = getFridgesById({ fridgeId: id });
+  } = getFridgesById({ fridgeId: id, token: token });
 
   const { mutate } = useBookmarkMutation(id);
 

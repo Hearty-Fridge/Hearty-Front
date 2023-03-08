@@ -3,12 +3,14 @@ import { IoStarSharp, IoStarOutline } from 'react-icons/io5';
 import { useBookmarkMutation } from 'api/Fridges/useFridges';
 
 const ListItem = ({ id, onClick, info, activate }) => {
+  const token = localStorage.getItem('accessToken');
   const { mutate } = useBookmarkMutation(id, 1);
 
   const onClickBookmark = () => {
     mutate({
       fridgeId: id,
       state: info.isBookmark,
+      token: token,
     });
   };
 

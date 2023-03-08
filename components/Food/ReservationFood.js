@@ -4,11 +4,15 @@ import { useEffect, useState } from 'react';
 import { getFoodImageById } from 'api/Food/useFoods';
 
 const ReservationFood = ({ data, onClickCheck, disabled }) => {
+  const token = localStorage.getItem('accessToken');
   const [expirationDate] = useState(
     moment(data.food.expiration).format('YYYY.MM.DD')
   );
   const [expLeft, setExpLeft] = useState(100);
-  const {data: imageData, refetch} = getFoodImageById({giveId : data.giveId});
+  const { data: imageData, refetch } = getFoodImageById({
+    giveId: data.giveId,
+    token: token,
+  });
 
   // 남은 일자 계산
   useEffect(() => {
@@ -38,7 +42,14 @@ const ReservationFood = ({ data, onClickCheck, disabled }) => {
           onClick={(obj) => onClickCheck(obj, data)}
         />
       </div>
-      {imageData && imageData.images.length ? <StyledImg src={`${imageData.baseUri}${imageData.images[0].uuidFileName}`} alt="hi" /> : <NotLoaded></NotLoaded>}
+      {imageData && imageData.images.length ? (
+        <StyledImg
+          src={`${imageData.baseUri}${imageData.images[0].uuidFileName}`}
+          alt="hi"
+        />
+      ) : (
+        <NotLoaded></NotLoaded>
+      )}
       <Info disabled={disabled}>
         <div
           style={{ display: 'flex', columnGap: '12px', alignItems: 'center' }}
@@ -92,7 +103,7 @@ const StyledImg = styled.img`
 const NotLoaded = styled.div`
   min-width: 63px;
   height: 63px;
-`
+`;
 
 const Info = styled.div`
   width: 100%;

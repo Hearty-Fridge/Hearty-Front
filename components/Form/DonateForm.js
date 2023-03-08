@@ -28,7 +28,8 @@ const CATEGORY = [
 ];
 
 export default function DonateForm({ id, setShow }) {
-  const { refetch } = getFridgesById({ fridgeId: id });
+  const token = localStorage.getItem('accessToken');
+  const { refetch } = getFridgesById({ fridgeId: id, token: token });
   const [selectedImage, setSelectedImage] = useState();
   const { register, handleSubmit, formState, reset, control } = useForm({
     defaultValues: {
@@ -64,7 +65,7 @@ export default function DonateForm({ id, setShow }) {
     formData.append('fridgeId', id);
     formData.append('giverId', 11);
     if (selectedImage) formData.append('images', selectedImage);
-    mutate(formData);
+    mutate(formData, token);
     setShow(false);
     refetch();
   };

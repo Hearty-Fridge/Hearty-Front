@@ -1,14 +1,12 @@
 import { axiosInstance } from 'api/axiosInstance';
 import { useQuery } from 'react-query';
 import { useQueryClient, useMutation } from 'react-query';
-import { useRecoilState } from 'recoil';
-import { userState } from 'atoms/user';
 
-export const getAllFridges = () => {
-  const token = localStorage.getItem('accessToken');
+export const getAllFridges = ({ token }) => {
   if (!token) {
     return { isLoading: false, error: 'Access token is missing' };
   }
+
   return useQuery(
     ['fridges'],
     async () => {
@@ -32,8 +30,7 @@ export const getAllFridges = () => {
   );
 };
 
-export const getFridgesById = ({ fridgeId }) => {
-  const token = localStorage.getItem('accessToken');
+export const getFridgesById = ({ fridgeId, token }) => {
   if (!token) {
     return { isLoading: false, error: 'Access token is missing' };
   }
@@ -60,8 +57,7 @@ export const getFridgesById = ({ fridgeId }) => {
   );
 };
 
-export const addBookmark = ({ fridgeId, state }) => {
-  const token = localStorage.getItem('accessToken');
+export const addBookmark = ({ fridgeId, state, token }) => {
   if (!token) {
     return { isLoading: false, error: 'Access token is missing' };
   }
