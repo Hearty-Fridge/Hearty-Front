@@ -31,6 +31,7 @@ export default function DonateForm({ id, setShow }) {
   const token = localStorage.getItem('accessToken');
   const { refetch } = getFridgesById({ fridgeId: id, token: token });
   const [selectedImage, setSelectedImage] = useState();
+  const [imageError, setImageError] = useState(true);
   const {
     register,
     handleSubmit,
@@ -44,21 +45,23 @@ export default function DonateForm({ id, setShow }) {
       foodName: '',
       foodAmount: '',
       message: '',
-      selectedImage: null,
+      selectedImage: false,
       category: '',
       expirationDate: new Date(),
     },
   });
   const { errors } = formState;
   const { mutate } = useFoodsMutation({ fridgeId: id });
-  // const selectedImageChange = useCallback(
-  //   (e) => {
-  //     if (e.target.files && e.target.files.length > 0) {
-  //       setSelectedImage(e.target.files[0]);
-  //     }
-  //   },
-  //   [setSelectedImage]
-  // );
+
+  const selectedImageChange = useCallback(
+    (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        setSelectedImage(e.target.files[0]);
+        // setValue('selectedImage', e.target.files[0]);
+      }
+    },
+    [setSelectedImage]
+  );
 
   const onHandleSubmit = async (e) => {
     const formData = new FormData();
@@ -188,20 +191,19 @@ export default function DonateForm({ id, setShow }) {
               disabled={selectedImage}
               style={{ display: 'none' }}
               {...register('selectedImage', {
-                required: '사진을 입력해주세요.',
+                required: '사진을 입력해주세요',
+                onChange: (e) => selectedImageChange(e),
               })}
-              // required
             />
-            {getValues('selectedImage') ? (
+            {selectedImage ? (
               <InputImage>
-                <img
-                  src={URL.createObjectURL(getValues('selectedImage'))}
-                  alt="Thumb"
-                />
+                <img src={URL.createObjectURL(selectedImage)} alt="Thumb" />
                 <RemoveButton
                   type="button"
                   onClick={(e) => {
+                    setSelectedImage(null);
                     setValue('selectedImage', null);
+                    e.target.value = null;
                     e.preventDefault();
                   }}
                 >
