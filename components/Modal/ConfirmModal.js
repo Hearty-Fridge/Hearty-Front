@@ -3,25 +3,27 @@ import Modal from './Modal';
 import { IoLocationSharp } from 'react-icons/io5';
 import ConfirmFood from '@components/Food/ConfirmFood';
 import { useTakeFoodMutation } from 'api/Food/useFoods';
+import { takeFood } from 'api/Food/useFoods';
 
-const ConfirmModal = ({
-  id,
-  data,
-  loc,
-  show,
-  onCloseModal,
-  showReservation,
-}) => {
+const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
   const token = localStorage.getItem('accessToken');
-  const { mutate } = useTakeFoodMutation(id);
-  console.log(data, loc);
+  const { refetch } = getCanReserve({ token: token });
   // authorization이 생기면 수정해야 함.
-  const onHandleSubmit = () => {
+  const onHandleSubmit = async () => {
+    let flag = false;
     for (let i = 0; i < data.length; i++) {
-      const res = mutate({ giveId: data[i].giveId, token: token });
-      console.log(res);
+      const res = await takeFood({ giveId: data[i].giveId, token: token });
+      if (res.error) {
+        flag = true;
+        alert(res.error);
+        break;
+      }
     }
-    onCloseModal();
+    if (!flag) {
+      alert('Successful!');
+      onCloseModal();
+      refetch();
+    }
   };
   return (
     <Modal show={show} onCloseModal={onCloseModal}>

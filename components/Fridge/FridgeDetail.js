@@ -9,7 +9,7 @@ import MessageList from '@components/Message/messageList';
 import ReservationModal from '@components/Modal/ReservationModal';
 import DonationModal from '@components/Modal/DonationModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
-import { addBookmark } from 'api/Fridges/useFridges';
+import { getCanReserve } from 'api/Food/useFoods';
 
 const FridgeDetail = ({ id }) => {
   const router = useRouter();
@@ -19,6 +19,7 @@ const FridgeDetail = ({ id }) => {
   const [isDonation, setIsDonation] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
   const [reservationList, setReservationList] = useState([]);
+  const { data: numCanReserve } = getCanReserve({ token: token });
 
   const {
     data: fridgeDetailData,
@@ -49,8 +50,16 @@ const FridgeDetail = ({ id }) => {
   };
 
   const ReservationHandleSubmit = () => {
-    setIsReservation(false);
-    setIsConfirm(true);
+    if (reservationList.length === 0) {
+      alert('하나 이상의 음식을 선택하세요!');
+    } else if (numCanReserve < reservationList.length) {
+      alert(
+        `예약 가능 음식 개수를 초과했습니다. 예약 가능 음식 개수 : ${numCanReserve}`
+      );
+    } else {
+      setIsReservation(false);
+      setIsConfirm(true);
+    }
   };
 
   const showReservation = () => {

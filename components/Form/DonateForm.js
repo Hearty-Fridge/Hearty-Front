@@ -31,7 +31,15 @@ export default function DonateForm({ id, setShow }) {
   const token = localStorage.getItem('accessToken');
   const { refetch } = getFridgesById({ fridgeId: id, token: token });
   const [selectedImage, setSelectedImage] = useState();
-  const { register, handleSubmit, formState, reset, control } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState,
+    reset,
+    control,
+    getValues,
+    setValue,
+  } = useForm({
     defaultValues: {
       foodName: '',
       foodAmount: '',
@@ -43,14 +51,14 @@ export default function DonateForm({ id, setShow }) {
   });
   const { errors } = formState;
   const { mutate } = useFoodsMutation({ fridgeId: id });
-  const selectedImageChange = useCallback(
-    (e) => {
-      if (e.target.files && e.target.files.length > 0) {
-        setSelectedImage(e.target.files[0]);
-      }
-    },
-    [setSelectedImage]
-  );
+  // const selectedImageChange = useCallback(
+  //   (e) => {
+  //     if (e.target.files && e.target.files.length > 0) {
+  //       setSelectedImage(e.target.files[0]);
+  //     }
+  //   },
+  //   [setSelectedImage]
+  // );
 
   const onHandleSubmit = async (e) => {
     const formData = new FormData();
@@ -166,24 +174,34 @@ export default function DonateForm({ id, setShow }) {
         <Section>
           <SectionName>
             <div className="name">음식 사진</div>
+            <div className="error">
+              {errors.selectedImage && errors.selectedImage.message}
+            </div>
           </SectionName>
           <Info>사진을 입력해주세요</Info>
           <label style={{ cursor: 'pointer', display: 'inline-block' }}>
+            {/* react hook form controller를 사용해서 해결해보기 */}
+            {/* 현재 버그는 필수 항목으로 만들고 싶지만, display: none이 적용되지 않는 것 */}
             <input
               accept="image/*"
               type="file"
-              onChange={selectedImageChange}
               disabled={selectedImage}
               style={{ display: 'none' }}
-              required
+              {...register('selectedImage', {
+                required: '사진을 입력해주세요.',
+              })}
+              // required
             />
-            {selectedImage ? (
+            {getValues('selectedImage') ? (
               <InputImage>
-                <img src={URL.createObjectURL(selectedImage)} alt="Thumb" />
+                <img
+                  src={URL.createObjectURL(getValues('selectedImage'))}
+                  alt="Thumb"
+                />
                 <RemoveButton
                   type="button"
                   onClick={(e) => {
-                    setSelectedImage(null);
+                    setValue('selectedImage', null);
                     e.preventDefault();
                   }}
                 >

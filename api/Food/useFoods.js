@@ -15,31 +15,23 @@ const giveFood = (body, token) => {
   });
 };
 
-const takeFood = ({ giveId, token }) => {
+export const takeFood = async ({ giveId, token }) => {
   if (!token) {
     return { isLoading: false, error: 'Access token is missing' };
   }
+  const result = await axiosInstance
+    .request({
+      method: 'POST',
+      url: `/take/takeFood?giveId=${giveId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((e) => {
+      return { error: e.response.data.message };
+    });
 
-  return axiosInstance.request({
-    method: 'POST',
-    url: `/take/takeFood?giveId=${giveId}`,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-
-export const useTakeFoodMutation = (id) => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: takeFood,
-    onSuccess: () => {
-      queryClient.invalidateQueries(['fridgesById', id]);
-    },
-    onMutate: async (newData) => {
-      // console.log(newData);
-    },
-  });
+  return result;
 };
 
 export const useFoodsMutation = ({ fridgeId }) => {
@@ -174,4 +166,26 @@ export const getFoodImageById = ({ giveId, token }) => {
   );
 };
 
-export default useFoodsMutation;
+export const getCanReserve = ({ token }) => {
+  if (!token) {
+    return { isLoading: false, error: 'Access token is missing' };
+  }
+  return useQuery(
+    ['numCanReserve'],
+    async () => {
+      const { data } = await axiosInstance.request({
+        method: 'GET',
+        url: '/take/numNotDone',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return 2 - data.data;
+    },
+    {
+      onError: (e) => {
+        console.log(e);
+      },
+    }
+  );
+};
