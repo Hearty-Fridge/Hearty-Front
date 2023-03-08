@@ -32,7 +32,7 @@ const ReservationModal = ({
 
   useEffect(() => {
     reservationList.forEach((elem) => {
-      const d = document.getElementById(`reserve-${elem.id}`);
+      const d = document.getElementById(`reserve-${elem.food.id}`);
       d.checked = true;
     });
   }, []);

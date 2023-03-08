@@ -28,7 +28,7 @@ const CATEGORY = [
 ];
 
 export default function DonateForm({ id, setShow }) {
-  const { refetch } = getFridgesById({ fridgeId: id, memberId: 1 });
+  const { refetch } = getFridgesById({ fridgeId: id });
   const [selectedImage, setSelectedImage] = useState();
   const { register, handleSubmit, formState, reset, control } = useForm({
     defaultValues: {
@@ -200,9 +200,17 @@ export default function DonateForm({ id, setShow }) {
         <Section>
           <SectionName>
             <div className="name">쪽지 남기기</div>
+            <div className="error">
+              {errors.message && errors.message.message}
+            </div>
           </SectionName>
           <Info>잘 먹으라고 인사하세요~!~!</Info>
-          <input placeholder="Hearty Message" {...register('message')} />
+          <input
+            placeholder="Hearty Message"
+            {...register('message', {
+              required: '메세지를 입력해주세요.',
+            })}
+          />
         </Section>
       </Container>
       <BtnWrapper>

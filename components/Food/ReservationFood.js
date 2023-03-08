@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
+import { getFoodImageById } from 'api/Food/useFoods';
 
 const ReservationFood = ({ data, onClickCheck, disabled }) => {
   const [expirationDate] = useState(
     moment(data.food.expiration).format('YYYY.MM.DD')
   );
   const [expLeft, setExpLeft] = useState(100);
+  const {data: imageData, refetch} = getFoodImageById({giveId : data.giveId});
 
   // 남은 일자 계산
   useEffect(() => {
@@ -21,7 +23,14 @@ const ReservationFood = ({ data, onClickCheck, disabled }) => {
 
   return (
     <FoodWrapper disabled={disabled}>
-      <div style={{ height: '63px', display: 'flex', alignItems: 'center' }}>
+      <div
+        style={{
+          marginLeft: '20 px',
+          height: '63px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
         <FoodCheckbox
           id={`reserve-${data.food.id}`}
           type="checkbox"
@@ -29,8 +38,7 @@ const ReservationFood = ({ data, onClickCheck, disabled }) => {
           onClick={(obj) => onClickCheck(obj, data)}
         />
       </div>
-      <FoodPhoto disabled={disabled} />
-
+      {imageData && imageData.images.length ? <StyledImg src={`${imageData.baseUri}${imageData.images[0].uuidFileName}`} alt="hi" /> : <NotLoaded></NotLoaded>}
       <Info disabled={disabled}>
         <div
           style={{ display: 'flex', columnGap: '12px', alignItems: 'center' }}
@@ -76,11 +84,15 @@ const FoodCheckbox = styled.input`
   }
 `;
 
-const FoodPhoto = styled.div`
+const StyledImg = styled.img`
+  width: 63px;
+  height: 63px;
+  /* background-color: ${(props) => (props.disabled ? '#f8f8f8B3' : 'red')}; */
+`;
+const NotLoaded = styled.div`
   min-width: 63px;
   height: 63px;
-  background-color: ${(props) => (props.disabled ? '#f8f8f8B3' : 'red')};
-`;
+`
 
 const Info = styled.div`
   width: 100%;
@@ -102,10 +114,15 @@ const Info = styled.div`
         : props.theme.palette.secondary.main};
   }
   .message {
+    display: -webkit-box;
+    text-overflow: ellipsis;
     color: ${(props) =>
       props.disabled
         ? props.theme.palette.secondary.main50
         : props.theme.palette.secondary.main30};
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
   }
 `;
 
