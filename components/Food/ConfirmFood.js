@@ -1,10 +1,24 @@
 import styled from 'styled-components';
 import moment from 'moment';
+import { getFoodImageById } from 'api/Food/useFoods';
 
 const ConfirmFood = ({ data }) => {
+  const token = localStorage.getItem('accessToken');
+  const { data: imageData, refetch } = getFoodImageById({
+    giveId: data.id,
+    token: token,
+  });
   return (
     <FoodWrapper>
-      <FoodImg></FoodImg>
+      {imageData && imageData.images.length ? (
+        <StyledImg
+          src={`${imageData.baseUri}${imageData.images[0].uuidFileName}`}
+          alt="foodImage"
+        />
+      ) : (
+        <FoodImg></FoodImg>
+      )}
+
       <FoodInfo>
         <Name>{data.name}</Name>
         <Detail>{`${data.amount} | ~${moment(data.expiration).format(
@@ -30,6 +44,11 @@ const FoodWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.palette.beige2};
   background-color: ${({ theme }) => theme.palette.beigeWhite};
   color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
+const StyledImg = styled.img`
+  width: 120px;
+  height: 120px;
 `;
 
 const FoodImg = styled.div`

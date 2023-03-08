@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useForm } from 'react-hook-form';
-import useFoodsMutation from 'api/Food/useFoods';
+import { useFoodsMutation } from 'api/Food/useFoods';
 import Calendar from '@components/Calendar/Calendar';
 import { getFridgesById } from 'api/Fridges/useFridges';
 import { IoCamera } from 'react-icons/io5';

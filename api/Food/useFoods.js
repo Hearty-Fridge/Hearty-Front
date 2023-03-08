@@ -15,7 +15,34 @@ const giveFood = (body, token) => {
   });
 };
 
-const useFoodsMutation = ({ fridgeId }) => {
+const takeFood = ({ giveId, token }) => {
+  if (!token) {
+    return { isLoading: false, error: 'Access token is missing' };
+  }
+
+  return axiosInstance.request({
+    method: 'POST',
+    url: `/take/takeFood?giveId=${giveId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const useTakeFoodMutation = (id) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: takeFood,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['fridgesById', id]);
+    },
+    onMutate: async (newData) => {
+      // console.log(newData);
+    },
+  });
+};
+
+export const useFoodsMutation = ({ fridgeId }) => {
   // mutation 성공 후 `useTodosQuery`로 관리되는 서버 상태를 다시 불러오기 위한
   // Cache 초기화를 위해 사용될 queryClient 객체
   const queryClient = useQueryClient();
@@ -23,7 +50,10 @@ const useFoodsMutation = ({ fridgeId }) => {
     mutationFn: giveFood,
     // mutate 요청이 성공한 후 queryClient.invalidateQueries 함수를 통해
     // useTodosQuery에서 불러온 API Response의 Cache를 초기화
-    onSuccess: () => queryClient.invalidateQueries('giveFood'),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['fridges']);
+      queryClient.invalidateQueries(['fridgesById', fridgeId.toString()]);
+    },
     onMutate: async (newData) => {
       let obj = {};
       for (const [key, value] of newData.entries()) {

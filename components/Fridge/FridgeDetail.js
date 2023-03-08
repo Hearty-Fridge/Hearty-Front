@@ -136,6 +136,7 @@ const FridgeDetail = ({ id }) => {
       )}
       {isConfirm && (
         <ConfirmModal
+          id={id}
           data={reservationList}
           loc={fridgeDetailData.fridgeInfo.fridgeName}
           show={isConfirm}

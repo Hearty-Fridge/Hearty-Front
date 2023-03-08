@@ -85,6 +85,7 @@ const FoodCheckbox = styled.input`
   width: 1.25em;
   height: 1.25em;
   appearance: none;
+  margin-left: 10px;
   border: max(2px, 0.1em) solid gray;
   :checked {
     content: '✓';

@@ -2,16 +2,24 @@ import styled, { css } from 'styled-components';
 import Modal from './Modal';
 import { IoLocationSharp } from 'react-icons/io5';
 import ConfirmFood from '@components/Food/ConfirmFood';
-import { testTakeFood } from 'api/Food/useFoods';
+import { useTakeFoodMutation } from 'api/Food/useFoods';
 
-const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
+const ConfirmModal = ({
+  id,
+  data,
+  loc,
+  show,
+  onCloseModal,
+  showReservation,
+}) => {
+  const token = localStorage.getItem('accessToken');
+  const { mutate } = useTakeFoodMutation(id);
+  console.log(data, loc);
   // authorization이 생기면 수정해야 함.
   const onHandleSubmit = () => {
     for (let i = 0; i < data.length; i++) {
-      const d = {
-        giveId: data[i].giveId,
-      };
-      const res = testTakeFood(d);
+      const res = mutate({ giveId: data[i].giveId, token: token });
+      console.log(res);
     }
     onCloseModal();
   };
@@ -26,7 +34,7 @@ const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
           <IoLocationSharp />
           {loc}
         </Info>
-        <FoodWrapper>
+        <ContentWrapper>
           {data?.map((t) => (
             <ConfirmFood data={t.food} />
           ))}
@@ -34,7 +42,7 @@ const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
             <div>Please leave a message</div>
             <div>abount the completion of pick-up by 3:35.</div>
           </Notification>
-        </FoodWrapper>
+        </ContentWrapper>
         <BtnWrapper>
           <button className="cancel" onClick={showReservation}>
             Back
@@ -81,11 +89,10 @@ const Info = styled.div`
   color: ${({ theme }) => theme.palette.secondary.main70};
 `;
 
-const FoodWrapper = styled.div`
+const ContentWrapper = styled.div`
   width: 674px;
   margin-left: 60px;
   margin-top: 38px;
-  overflow-y: scroll;
 `;
 
 const BtnStyle = css`
