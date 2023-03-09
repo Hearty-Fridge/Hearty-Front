@@ -45,6 +45,45 @@ const MypageComponent = () => {
     return dateB - dateA;
   });
 
+  const receive = [
+    {
+      messageId: 22,
+      type: 'receive',
+      message: '제발',
+      fridgeAddress: '서울특별시 노원구 노원로 261',
+      time: '2023-03-06T07:12:17.261109',
+    },
+    {
+      messageId: 21,
+      type: 'receive',
+      message: 'ㅋㅋㅎ',
+      fridgeAddress: '서울특별시 노원구 노원로 261',
+      time: '2023-03-06T07:12:16.261109',
+    },
+
+    {
+      messageId: 23,
+      type: 'receive',
+      message: '123',
+      fridgeAddress: '서울특별시 노원구 노원로 261',
+      time: '2023-03-06T07:20:31.000091',
+    },
+    {
+      messageId: 19,
+      type: 'receive',
+      message: '돌아온 썬칩입니다~',
+      fridgeAddress: '서울특별시 노원구 동일로186길 3-24',
+      time: '2023-03-02T12:22:15.518541',
+    },
+  ];
+  const send = data.data.data.sendMessages;
+  const MSG_LIST = receive.concat(send);
+  const SORTED_MSG = MSG_LIST.sort((a, b) => {
+    const dateA = dayjs(a.time);
+    const dateB = dayjs(b.time);
+    return dateB - dateA;
+  });
+
   return (
     <Boxes>
       <ProfileBox>
@@ -58,7 +97,7 @@ const MypageComponent = () => {
           <GnTData list={SORTED_GNT} />
         </GnTBox>
         <MessageBox>
-          <MsgData />
+          <MsgData list={SORTED_MSG} />
         </MessageBox>
       </DataBox>
     </Boxes>

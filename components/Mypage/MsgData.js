@@ -2,42 +2,9 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
-import Card from './Message';
 
-const MSG_LIST = [
-  {
-    is: 'R',
-    time: '2023.03.12',
-    message: '안녕하세요',
-    loc: '서울시 노원구 공릉동 123',
-  },
-  {
-    is: 'S',
-    time: '2023.03.15',
-    message: '안녕하세요2',
-    loc: '서울시 노원구 공릉동 123',
-  },
-  {
-    is: 'R',
-    time: '2023.03.14',
-    message: '안녕하세요3',
-    loc: '서울시 노원구 공릉동 123',
-  },
-  {
-    is: 'R',
-    time: '2023.03.20',
-    message: '안녕하세요4',
-    loc: '서울시 노원구 공릉동 123',
-  },
-  {
-    is: 'R',
-    time: '2023.03.20',
-    message: '안녕하세요4',
-    loc: '서울시 노원구 공릉동 123',
-  },
-];
-
-const MsgData = () => {
+const MsgData = ({ list }) => {
+  console.log(list);
   const settings = {
     dots: true,
     infinite: true,
@@ -52,8 +19,18 @@ const MsgData = () => {
       <Title>Hearty Messages</Title>
 
       <Slider {...settings}>
-        {MSG_LIST.map((item) => (
-          <Card key={item} />
+        {list.map((item) => (
+          <div>
+            <Card key={item}>
+              {item.type == 'receive' ? (
+                <TagReceive>Receive</TagReceive>
+              ) : (
+                <TagSend>Send</TagSend>
+              )}
+              <Contents>{item.message}</Contents>
+              <Address>{item.fridgeAddress}</Address>
+            </Card>
+          </div>
         ))}
       </Slider>
     </Wrapper>
@@ -71,6 +48,66 @@ const Title = styled.div`
   line-height: 29px;
 
   color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
+const Card = styled.div`
+  position: relative;
+  width: 310px;
+  padding: 26px 30px;
+  height: 198.96px;
+
+  background: #f8f8f8;
+
+  border: 1px solid #f1eae0;
+  border-radius: 10px;
+`;
+
+const TagSend = styled.div`
+  margin-right: 28px;
+  padding: 4px 10px;
+  width: 46px;
+  height: 22px;
+  font-weight: 500;
+  font-size: 12px;
+
+  background: #a6cda5;
+  border-radius: 5px;
+  color: white;
+
+  text-align: center;
+`;
+const TagReceive = styled.div`
+  margin-right: 28px;
+  padding: 4px 10px;
+  width: 64px;
+  height: 22px;
+  font-weight: 500;
+  font-size: 12px;
+
+  background: #d6a9a9;
+  border-radius: 5px;
+  color: white;
+
+  text-align: center;
+`;
+
+const Contents = styled.div`
+  margin-top: 18px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+
+  color: #594c48;
+`;
+
+const Address = styled.div`
+  position: absolute;
+  bottom: 25px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: #594c48;
 `;
 
 export default MsgData;

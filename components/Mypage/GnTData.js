@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 const GnTData = ({ list }) => {
-  console.log(list);
-
   return (
     <Wrapper>
       <Title>Give & Take</Title>

@@ -14,21 +14,24 @@ const ReservationData = ({ reserv }) => {
             <THTxt>Location</THTxt>
           </TH>
           {reserv.map((item) => (
-            <TD key={item}>
-              <Time>
-                {new Date(item.takeTime).getHours()}:
-                {new Date(item.takeTime).getMinutes()}
-              </Time>
-              <TDTxt>{item.foodName}</TDTxt>
-              <LocBox>
-                <TDTxt>{item.fridgeName}</TDTxt>
-                <TDSubTxt>{item.fridgeName}</TDSubTxt>
-              </LocBox>
-              <Buttons>
-                <BtnCancel>Cancel</BtnCancel>
-                <BtnCheck>Check</BtnCheck>
-              </Buttons>
-            </TD>
+            <>
+              <TD key={item}>
+                <Time>
+                  {new Date(item.takeTime).getHours()}:
+                  {new Date(item.takeTime).getMinutes()}
+                </Time>
+                <TDTxt>{item.foodName}</TDTxt>
+                <LocBox>
+                  <TDTxt>{item.fridgeName}</TDTxt>
+                  <TDSubTxt>{item.fridgeName}</TDSubTxt>
+                </LocBox>
+                <Buttons>
+                  <BtnCancel>Cancel</BtnCancel>
+                  <BtnCheck>Check</BtnCheck>
+                </Buttons>
+              </TD>
+              <Divider />
+            </>
           ))}
         </Table>
       </Wrapper>
@@ -69,6 +72,9 @@ const THTxt = styled.div`
   line-height: 19px;
 
   color: rgba(89, 76, 72, 0.7);
+`;
+const Divider = styled.hr`
+  border: 1px solid #e9dfd2;
 `;
 
 const TD = styled.div`
