@@ -11,11 +11,17 @@ import MsgData from './MsgData';
 
 const MypageComponent = () => {
   const userStateAtom = useRecoilValue(userState);
+  const token = localStorage.getItem('accessToken');
   const { data } = useQuery(
     ['getProfile', userStateAtom.memberId],
     async () =>
       await axiosInstance.get(
-        `/member/getProfile2?memberId=${userStateAtom.memberId}`
+        `/member/getProfile2?memberId=${userStateAtom.memberId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}}`,
+          },
+        }
       ),
     { enabled: !!userStateAtom.memberId }
   );
