@@ -11,17 +11,7 @@ const MapPage = () => {
   const router = useRouter();
   const mapRef = useRef(null);
   const boundsRef = useRef(null);
-
-  let token = null;
-  if (typeof window !== 'undefined') {
-    token = localStorage.getItem('accessToken');
-    if (!token) {
-      alert('Please Login!');
-      router.push('/');
-    }
-  } else {
-    return 0;
-  }
+  const [token, setToken] = useState(null);
 
   const [detail, setDetail] = useState(null);
   const [centerLoc, setCenterLoc] = useState(null);
@@ -34,10 +24,11 @@ const MapPage = () => {
 
   const setVisibleListInBoundary = useCallback(() => {
     // 이 부분 업데이트 될 때마다 Ka , Va 저 부분 바뀌는거 같음
+    // TODO : 버그 고치기
     const minLat = boundsRef.current?.Va.lo;
     const maxLat = boundsRef.current?.Va.hi;
-    const minLng = boundsRef.current?.Ka.lo;
-    const maxLng = boundsRef.current?.Ka.hi;
+    const minLng = boundsRef.current?.Ja.lo;
+    const maxLng = boundsRef.current?.Ja.hi;
 
     const tmp = data?.fridgeList
       .filter(
@@ -100,6 +91,14 @@ const MapPage = () => {
       setVisibleListInBoundary();
     }
   }, [setVisibleListInBoundary]);
+
+  useEffect(() => {
+    setToken(localStorage.getItem('accessToken'));
+  }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [token]);
 
   useEffect(() => {
     if (router.isReady) {

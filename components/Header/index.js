@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
@@ -16,6 +16,7 @@ const TOKEN_KEY = 'accessToken';
 
 const Header = () => {
   const [curUserData, setCurUserData] = useRecoilState(userState);
+  const [token, setToken] = useState(null);
   // recoil 써서 나중에 전역으로 관리하자!
   // const [isLogin, setIsLogin] = useState(false);
   const { pathname } = useRouter();
@@ -48,6 +49,10 @@ const Header = () => {
     // flow: 'auth-code',
   });
 
+  useEffect(() => {
+    setToken(localStorage.getItem('accessToken'));
+  }, [curUserData]);
+
   return (
     <StyledHeader>
       <Navigation>
@@ -58,7 +63,10 @@ const Header = () => {
           <NavLink
             key={navMenu}
             selected={currentPath === navMenu.toLowerCase()}
-            href={`/${navMenu.toLowerCase()}`}
+            href={token ? `/${navMenu.toLowerCase()}` : ''}
+            onClick={() => {
+              token ? '' : alert('please Login');
+            }}
           >
             {navMenu}
           </NavLink>

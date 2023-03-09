@@ -1,15 +1,18 @@
 import { axiosInstance } from 'api/axiosInstance';
-import { useQuery } from 'react-query';
+import { isError, useQuery } from 'react-query';
 import { useQueryClient, useMutation } from 'react-query';
 
 export const getAllFridges = ({ token }) => {
-  if (!token) {
-    return { isLoading: false, error: 'Access token is missing' };
-  }
+  // 이 부분이 너무 맘에 들지 않음
+  // let token = null;
+  // if (typeof window !== 'undefined') {
+  //   token = localStorage.getItem('accessToken');
+  // }
 
   return useQuery(
     ['fridges'],
     async () => {
+      if (!token) return;
       const { data } = await axiosInstance.request({
         method: 'GET',
         url: `/fridge/getAll`,
@@ -20,25 +23,21 @@ export const getAllFridges = ({ token }) => {
       return data.data;
     },
     {
-      refetchOnWindowFocus: true,
-    },
-    {
+      retryOnMount: true,
       onError: (e) => {
-        console.error(e);
+        console.log('error: ', e);
       },
     }
   );
 };
 
 export const getFridgesById = ({ fridgeId, token }) => {
-  if (!token) {
-    return { isLoading: false, error: 'Access token is missing' };
-  }
   return useQuery(
     ['fridgesById', fridgeId],
     async () => {
+      if (!token) return;
       if (fridgeId === undefined || fridgeId === null) {
-        return 0;
+        return;
       }
       const { data } = await axiosInstance.request({
         method: 'GET',
@@ -87,7 +86,6 @@ export const useBookmarkMutation = (fridgeNum) => {
     mutationFn: addBookmark,
 
     onMutate: async (newData) => {
-      console.log(newData);
       const [fridgesQueryKey, fridgeQueryKey] = [
         ['fridges'],
         ['fridgesById', fridgeNum.toString()],

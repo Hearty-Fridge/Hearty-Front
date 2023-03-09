@@ -2,12 +2,13 @@ import { axiosInstance } from 'api/axiosInstance';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import axios from 'axios';
 
-const giveFood = (body, token) => {
+const giveFood = async ({ body, token }) => {
+  console.log(token);
+  console.log(body);
   if (!token) {
     return { isLoading: false, error: 'Access token is missing' };
   }
-
-  axiosInstance.post('/give/giveFood', body, {
+  await axiosInstance.post('/give/giveFood', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`,
@@ -43,16 +44,16 @@ export const useFoodsMutation = ({ fridgeId }) => {
     // mutate 요청이 성공한 후 queryClient.invalidateQueries 함수를 통해
     // useTodosQuery에서 불러온 API Response의 Cache를 초기화
     onSuccess: () => {
+      console.log('Success!');
       queryClient.invalidateQueries(['fridges']);
       queryClient.invalidateQueries(['fridgesById', fridgeId.toString()]);
     },
     onMutate: async (newData) => {
       let obj = {};
-      for (const [key, value] of newData.entries()) {
+      for (const [key, value] of newData.body.entries()) {
         obj[key] = value;
       }
       console.log(obj);
-
       const [fridgesQueryKey, fridgeQueryKey] = [
         ['fridges'],
         ['fridgesById', fridgeId.toString()],
@@ -70,21 +71,6 @@ export const useFoodsMutation = ({ fridgeId }) => {
         queryClient.cancelQueries(fridgesQueryKey),
         queryClient.cancelQueries(fridgeQueryKey),
       ]);
-
-      // FridgesById, FriedgeId
-      // data.foodList에 하나 추가
-
-      // giveId: 32
-      // giveTime: "2023-03-08T05:42:10.225321"
-      // ▶ food 6 items
-      // id: 32
-      // name: "바닐라 라떼"
-      // category: "Drink/Coffee"
-      // message: ""
-      // amount: "200ml"
-      // expiration: "2023-03-08T14:41:44"
-      // fridgeName: "공릉1동 자치회관"
-      // isReserved: false
       fridgeData.foodList.push({
         giveId: -1,
         giveTime: new Date(),
@@ -97,23 +83,16 @@ export const useFoodsMutation = ({ fridgeId }) => {
           expiration: obj.expiration,
         },
         fridgeName: fridgeData.fridgeInfo.fridgeName,
-        isReserved: true,
+        isReserved: false,
       });
-      // giveId
-      // message
-      // messageId
-      // sendTime
-
+      console.log(fridgeData.foodList);
       fridgeData.messageList.push({
         giveId: -1,
         message: obj.message,
         messageId: -1,
         sendTime: new Date(),
       });
-      // Fridges에
-      // data.fridges[fridgeId-1]
-      // numFood +=1
-      // numMessages += 1
+      console.log(fridgeData.messageList);
       fridgesData.fridgeList[fridgeId - 1].numFoods += 1;
       fridgesData.fridgeList[fridgeId - 1].numMessages += 1;
       console.log(fridgesData.fridgeList[fridgeId - 1]);
@@ -124,7 +103,7 @@ export const useFoodsMutation = ({ fridgeId }) => {
       return { previousData };
     },
     onError: (err, newData, context) => {
-      console.log(err);
+      console.log(err, context, newData);
       queryClient.setQueryData(['fridges'], context.previousData.fridges);
       queryClient.setQueryData(
         ['fridgesById', fridgeId],
