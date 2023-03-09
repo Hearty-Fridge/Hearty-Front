@@ -13,6 +13,7 @@
     "@next/font": "13.1.2",
     "@react-oauth/google": "^0.6.1",
     "axios": "^1.2.2",
+    "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "eslint-config-next": "13.1.2",
     "google-map-react": "^2.2.0",

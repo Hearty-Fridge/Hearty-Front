@@ -3,6 +3,7 @@ import { userState } from 'atoms/user';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
 import ProfileData from './ProfileData';
 import ReservationData from './ReservationData';
@@ -16,7 +17,7 @@ const MypageComponent = () => {
     ['getProfile', userStateAtom.memberId],
     async () =>
       await axiosInstance.get(
-        `/member/getProfile2?memberId=${userStateAtom.memberId}`,
+        `/member/getProfile3?memberId=${userStateAtom.memberId}`,
         {
           headers: {
             Authorization: `Bearer ${token}}`,
@@ -37,6 +38,13 @@ const MypageComponent = () => {
   const gives = data.data.data.gives;
   const takes = data.data.data.takes;
 
+  const GNT_LIST = gives.concat(takes);
+  const SORTED_GNT = GNT_LIST.sort((a, b) => {
+    const dateA = dayjs(a.time);
+    const dateB = dayjs(b.time);
+    return dateB - dateA;
+  });
+
   return (
     <Boxes>
       <ProfileBox>
@@ -47,7 +55,7 @@ const MypageComponent = () => {
           <ReservationData reserv={reserv} />
         </ReservationBox>
         <GnTBox>
-          <GnTData gives={gives} takes={takes} />
+          <GnTData list={SORTED_GNT} />
         </GnTBox>
         <MessageBox>
           <MsgData />

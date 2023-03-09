@@ -1,39 +1,9 @@
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
-const GNT_LIST = [
-  {
-    gnt: 'Take',
-    time: '2023.02.12',
-    food: '군고구마',
-    location: {
-      main: '서울시 노원구 공릉동 123',
-      sub: '공릉 1동 주민센터 냉장고',
-    },
-    message: '',
-  },
-  {
-    gnt: 'Give',
-    time: '2023.02.14',
-    food: '우유',
-    location: {
-      main: '서울시 노원구 공릉동 123',
-      sub: '공릉 1동 주민센터 냉장고',
-    },
-    message: '맛있게 잘먹었어요!',
-  },
-  {
-    gnt: 'Take',
-    time: '2023.02.14',
-    food: '계란',
-    location: {
-      main: '서울시 노원구 공릉동 123',
-      sub: '공릉 1동 주민센터 냉장고',
-    },
-    message: '맛있게 잘먹었어요!',
-  },
-];
+const GnTData = ({ list }) => {
+  console.log(list);
 
-const GnTData = () => {
   return (
     <Wrapper>
       <Title>Give & Take</Title>
@@ -44,20 +14,30 @@ const GnTData = () => {
           <THTxt>Food</THTxt>
           <THTxt>Location</THTxt>
         </TH>
-        {GNT_LIST.map((item) => (
-          <TD key={item}>
-            <TagTake>Take</TagTake>
-            <TDTxt>{item.time}</TDTxt>
-            <TDTxt>{item.food}</TDTxt>
-            <LocBox>
-              <TDTxt>{item.location.main}</TDTxt>
-              <TDSubTxt>{item.location.sub}</TDSubTxt>
-            </LocBox>
-            <Buttons>
-              <OnBtn>Leave a Message</OnBtn>
-            </Buttons>
-          </TD>
-        ))}
+        <TDWrapper>
+          {list.map((item) => (
+            <TD key={item}>
+              {item.type == 'give' ? (
+                <TagGive>Give</TagGive>
+              ) : (
+                <TagTake>Take</TagTake>
+              )}
+              <TDTxt>{dayjs(item.time).format('YYYY.MM.DD')}</TDTxt>
+              <TDTxt>{item.foodName}</TDTxt>
+              <LocBox>
+                <TDTxt>{item.fridgeAddress}</TDTxt>
+                <TDSubTxt>{item.fridgeName}</TDSubTxt>
+              </LocBox>
+              <Buttons>
+                {item.isDone ? (
+                  <OffBtn>Leave a Message</OffBtn>
+                ) : (
+                  <OnBtn>Leave a Message</OnBtn>
+                )}
+              </Buttons>
+            </TD>
+          ))}
+        </TDWrapper>
       </Table>
     </Wrapper>
   );
@@ -105,6 +85,11 @@ const THTxt = styled.div`
   line-height: 19px;
 
   color: rgba(89, 76, 72, 0.7);
+`;
+const TDWrapper = styled.div`
+  height: 210px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 const TD = styled.div`
   display: flex;

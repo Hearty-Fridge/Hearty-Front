@@ -2,13 +2,47 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import Card from './Message';
+
+const MSG_LIST = [
+  {
+    is: 'R',
+    time: '2023.03.12',
+    message: '안녕하세요',
+    loc: '서울시 노원구 공릉동 123',
+  },
+  {
+    is: 'S',
+    time: '2023.03.15',
+    message: '안녕하세요2',
+    loc: '서울시 노원구 공릉동 123',
+  },
+  {
+    is: 'R',
+    time: '2023.03.14',
+    message: '안녕하세요3',
+    loc: '서울시 노원구 공릉동 123',
+  },
+  {
+    is: 'R',
+    time: '2023.03.20',
+    message: '안녕하세요4',
+    loc: '서울시 노원구 공릉동 123',
+  },
+  {
+    is: 'R',
+    time: '2023.03.20',
+    message: '안녕하세요4',
+    loc: '서울시 노원구 공릉동 123',
+  },
+];
 
 const MsgData = () => {
   const settings = {
     dots: true,
     infinite: true,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     arrows: false,
     dotsClass: 'dots_custom',
   };
@@ -18,18 +52,9 @@ const MsgData = () => {
       <Title>Hearty Messages</Title>
 
       <Slider {...settings}>
-        <div>
-          <Card>1</Card>
-        </div>
-        <div>
-          <Card>2</Card>
-        </div>
-        <div>
-          <Card>3</Card>
-        </div>
-        <div>
-          <Card>4</Card>
-        </div>
+        {MSG_LIST.map((item) => (
+          <Card key={item} />
+        ))}
       </Slider>
     </Wrapper>
   );
@@ -46,17 +71,6 @@ const Title = styled.div`
   line-height: 29px;
 
   color: ${({ theme }) => theme.palette.secondary.main};
-`;
-
-const Card = styled.div`
-  width: 310px;
-  padding: 50px;
-  height: 198.96px;
-
-  background: #f8f8f8;
-
-  border: 1px solid #f1eae0;
-  border-radius: 10px;
 `;
 
 export default MsgData;
