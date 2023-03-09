@@ -3,33 +3,31 @@ import styled from 'styled-components';
 export const HomeP1 = ({ className }) => {
   return (
     <Wrapper className={className}>
+      <BackImg1 />
       <Title>
         Let’s donate <br /> with hearty fridge!
       </Title>
-      <Flex>
-        <SubTitle>
-          <How>How?</How>
-          The expression is a simple sentence of <br />
-          promoting a healthy life and the welfare of all <br />
-          generations, e and the welfare of.
-        </SubTitle>
-        <BackImg />
-      </Flex>
+      {/* <BackImg1 /> */}
+      <SubTitle>
+        <How>How?</How>
+        The expression is a simple sentence of <br />
+        promoting a healthy life and the welfare of all <br />
+        generations, e and the welfare of.
+      </SubTitle>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  margin-top: 99px;
-  /* height: 943px; */
+  height: 1023px;
 `;
 const Title = styled.div`
   font-family: 'Playfair Display';
   font-style: italic;
-  font-size: 96px;
+  font-size: 80px;
   font-weight: 900;
 
-  line-height: 110px;
+  line-height: 80px;
   text-align: 'center';
   color: ${(props) => props.theme.palette.accent};
 `;
@@ -44,11 +42,11 @@ const Flex = styled.div`
 const SubTitle = styled.div`
   display: inline-block;
   font-weight: 400;
-  font-size: 30px;
-  line-height: 36px;
+  font-size: 20px;
+  line-height: 28px;
 
   letter-spacing: -0.01em;
-  margin-top: 60px;
+  margin-top: 46px;
   z-index: 1;
 
   color: ${(props) => props.theme.palette.secondary.main};
@@ -56,10 +54,10 @@ const SubTitle = styled.div`
 
 const How = styled.div`
   display: inline-block;
-  padding: 0px 12px 0px 12px;
-  margin-right: 42px;
+  padding: 0px 11px 0px 11px;
+  margin-right: 19px;
   font-weight: 300;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 50px;
 
   color: ${(props) => props.theme.palette.accent};
@@ -69,11 +67,13 @@ const How = styled.div`
   border-color: ${({ theme }) => theme.palette.accent};
 `;
 
-const BackImg = styled.div`
+const BackImg1 = styled.div`
   /* position: absolute; */
   position: relative;
-  width: 1101px;
-  height: 648px;
+  padding-left: 132px;
+  float: right;
+  width: 425px;
+  height: 334px;
   background-color: white;
   z-index: -1;
   bottom: 0;

@@ -17,7 +17,7 @@ export const HomeP4 = ({ className }) => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 99px;
+  height: 1023px;
 `;
 const Title = styled.div`
   font-family: 'Playfair Display';
