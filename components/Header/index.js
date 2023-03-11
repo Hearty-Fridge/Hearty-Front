@@ -3,7 +3,7 @@ import { useMemo, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
 import { userState } from 'atoms/user';
 import { useRecoilState } from 'recoil';
@@ -11,7 +11,7 @@ import { getZIndex } from '@styles/zIndex';
 import { axiosInstance } from 'api';
 import { AiFillBell, AiFillMail } from 'react-icons/ai';
 
-const NAV_MENU = ['Intro', 'Map', 'Donating'];
+const NAV_MENU = ['Intro', '|', 'Map'];
 const TOKEN_KEY = 'accessToken';
 
 const Header = () => {
@@ -25,6 +25,7 @@ const Header = () => {
   const handleSuccess = async (accessToken) => {
     try {
       const res = await axiosInstance.post(`/member/googleLogin`, {
+      const res = await axios.post(`/api/v1/member/googleLogin`, {
         accessToken: accessToken,
       });
 
@@ -85,7 +86,7 @@ const Header = () => {
           </>
         ) : (
           <>
-            <LogInButton onClick={login}>Login</LogInButton>
+            <LogInButton onClick={login}>Log in</LogInButton>
           </>
         )}
       </InfoArea>
@@ -102,17 +103,22 @@ const StyledHeader = styled.header`
   left: 0;
   display: flex;
   width: 100%;
-  height: 112px;
+  height: 111px;
   align-items: center;
   justify-content: space-between;
   z-index: ${getZIndex('header')};
+  background-color: #ffffff;
 `;
 
 const Navigation = styled.nav`
   display: flex;
   align-items: center;
   font-size: 20px;
-  column-gap: 72px;
+  column-gap: 33px;
+`;
+
+const Logo = styled.div`
+  margin-right: 33px;
 `;
 
 const NavLink = styled(Link)`
@@ -153,8 +159,26 @@ const LogInButton = styled.button`
   background-color: ${({ theme }) => theme.palette.accent};
 `;
 
+const LogOutButton = styled.button`
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  color: ${({ theme }) => theme.palette.gray};
+  background-color: ${({ theme }) => theme.palette.background};
+`;
+
 const MyPageButton = styled(Link)`
   ${LinkButtonStyle}
-  min-width: 107px;
+  cursor: pointer;
+  min-width: 92.32px;
+  outline: none;
+  border: none;
+  font-size: 14px;
   background-color: ${({ theme }) => theme.palette.primary};
 `;
