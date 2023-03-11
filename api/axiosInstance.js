@@ -1,5 +1,9 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_SERVER_NAME}/api/v1`,
+  baseURL: `/api/v1`,
+  headers: {
+    Accept: '*/*',
+    'Content-Type': 'application/json',
+  },
 });

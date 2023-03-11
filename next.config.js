@@ -4,8 +4,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:path*',
-        destination: 'http://34.64.101.33:8080/api/v1/:path*',
+        source: '/api/v1/:path*',
+        destination: `${process.env.NEXT_PUBLIC_SERVER_NAME}/api/v1/:path*`,
       },
     ];
   },
