@@ -29,7 +29,7 @@ const Title = styled.div`
 
   line-height: 80px;
   text-align: 'center';
-  color: ${(props) => props.theme.palette.accent};
+  color: ${({ theme }) => theme.palette.accent};
 `;
 
 const Flex = styled.div`
@@ -49,7 +49,7 @@ const SubTitle = styled.div`
   margin-top: 46px;
   z-index: 1;
 
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 const How = styled.div`
@@ -60,7 +60,7 @@ const How = styled.div`
   font-size: 16px;
   border-radius: 50px;
 
-  color: ${(props) => props.theme.palette.accent};
+  color: ${({ theme }) => theme.palette.accent};
   /* border: 1px soild ${({ theme }) => theme.palette.accent}; */
   border-style: solid;
   border-width: 1px;
