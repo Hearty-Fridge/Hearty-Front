@@ -17,8 +17,8 @@ const ReservationData = ({ reserv }) => {
             <>
               <TD key={item}>
                 <Time>
-                  {new Date(item.takeTime).getHours()}:
-                  {new Date(item.takeTime).getMinutes()}
+                  {new Date(item.time).getHours()}:
+                  {new Date(item.time).getMinutes()}
                 </Time>
                 <TDTxt>{item.foodName}</TDTxt>
                 <LocBox>
