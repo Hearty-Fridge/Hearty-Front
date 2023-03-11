@@ -24,7 +24,6 @@ const Header = () => {
 
   const handleSuccess = async (accessToken) => {
     try {
-      const res = await axiosInstance.post(`/member/googleLogin`, {
       const res = await axios.post(`/api/v1/member/googleLogin`, {
         accessToken: accessToken,
       });
