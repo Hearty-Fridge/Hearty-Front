@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 const GnTData = ({ list }) => {
+  console.log('LIST:', list);
   return (
     <Wrapper>
       <Title>Give & Take</Title>
@@ -27,7 +28,7 @@ const GnTData = ({ list }) => {
                 <TDSubTxt>{item.fridgeName}</TDSubTxt>
               </LocBox>
               <Buttons>
-                {item.isDone ? (
+                {item.status == 'COMPLETED' ? (
                   <OffBtn>Leave a Message</OffBtn>
                 ) : (
                   <OnBtn>Leave a Message</OnBtn>
