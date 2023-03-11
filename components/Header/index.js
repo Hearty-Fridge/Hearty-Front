@@ -84,7 +84,9 @@ const Header = () => {
             <Bell>
               <AiFillBell className="icon" color="#594C48" />
             </Bell>
-            <LogOutButton onClick={handleLogout}>Log out</LogOutButton>
+            <Link href="/">
+              <LogOutButton onClick={handleLogout}>Log out</LogOutButton>
+            </Link>
             <MyPageButton href="/mypage">My</MyPageButton>
           </>
         ) : (
