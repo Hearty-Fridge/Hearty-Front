@@ -3,7 +3,7 @@ import { useMemo, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
-import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { userState } from 'atoms/user';
 import { useRecoilState, useSetRecoilState } from 'recoil';
