@@ -1,93 +1,127 @@
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import axios from 'axios';
+import { userState } from 'atoms/user';
+import { useRecoilState } from 'recoil';
+import { getZIndex } from '@styles/zIndex';
+import { axiosInstance } from 'api';
+import { AiFillBell, AiFillMail } from 'react-icons/ai';
 
-const NAV_MENU = ['Intro', 'Map', 'Donating'];
+const NAV_MENU = ['Intro', '|', 'Map'];
+const TOKEN_KEY = 'accessToken';
 
 const Header = () => {
+  const [curUserData, setCurUserData] = useRecoilState(userState);
+  const [token, setToken] = useState(null);
   // recoil 써서 나중에 전역으로 관리하자!
-  const [isLogin, setIsLogin] = useState(false);
+  // const [isLogin, setIsLogin] = useState(false);
   const { pathname } = useRouter();
   const currentPath = useMemo(() => pathname.replace('/', ''), [pathname]);
 
+  const handleSuccess = async (accessToken) => {
+    try {
+      const res = await axios.post(`/api/v1/member/googleLogin`, {
+        accessToken: accessToken,
+      });
+
+      setCurUserData({
+        memberId: res.data.memberId,
+        isLogin: true,
+        name: res.data.name,
+        email: res.data.email,
+        profileImage: res.data.profileImage,
+      });
+
+      localStorage.setItem(TOKEN_KEY, res.data.accessToken);
+    } catch (error) {
+      console.error('error: ', error);
+    }
+  };
+
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      handleSuccess(tokenResponse.access_token);
+    },
+    // flow: 'auth-code',
+  });
+
+  useEffect(() => {
+    setToken(localStorage.getItem('accessToken'));
+  }, [curUserData]);
+
   return (
-    <TopWrapper>
+    <StyledHeader>
       <Navigation>
         <Link href="/">
-          <Image src="/image/Logo.png" width={145} height={111} />
+          <Image src="/image/Logo.png" alt="logo" width={145} height={111} />
         </Link>
         {NAV_MENU.map((navMenu) => (
           <NavLink
             key={navMenu}
             selected={currentPath === navMenu.toLowerCase()}
-            href={`/${navMenu.toLowerCase()}`}
+            href={token ? `/${navMenu.toLowerCase()}` : ''}
+            onClick={() => {
+              token ? '' : alert('please Login');
+            }}
           >
             {navMenu}
           </NavLink>
         ))}
       </Navigation>
       <InfoArea>
-        {isLogin ? (
+        {curUserData.isLogin ? (
           <>
             <div>
-              <Image
-                src="/image/message.png"
-                width={36}
-                height={36}
-                alt="message"
-                className="icons"
-              />
+              <AiFillMail className="icon" />
             </div>
             <div>
-              <Image
-                src="/image/alarm.png"
-                width={36}
-                height={36}
-                alt="alarm"
-                className="icons"
-              />
+              <AiFillBell className="icon" />
             </div>
-            <div className="mypage">My</div>
+            <MyPageButton href="/mypage">My</MyPageButton>
           </>
         ) : (
           <>
-            <div className="signup">Login</div>
+            <LogInButton onClick={login}>Log in</LogInButton>
           </>
         )}
       </InfoArea>
-    </TopWrapper>
+    </StyledHeader>
   );
 };
 
 export default Header;
 
-const TopWrapper = styled.div`
-  width: 100%;
+const StyledHeader = styled.header`
+  padding: 0 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
-  height: 137px;
+  width: 100%;
+  height: 111px;
   align-items: center;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.palette.background};
+  z-index: ${getZIndex('header')};
+  background-color: #ffffff;
 `;
 
 const Navigation = styled.nav`
   display: flex;
-  width: 100%;
-  display: flex;
   align-items: center;
-  font-size: 24px;
-  div {
-    margin-left: 80px;
-  }
-  a {
-    margin-left: 80px;
-    color: ${(props) => props.theme.palette.secondary.main};
-  }
+  font-size: 20px;
+  column-gap: 33px;
+`;
+
+const Logo = styled.div`
+  margin-right: 33px;
 `;
 
 const NavLink = styled(Link)`
+  color: ${({ theme }) => theme.palette.secondary.main};
   ${({ selected }) =>
     selected &&
     css`
@@ -99,27 +133,51 @@ const InfoArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
-  width: 100%;
   font-size: 18px;
-  .icons {
-    margin-right: 48px;
+  column-gap: 48px;
+  .icon {
+    width: 36px;
+    height: 36px;
   }
-  .signup {
-    margin-right: 80px;
-    color: white;
-    width: 107px;
-    text-align: center;
-    border-radius: 18px;
-    padding: 10px;
-    background-color: ${(props) => props.theme.palette.accent};
-  }
-  .mypage {
-    margin-right: 80px;
-    color: white;
-    width: 107px;
-    text-align: center;
-    border-radius: 18px;
-    padding: 10px;
-    background-color: ${(props) => props.theme.palette.primary};
-  }
+`;
+
+const LinkButtonStyle = css`
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16.5px 28px;
+  border-radius: 100px;
+`;
+
+const LogInButton = styled.button`
+  ${LinkButtonStyle};
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: ${({ theme }) => theme.palette.accent};
+`;
+
+const LogOutButton = styled.button`
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  color: ${({ theme }) => theme.palette.gray};
+  background-color: ${({ theme }) => theme.palette.background};
+`;
+
+const MyPageButton = styled(Link)`
+  ${LinkButtonStyle}
+  cursor: pointer;
+  min-width: 92.32px;
+  outline: none;
+  border: none;
+  font-size: 14px;
+  background-color: ${({ theme }) => theme.palette.primary};
 `;
