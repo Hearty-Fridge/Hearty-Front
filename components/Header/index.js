@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
 import { userState } from 'atoms/user';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { getZIndex } from '@styles/zIndex';
 import { axiosInstance } from 'api';
 import { AiFillBell, AiFillMail } from 'react-icons/ai';
@@ -16,6 +16,7 @@ const TOKEN_KEY = 'accessToken';
 
 const Header = () => {
   const [curUserData, setCurUserData] = useRecoilState(userState);
+  const resetUserData = useSetRecoilState(userState);
   const [token, setToken] = useState(null);
   // recoil 써서 나중에 전역으로 관리하자!
   // const [isLogin, setIsLogin] = useState(false);
@@ -49,6 +50,11 @@ const Header = () => {
     // flow: 'auth-code',
   });
 
+  const handleLogout = () => {
+    localStorage.clear();
+    resetUserData([]);
+  };
+
   useEffect(() => {
     setToken(localStorage.getItem('accessToken'));
   }, [curUserData]);
@@ -75,12 +81,10 @@ const Header = () => {
       <InfoArea>
         {curUserData.isLogin ? (
           <>
-            <div>
-              <AiFillMail className="icon" />
-            </div>
-            <div>
-              <AiFillBell className="icon" />
-            </div>
+            <Bell>
+              <AiFillBell className="icon" color="#594C48" />
+            </Bell>
+            <LogOutButton onClick={handleLogout}>Log out</LogOutButton>
             <MyPageButton href="/mypage">My</MyPageButton>
           </>
         ) : (
@@ -158,6 +162,13 @@ const LogInButton = styled.button`
   background-color: ${({ theme }) => theme.palette.accent};
 `;
 
+const Bell = styled.button`
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0);
+`;
+
 const LogOutButton = styled.button`
   outline: none;
   border: none;
@@ -169,7 +180,7 @@ const LogOutButton = styled.button`
 
   font-size: 18px;
   color: ${({ theme }) => theme.palette.gray};
-  background-color: ${({ theme }) => theme.palette.background};
+  background-color: rgba(255, 0, 0, 0);
 `;
 
 const MyPageButton = styled(Link)`
