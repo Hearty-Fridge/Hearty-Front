@@ -129,6 +129,10 @@ const NavLink = styled(Link)`
     `};
 `;
 
+const Bar = styled.div`
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
 const InfoArea = styled.div`
   display: flex;
   align-items: center;
