@@ -30,7 +30,7 @@ const MypageComponent = () => {
   console.log(data);
 
   if (!data) {
-    return null;
+    return <>로그인이 필요합니다.</>;
   }
 
   const user = data.data.data.profile;
@@ -61,7 +61,7 @@ const MypageComponent = () => {
       </ProfileBox>
       <DataBox>
         <ReservationBox>
-          <ReservationData reserv={reserv} />
+          <ReservationData reserv={reserv} userId={userStateAtom.memberId} />
         </ReservationBox>
         <GnTBox>
           <GnTData list={SORTED_GNT} />

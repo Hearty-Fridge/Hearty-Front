@@ -1,8 +1,32 @@
+import { axiosInstance } from 'api';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
-// 2023-03-02T12:16:14.362085
+const ReservationData = ({ reserv, userId }) => {
+  const token = localStorage.getItem('accessToken');
 
-const ReservationData = ({ reserv }) => {
+  console.log(reserv);
+  const handleCancel = (id) => {
+    console.log(id);
+  };
+
+  const handleCheck = async (id) => {
+    try {
+      const response = await axiosInstance.put(
+        `/take/checkFood?takeId=${id}`,
+        id,
+        {
+          headers: {
+            Authorization: `Bearer ${token}}`,
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Wrapper>
@@ -26,8 +50,20 @@ const ReservationData = ({ reserv }) => {
                   <TDSubTxt>{item.fridgeName}</TDSubTxt>
                 </LocBox>
                 <Buttons>
-                  <BtnCancel>Cancel</BtnCancel>
-                  <BtnCheck>Check</BtnCheck>
+                  <BtnCancel
+                    onClick={() => {
+                      handleCancel(item.id);
+                    }}
+                  >
+                    Cancel
+                  </BtnCancel>
+                  <BtnCheck
+                    onClick={() => {
+                      handleCheck(item.id);
+                    }}
+                  >
+                    Check
+                  </BtnCheck>
                 </Buttons>
               </TD>
               <Divider />
@@ -116,6 +152,7 @@ const Buttons = styled.div`
   column-gap: 23px;
 `;
 const BtnCancel = styled.button`
+  cursor: pointer;
   width: 84px;
   height: 37px;
   text-align: center;
@@ -127,6 +164,7 @@ const BtnCancel = styled.button`
   font-size: 16px;
 `;
 const BtnCheck = styled.button`
+  cursor: pointer;
   width: 84px;
   height: 37px;
   text-align: center;
