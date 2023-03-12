@@ -87,7 +87,7 @@ const THTxt = styled.div`
 `;
 const TDWrapper = styled.div`
   height: 210px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 `;
 const TD = styled.div`

@@ -43,7 +43,7 @@ export function useLogin() {
         };
         setCurUserData(user);
         localStorage.setItem(TOKEN_KEY, data.accessToken);
-        setIsLogin(true); // 로그인 성공 시 isLogin 변수를 true로 설정합니다.
+        setIsLogin(true);
       } catch (error) {
         console.error('error: ', error);
       }
@@ -53,7 +53,7 @@ export function useLogin() {
   const handleLogout = () => {
     localStorage.removeItem(TOKEN_KEY);
     resetUserState();
-    setIsLogin(false); // 로그아웃 시 isLogin 변수를 false로 설정합니다.
+    setIsLogin(false);
   };
 
   return { isLogin, handleLogin, handleLogout };
