@@ -32,8 +32,8 @@ export function useLogin() {
     onSuccess: async (response) => {
       const accessToken = response.access_token;
       try {
-        const { data } = await axiosInstance.post('/member/googleLogin', {
-          accessToken,
+        const { data } = await axiosInstance.post(`/member/googleLogin`, {
+          accessToken: accessToken,
         });
         const user = {
           memberId: data.memberId,
@@ -42,7 +42,8 @@ export function useLogin() {
           profileImage: data.profileImage,
         };
         setCurUserData(user);
-        localStorage.setItem(TOKEN_KEY, res.data.accessToken);
+        localStorage.setItem(TOKEN_KEY, data.accessToken);
+        setIsLogin(true); // 로그인 성공 시 isLogin 변수를 true로 설정합니다.
       } catch (error) {
         console.error('error: ', error);
       }
@@ -52,6 +53,7 @@ export function useLogin() {
   const handleLogout = () => {
     localStorage.removeItem(TOKEN_KEY);
     resetUserState();
+    setIsLogin(false); // 로그아웃 시 isLogin 변수를 false로 설정합니다.
   };
 
   return { isLogin, handleLogin, handleLogout };
