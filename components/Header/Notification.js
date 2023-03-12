@@ -1,17 +1,32 @@
-import { AiFillBell } from 'react-icons/ai';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useState } from 'react';
+import { axiosInstance } from 'api';
+import { useQuery } from 'react-query';
+import dayjs from 'dayjs';
+
 import NotificationModal from '@components/Modal/NotificationModal';
+import { AiFillBell } from 'react-icons/ai';
+import axios from 'axios';
 
 const Notification = () => {
   const [openModal, setOpenModal] = useState(false);
-  const onClickBell = () => {
+
+  const onClickBell = async () => {
     setOpenModal(true);
-    console.log(openModal);
+
+    try {
+      const { data } = await axiosInstance.get(`/notification/getNotification`);
+
+      console.log(data);
+    } catch (error) {
+      console.error('error: ', error);
+    }
   };
+
   const setCloseModal = () => {
     setOpenModal(false);
   };
+
   return (
     <>
       <Bell onClick={onClickBell}>
