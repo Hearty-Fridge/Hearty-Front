@@ -1,7 +1,5 @@
 import { axiosInstance } from 'api';
-import { userState } from 'atoms/user';
 import { useQuery } from 'react-query';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
@@ -11,30 +9,17 @@ import GnTData from './GnTData';
 import MsgData from './MsgData';
 
 const MypageComponent = () => {
-  const userStateAtom = useRecoilValue(userState);
-  const token = localStorage.getItem('accessToken');
   const { data } = useQuery(
-    ['getProfile', userStateAtom.memberId],
-    async () =>
-      await axiosInstance.get(
-        `/member/getProfile3?memberId=${userStateAtom.memberId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}}`,
-          },
-        }
-      ),
-    { enabled: !!userStateAtom.memberId }
+    ['getProfile'],
+    async () => await axiosInstance.get(`/member/getProfile3`)
   );
-
-  console.log(data);
 
   if (!data) {
     return null;
   }
 
   const user = data.data.data.profile;
-  const reserv = data.data.data.reservations;
+  const reservations = data.data.data.reservations;
   const gives = data.data.data.gives;
   const takes = data.data.data.takes;
 
@@ -61,7 +46,7 @@ const MypageComponent = () => {
       </ProfileBox>
       <DataBox>
         <ReservationBox>
-          <ReservationData reserv={reserv} />
+          <ReservationData reservations={reservations} />
         </ReservationBox>
         <GnTBox>
           <GnTData list={SORTED_GNT} />

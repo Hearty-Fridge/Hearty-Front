@@ -6,7 +6,6 @@ export const userState = atom({
   key: `userState/${v1()}`,
   default: {
     memberId: null,
-    isLogin: false,
     email: '',
     name: '',
     profileImage: '',

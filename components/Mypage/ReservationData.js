@@ -1,8 +1,23 @@
+import { axiosInstance } from 'api';
 import styled from 'styled-components';
+import ReservationTime from './ReservationTime';
 
-// 2023-03-02T12:16:14.362085
+const ReservationData = ({ reservations }) => {
+  const handleCancel = (id) => {
+    console.log(id);
+  };
 
-const ReservationData = ({ reserv }) => {
+  const handleCheck = async (id) => {
+    try {
+      const response = await axiosInstance.put(
+        `/take/checkFood?takeId=${id}`,
+        id
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Wrapper>
@@ -13,21 +28,30 @@ const ReservationData = ({ reserv }) => {
             <THTxt>Food</THTxt>
             <THTxt>Location</THTxt>
           </TH>
-          {reserv.map((item) => (
+          {reservations.map((reservation) => (
             <>
-              <TD key={item}>
-                <Time>
-                  {new Date(item.takeTime).getHours()}:
-                  {new Date(item.takeTime).getMinutes()}
-                </Time>
-                <TDTxt>{item.foodName}</TDTxt>
+              <TD key={reservation.id}>
+                <ReservationTime time={reservation.time} />
+                <TDTxt>{reservation.foodName}</TDTxt>
                 <LocBox>
-                  <TDTxt>{item.fridgeName}</TDTxt>
-                  <TDSubTxt>{item.fridgeName}</TDSubTxt>
+                  <TDTxt>{reservation.fridgeName}</TDTxt>
+                  <TDSubTxt>{reservation.fridgeName}</TDSubTxt>
                 </LocBox>
                 <Buttons>
-                  <BtnCancel>Cancel</BtnCancel>
-                  <BtnCheck>Check</BtnCheck>
+                  <BtnCancel
+                    onClick={() => {
+                      handleCancel(reservation.id);
+                    }}
+                  >
+                    Cancel
+                  </BtnCancel>
+                  <BtnCheck
+                    onClick={() => {
+                      handleCheck(reservation.id);
+                    }}
+                  >
+                    Check
+                  </BtnCheck>
                 </Buttons>
               </TD>
               <Divider />
@@ -116,6 +140,7 @@ const Buttons = styled.div`
   column-gap: 23px;
 `;
 const BtnCancel = styled.button`
+  cursor: pointer;
   width: 84px;
   height: 37px;
   text-align: center;
@@ -127,6 +152,7 @@ const BtnCancel = styled.button`
   font-size: 16px;
 `;
 const BtnCheck = styled.button`
+  cursor: pointer;
   width: 84px;
   height: 37px;
   text-align: center;
