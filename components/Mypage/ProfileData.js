@@ -69,7 +69,6 @@ const ProfileData = ({ user }) => {
           )}
         </Wrap>
       </Wrapper>
-      <SignDate>가입일 2020.06.12</SignDate>
     </>
   );
 };
