@@ -1,10 +1,25 @@
 import styled from 'styled-components';
+import { axiosInstance } from 'api';
+import { useQuery } from 'react-query';
 
 const Cancel = () => {};
 
-const ProfileData = ({ user, gives, takes }) => {
-  const profileImg = user.profileImage;
-  console.log(profileImg);
+const ProfileData = ({ user }) => {
+  const { data: takeData } = useQuery(
+    ['getTakes'],
+    async () => await axiosInstance.get(`/take/getTakes`)
+  );
+  const { data: giveData } = useQuery(
+    ['getGives'],
+    async () => await axiosInstance.get(`/give/getGives`)
+  );
+
+  if (!takeData || !giveData) {
+    return null;
+  }
+
+  const takes = takeData.data.data;
+  const gives = giveData.data.data;
   return (
     <>
       {' '}

@@ -1,8 +1,35 @@
+import { axiosInstance } from 'api';
+import { useQuery } from 'react-query';
+
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-const GnTData = ({ list }) => {
-  console.log('LIST:', list);
+const GnTData = () => {
+  const { data: givesData } = useQuery(
+    ['getGives'],
+    async () => await axiosInstance.get(`/member/getGives`)
+  );
+  const { data: takesData } = useQuery(
+    ['getTakes'],
+    async () => await axiosInstance.get(`/member/getTakes`)
+  );
+
+  if (!givesData || !takesData) {
+    return null;
+  }
+
+  console.log(givesData);
+
+  const gives = givesData.data.data;
+  const takes = takesData.data.data;
+
+  const GNT_LIST = gives.concat(takes);
+  const list = GNT_LIST.sort((a, b) => {
+    const dateA = dayjs(a.time);
+    const dateB = dayjs(b.time);
+    return dateB - dateA;
+  });
+
   return (
     <Wrapper>
       <Title>Give & Take</Title>

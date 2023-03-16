@@ -1,8 +1,23 @@
 import { axiosInstance } from 'api';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 import ReservationTime from './ReservationTime';
 
-const ReservationData = ({ reservations }) => {
+const ReservationData = () => {
+  const { data } = useQuery(
+    ['getReservatino'],
+    async () => await axiosInstance.get(`/take/getReservation`)
+  );
+
+  if (!data) {
+    return null;
+  }
+
+  console.log(data);
+
+  const reservations = data.data.data;
+
   const handleCancel = (id) => {
     console.log(id);
   };
