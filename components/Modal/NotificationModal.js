@@ -4,7 +4,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { AiFillBell } from 'react-icons/ai';
 import { FaEnvelope } from 'react-icons/fa';
 
-const NotificationModal = ({ show, setShow, onCloseModal }) => {
+const NotificationModal = ({ show, onCloseModal, list }) => {
   return (
     <Modal show={show} onCloseModal={onCloseModal} bright={true}>
       <Container>

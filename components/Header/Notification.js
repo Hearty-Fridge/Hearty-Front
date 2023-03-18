@@ -36,7 +36,11 @@ const Notification = () => {
       </Bell>
       {openModal && (
         <>
-          <NotificationModal show={openModal} onCloseModal={setCloseModal} />
+          <NotificationModal
+            show={openModal}
+            onCloseModal={setCloseModal}
+            list={list}
+          />
         </>
       )}
     </>
