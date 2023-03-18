@@ -47,11 +47,11 @@ const LeaveMsgModal = ({ show, onCloseModal, item }) => {
             maxLength={maxLength}
             data-counter={`${counter}/${maxLength}`}
             placeholder="Please leave your message"
-          >
+          ></Box>
+          <Valid>
             {counter}/{maxLength}
-          </Box>
+          </Valid>
         </Wrap>
-        {counter}/{maxLength}
         <Buttons>
           <CancelBtn>Cancel</CancelBtn>
           <ConfirmBtn>Confirm</ConfirmBtn>
@@ -131,10 +131,8 @@ const TagGive = styled.div`
 const Wrap = styled.div`
   padding: 20px 35px;
 `;
-
 const Box = memo(styled.textarea`
   font-family: 'Pretendard';
-
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -164,6 +162,7 @@ const Buttons = styled.div`
   width: 194px;
   column-gap: 26px;
   margin-right: 30px;
+  margin-top: 5px;
 `;
 
 const CancelBtn = styled.button`
@@ -186,6 +185,14 @@ const ConfirmBtn = styled.button`
   background-color: ${({ theme }) => theme.palette.accent};
   border: 1px solid #f2916e;
   border-radius: 10px;
+`;
+
+const Valid = styled.div`
+  float: right;
+  font-size: 15px;
+  align-items: center;
+  text-align: right;
+  color: rgba(89, 76, 72, 0.7);
 `;
 
 export default LeaveMsgModal;
