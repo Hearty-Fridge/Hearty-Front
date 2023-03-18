@@ -9,7 +9,6 @@ import { FaEnvelope } from 'react-icons/fa';
 
 const NotificationModal = ({ show, onCloseModal, list }) => {
   const handleCheck = async (id) => {
-    console.log('sdfkjsdljf');
     try {
       const response = await axiosInstance.put(
         `/notification/checkNotice?notificationId=${id}`,

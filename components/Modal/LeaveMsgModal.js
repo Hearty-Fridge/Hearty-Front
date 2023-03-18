@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import Modal from './Modal';
 import { IoCloseSharp } from 'react-icons/io5';
 import { useState, memo } from 'react';
+import { axiosInstance } from 'api';
 
 const LeaveMsgModal = ({ show, onCloseModal, item }) => {
-  console.log(item);
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
@@ -15,6 +15,21 @@ const LeaveMsgModal = ({ show, onCloseModal, item }) => {
   const remainingChars = maxLength - value.length;
   const counter = remainingChars > maxLength ? 300 : value.length;
 
+  const sendMessage = async (id) => {
+    try {
+      const response = await axiosInstance.post(`/message/takeMessage`, {
+        takeId: id,
+        content: value,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    console.log('send!');
+    console.log(id);
+  };
+
+  console.log(item);
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
       <Container>
@@ -53,8 +68,15 @@ const LeaveMsgModal = ({ show, onCloseModal, item }) => {
           </Valid>
         </Wrap>
         <Buttons>
-          <CancelBtn>Cancel</CancelBtn>
-          <ConfirmBtn>Confirm</ConfirmBtn>
+          <CancelBtn onClick={onCloseModal}>Cancel</CancelBtn>
+          <ConfirmBtn
+            onChange={() => {
+              sendMessage(item.id);
+            }}
+            onClick={onCloseModal}
+          >
+            Confirm
+          </ConfirmBtn>
         </Buttons>
       </Container>
     </Modal>
@@ -166,6 +188,7 @@ const Buttons = styled.div`
 `;
 
 const CancelBtn = styled.button`
+  cursor: pointer;
   width: 148px;
   height: 37px;
   text-align: center;
@@ -177,6 +200,7 @@ const CancelBtn = styled.button`
 `;
 
 const ConfirmBtn = styled.button`
+  cursor: pointer;
   width: 148px;
   height: 37px;
   text-align: center;
