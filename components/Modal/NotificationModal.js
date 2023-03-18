@@ -1,5 +1,5 @@
 import Modal from './Modal';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { IoCloseSharp } from 'react-icons/io5';
 import { AiFillBell } from 'react-icons/ai';
 import { FaEnvelope } from 'react-icons/fa';

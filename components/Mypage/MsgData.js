@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import Message from './Message';
 
 const MsgData = () => {
   const { data: sendMsg } = useQuery(
@@ -38,22 +39,14 @@ const MsgData = () => {
     dotsClass: 'dots_custom',
   };
 
+  console.log('LIST', list);
   return (
     <Wrapper>
       <Title>Hearty Messages</Title>
-
       <Slider {...settings}>
         {list.map((item) => (
           <div>
-            <Card key={item}>
-              {item.type == 'receive' ? (
-                <TagReceive>Receive</TagReceive>
-              ) : (
-                <TagSend>Send</TagSend>
-              )}
-              <Contents>{item.message}</Contents>
-              <Address>{item.fridgeAddress}</Address>
-            </Card>
+            <Message item={item} />
           </div>
         ))}
       </Slider>
