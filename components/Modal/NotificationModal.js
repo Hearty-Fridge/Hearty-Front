@@ -1,10 +1,26 @@
 import Modal from './Modal';
+import Link from 'next/link';
 import styled from 'styled-components';
+import { axiosInstance } from 'api';
+
 import { IoCloseSharp } from 'react-icons/io5';
 import { AiFillBell } from 'react-icons/ai';
 import { FaEnvelope } from 'react-icons/fa';
 
 const NotificationModal = ({ show, onCloseModal, list }) => {
+  const handleCheck = async (id) => {
+    console.log('sdfkjsdljf');
+    try {
+      const response = await axiosInstance.put(
+        `/notification/checkNotice?notificationId=${id}`,
+        id
+      );
+      console.log('click!');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Modal show={show} onCloseModal={onCloseModal} bright={true}>
       <Container>
@@ -37,13 +53,19 @@ const NotificationModal = ({ show, onCloseModal, list }) => {
                       </div>
                     </AlarmBar>
                   ) : (
-                    <NewAlarmBar>
-                      <AiFillBell className="icon" color="#ED6335" />
-                      <div>
-                        <Text>{item.message}</Text>
-                        <Date>{item.noticeDate}</Date>
-                      </div>
-                    </NewAlarmBar>
+                    <MypageLink href="/mypage">
+                      <NewAlarmBar
+                        onChange={() => {
+                          handleCheck(item.notificationId);
+                        }}
+                      >
+                        <AiFillBell className="icon" color="#ED6335" />
+                        <div>
+                          <Text>{item.message}</Text>
+                          <Date>{item.noticeDate}</Date>
+                        </div>
+                      </NewAlarmBar>
+                    </MypageLink>
                   )}
                 </>
               ) : (
@@ -60,13 +82,19 @@ const NotificationModal = ({ show, onCloseModal, list }) => {
                       </div>
                     </MessageBar>
                   ) : (
-                    <NewMessageBar>
-                      <FaEnvelope className="icon" color="#ED6335" />
-                      <div>
-                        <Text>{item.message}</Text>
-                        <Date>{item.noticeDate}</Date>
-                      </div>
-                    </NewMessageBar>
+                    <MypageLink href="/mypage">
+                      <NewMessageBar
+                        onClick={() => {
+                          handleCheck(item.notificationId);
+                        }}
+                      >
+                        <FaEnvelope className="icon" color="#ED6335" />
+                        <div>
+                          <Text>{item.message}</Text>
+                          <Date>{item.noticeDate}</Date>
+                        </div>
+                      </NewMessageBar>
+                    </MypageLink>
                   )}
                 </>
               )}
@@ -130,6 +158,7 @@ const AlarmBar = styled.div`
   border-radius: 10px;
 `;
 const NewAlarmBar = styled.div`
+  cursor: pointer;
   padding: 16px 11px;
   display: flex;
   column-gap: 5px;
@@ -172,6 +201,7 @@ const MessageBar = styled.div`
   border-radius: 10px;
 `;
 const NewMessageBar = styled.div`
+  cursor: pointer;
   padding: 16px 11px;
   display: flex;
   column-gap: 5px;
@@ -182,5 +212,7 @@ const NewMessageBar = styled.div`
   border: 1px solid ${({ theme }) => theme.palette.beige2};
   border-radius: 10px;
 `;
+
+const MypageLink = styled(Link)``;
 
 export default NotificationModal;
