@@ -1,10 +1,21 @@
 import { axiosInstance } from 'api';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
-
+import LeaveMsgModal from '@components/Modal/LeaveMsgModal';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 const GnTData = () => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const setCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const onClickItem = () => {
+    setOpenModal(true);
+  };
+
   const { data: givesData } = useQuery(
     ['getGives'],
     async () => await axiosInstance.get(`/member/getGives`)
@@ -58,7 +69,18 @@ const GnTData = () => {
                 {item.status == 'COMPLETED' ? (
                   <OffBtn>Leave a Message</OffBtn>
                 ) : (
-                  <OnBtn>Leave a Message</OnBtn>
+                  <>
+                    <OnBtn onClick={onClickItem}>Leave a Message</OnBtn>
+                    {openModal && (
+                      <>
+                        <LeaveMsgModal
+                          show={openModal}
+                          onCloseModal={setCloseModal}
+                          item={item}
+                        />
+                      </>
+                    )}
+                  </>
                 )}
               </Buttons>
             </TD>

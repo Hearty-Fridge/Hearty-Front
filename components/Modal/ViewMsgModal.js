@@ -1,9 +1,8 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Modal from './Modal';
 import { IoCloseSharp } from 'react-icons/io5';
 
 const ViewMsgModal = ({ show, onCloseModal, item }) => {
-  console.log(item);
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
       <Container>
