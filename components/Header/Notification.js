@@ -10,22 +10,24 @@ import axios from 'axios';
 
 const Notification = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [list, setList] = useState({});
+
+  const setCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const onClickBell = async () => {
     setOpenModal(true);
 
     try {
       const { data } = await axiosInstance.get(`/notification/getNotification`);
-
-      console.log(data);
+      setList(data.data);
     } catch (error) {
       console.error('error: ', error);
     }
   };
 
-  const setCloseModal = () => {
-    setOpenModal(false);
-  };
+  console.log(list);
 
   return (
     <>
