@@ -27,8 +27,6 @@ const Notification = () => {
     }
   };
 
-  console.log(list);
-
   return (
     <>
       <Bell onClick={onClickBell}>

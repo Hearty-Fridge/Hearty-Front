@@ -21,20 +21,57 @@ const NotificationModal = ({ show, onCloseModal, list }) => {
           </Exit>
         </Top>
         <List>
-          <AlarmBar>
-            <AiFillBell className="icon" color="#ED6335" />
-            <div>
-              <Text>예약중인 유기농 계란이 있습니다!</Text>
-              <Date>2023.02.12</Date>
-            </div>
-          </AlarmBar>
-          <MessageBar>
-            <FaEnvelope className="icon" color="rgba(89, 76, 72, 0.5)" />
-            <div>
-              <Text>레드향에 대한 메시지가 도착했습니다!</Text>
-              <Date>2023.02.12</Date>
-            </div>
-          </MessageBar>
+          {Object.values(list).map((item) => (
+            <>
+              {item.type == 'reserve' ? (
+                <>
+                  {item.isCheck ? (
+                    <AlarmBar>
+                      <AiFillBell
+                        className="icon"
+                        color="rgba(89, 76, 72, 0.5)"
+                      />
+                      <div>
+                        <Text>{item.message}</Text>
+                        <Date>{item.noticeDate}</Date>
+                      </div>
+                    </AlarmBar>
+                  ) : (
+                    <NewAlarmBar>
+                      <AiFillBell className="icon" color="#ED6335" />
+                      <div>
+                        <Text>{item.message}</Text>
+                        <Date>{item.noticeDate}</Date>
+                      </div>
+                    </NewAlarmBar>
+                  )}
+                </>
+              ) : (
+                <>
+                  {item.isCheck ? (
+                    <MessageBar>
+                      <FaEnvelope
+                        className="icon"
+                        color="rgba(89, 76, 72, 0.5)"
+                      />
+                      <div>
+                        <Text>{item.message}</Text>
+                        <Date>{item.noticeDate}</Date>
+                      </div>
+                    </MessageBar>
+                  ) : (
+                    <NewMessageBar>
+                      <FaEnvelope className="icon" color="#ED6335" />
+                      <div>
+                        <Text>{item.message}</Text>
+                        <Date>{item.noticeDate}</Date>
+                      </div>
+                    </NewMessageBar>
+                  )}
+                </>
+              )}
+            </>
+          ))}
         </List>
       </Container>
     </Modal>
@@ -87,6 +124,17 @@ const AlarmBar = styled.div`
   column-gap: 5px;
   width: 467px;
   height: 66px;
+  background: white;
+
+  border: 1px solid ${({ theme }) => theme.palette.beige2};
+  border-radius: 10px;
+`;
+const NewAlarmBar = styled.div`
+  padding: 16px 11px;
+  display: flex;
+  column-gap: 5px;
+  width: 467px;
+  height: 66px;
   background: ${({ theme }) => theme.palette.beige1};
 
   border: 1px solid ${({ theme }) => theme.palette.beige2};
@@ -119,6 +167,17 @@ const MessageBar = styled.div`
   width: 467px;
   height: 66px;
   background: white;
+
+  border: 1px solid ${({ theme }) => theme.palette.beige2};
+  border-radius: 10px;
+`;
+const NewMessageBar = styled.div`
+  padding: 16px 11px;
+  display: flex;
+  column-gap: 5px;
+  width: 467px;
+  height: 66px;
+  background: ${({ theme }) => theme.palette.beige1};
 
   border: 1px solid ${({ theme }) => theme.palette.beige2};
   border-radius: 10px;

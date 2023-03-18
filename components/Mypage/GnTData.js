@@ -53,7 +53,7 @@ const GnTData = () => {
         </TH>
         <TDWrapper>
           {list.map((item) => (
-            <TD key={item}>
+            <TD key={item.index}>
               {item.type == 'give' ? (
                 <TagGive>Give</TagGive>
               ) : (
