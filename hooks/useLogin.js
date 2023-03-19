@@ -55,7 +55,6 @@ export function useLogin() {
     resetUserState();
     setIsLogin(false);
   };
-  s;
 
   return { isLogin, handleLogin, handleLogout };
 }

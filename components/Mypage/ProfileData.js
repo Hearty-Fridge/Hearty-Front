@@ -1,10 +1,22 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { axiosInstance } from 'api';
 import { useQuery } from 'react-query';
+import TakerModal from '@components/Modal/TakerModal';
 
 const Cancel = () => {};
 
 const ProfileData = ({ user }) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const setCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleTaker = () => {
+    setOpenModal(true);
+  };
+
   const { data: takeData } = useQuery(
     ['getTakes'],
     async () => await axiosInstance.get(`/take/getTakes`)
@@ -63,8 +75,13 @@ const ProfileData = ({ user }) => {
               <CardMC>수급자 인증이 필요합니다!</CardMC>
               <CardD>최초인증이 필요합니다</CardD>
               <Flex>
-                <CardBC>인증하기</CardBC>
+                <CardBC onClick={handleTaker}>인증하기</CardBC>
               </Flex>
+              {openModal && (
+                <>
+                  <TakerModal show={openModal} onCloseModal={setCloseModal} />
+                </>
+              )}
             </Card>
           )}
         </Wrap>

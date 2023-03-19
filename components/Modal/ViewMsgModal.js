@@ -16,6 +16,7 @@ const ViewMsgModal = ({ show, onCloseModal, item }) => {
                 width: '41px',
                 height: '41px',
                 color: '#594C48',
+                cursor: 'pointer',
               }}
             />
           </Exit>
