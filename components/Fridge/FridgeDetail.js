@@ -91,9 +91,9 @@ const FridgeDetail = ({ id }) => {
       <Bookmark
         onClick={() => {
           mutate({
-            memberId: 1,
             fridgeId: id,
             state: fridgeDetailData.isBookmark,
+            token: token,
           });
         }}
       >

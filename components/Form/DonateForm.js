@@ -106,12 +106,7 @@ export default function DonateForm({ id, setShow }) {
               required: '권장 섭취 기간을 입력해주세요.',
             }}
             render={({ field: { onChange, value } }) => (
-              <Calendar
-                expirationDate={value}
-                setExpirationDate={(value) => {
-                  onChange(value);
-                }}
-              />
+              <Calendar expirationDate={value} setExpirationDate={onChange} />
             )}
           />
         </Section>
