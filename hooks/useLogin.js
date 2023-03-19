@@ -42,7 +42,7 @@ export function useLogin() {
           profileImage: data.profileImage,
         };
         setCurUserData(user);
-        localStorage.setItem(TOKEN_KEY, res.data.accessToken);
+        localStorage.setItem(TOKEN_KEY, data.accessToken);
       } catch (error) {
         console.error('error: ', error);
       }
