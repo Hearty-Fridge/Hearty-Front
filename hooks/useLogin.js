@@ -43,7 +43,10 @@ export function useLogin() {
         };
         setCurUserData(user);
         localStorage.setItem(TOKEN_KEY, data.accessToken);
+<<<<<<< HEAD
         setIsLogin(true);
+=======
+>>>>>>> 54e0b89baeaa9e6b3950a6225aeb78e71a6a50d2
       } catch (error) {
         console.error('error: ', error);
       }
