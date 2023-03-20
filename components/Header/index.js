@@ -9,8 +9,6 @@ import { useLogin } from '@hooks/useLogin';
 
 import Notification from './Notification';
 
-const NAV_MENU = ['Intro', '|', 'Map'];
-
 const Header = () => {
   const { isLogin, handleLogin, handleLogout } = useLogin();
 
