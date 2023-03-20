@@ -23,18 +23,19 @@ const Header = () => {
         <Link href="/">
           <Image src="/image/logo.png" alt="logo" width={145} height={145} />
         </Link>
-        {NAV_MENU.map((navMenu) => (
-          <NavLink
-            key={navMenu}
-            selected={currentPath === navMenu.toLowerCase()}
-            href={isLogin ? `/${navMenu.toLowerCase()}` : ''}
-            onClick={() => {
-              isLogin ? '' : alert('please Login');
-            }}
-          >
-            {navMenu}
-          </NavLink>
-        ))}
+        <NavLink selected={currentPath === 'intro'} href={`/intro`}>
+          Intro
+        </NavLink>
+        <div>|</div>
+        <NavLink
+          selected={currentPath === 'map'}
+          href={isLogin ? `/map` : ''}
+          onClick={() => {
+            isLogin ? '' : alert('please Login');
+          }}
+        >
+          Map
+        </NavLink>
       </Navigation>
       <InfoArea>
         {isLogin ? (
