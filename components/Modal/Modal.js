@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useCallback, useEffect } from 'react';
 import ModalContainer from './ModalContainer';
 
-const Modal = ({ children, show, onCloseModal }) => {
+const Modal = ({ children, show, onCloseModal, bright }) => {
   useEffect(() => {
     const close = (e) => {
       if (e.key === 'Escape') {
@@ -30,9 +30,15 @@ const Modal = ({ children, show, onCloseModal }) => {
   if (!show) return null;
   return (
     <ModalContainer>
-      <Container onClick={onCloseModal}>
-        <Content onClick={stopPropagation}>{children}</Content>
-      </Container>
+      {bright ? (
+        <WhiteContainer onClick={onCloseModal}>
+          <WhiteContent onClick={stopPropagation}>{children}</WhiteContent>
+        </WhiteContainer>
+      ) : (
+        <Container onClick={onCloseModal}>
+          <Content onClick={stopPropagation}>{children}</Content>
+        </Container>
+      )}
     </ModalContainer>
   );
 };
@@ -49,9 +55,25 @@ const Container = styled.div`
   z-index: 1001;
 `;
 
+const WhiteContainer = styled.div`
+  position: absolute;
+  min-height: 391px;
+  width: 100%;
+  z-index: 1001;
+  left: 1136px;
+  top: 102px;
+`;
+
 const Content = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+const WhiteContent = styled.div`
+  position: fixed;
+  left: 1136px;
+  top: 102px;
+  /* transform: translate(-50%, -50%); */
 `;

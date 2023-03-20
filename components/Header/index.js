@@ -7,6 +7,8 @@ import { getZIndex } from '@styles/zIndex';
 import { AiFillBell } from 'react-icons/ai';
 import { useLogin } from '@hooks/useLogin';
 
+import Notification from './Notification';
+
 const NAV_MENU = ['Intro', '|', 'Map'];
 
 const Header = () => {
@@ -37,9 +39,7 @@ const Header = () => {
       <InfoArea>
         {isLogin ? (
           <>
-            <Bell>
-              <AiFillBell className="icon" color="#594C48" />
-            </Bell>
+            <Notification />
             <Link href="/">
               <LogOutButton onClick={handleLogout}>Log out</LogOutButton>
             </Link>
@@ -122,13 +122,6 @@ const LogInButton = styled.button`
   outline: none;
   border: none;
   background-color: ${({ theme }) => theme.palette.accent};
-`;
-
-const Bell = styled.button`
-  outline: none;
-  border: none;
-  cursor: pointer;
-  background-color: rgba(255, 0, 0, 0);
 `;
 
 const LogOutButton = styled.button`

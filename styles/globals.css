@@ -37,11 +37,10 @@ a {
 /* slick-slider dots_custom */
 .dots_custom {
   padding: 0;
-  width: 130px;
   height: 10px;
   text-align: center;
-  margin-top: 25px;
-  margin-left: 433px;
+  padding-top: 25px;
+  margin: 0 auto;
 }
 
 .dots_custom li {

@@ -1,10 +1,35 @@
+import { axiosInstance } from 'api';
+import { useQuery } from 'react-query';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import Message from './Message';
 
-const MsgData = ({ list }) => {
-  console.log(list);
+const MsgData = () => {
+  const { data: sendMsg } = useQuery(
+    ['getSendMessages'],
+    async () => await axiosInstance.get(`/message/getSendMessages`)
+  );
+  const { data: receiveMsg } = useQuery(
+    ['getReceiveMessages'],
+    async () => await axiosInstance.get(`/message/getReceiveMessages`)
+  );
+
+  if (!sendMsg || !receiveMsg) {
+    return null;
+  }
+
+  const receive = receiveMsg.data.data;
+  const send = sendMsg.data.data;
+  const MSG_LIST = receive.concat(send);
+  const list = MSG_LIST.sort((a, b) => {
+    const dateA = dayjs(a.time);
+    const dateB = dayjs(b.time);
+    return dateB - dateA;
+  });
+
   const settings = {
     dots: true,
     infinite: true,
@@ -14,22 +39,14 @@ const MsgData = ({ list }) => {
     dotsClass: 'dots_custom',
   };
 
+  console.log('LIST', list);
   return (
     <Wrapper>
       <Title>Hearty Messages</Title>
-
       <Slider {...settings}>
         {list.map((item) => (
           <div>
-            <Card key={item}>
-              {item.type == 'receive' ? (
-                <TagReceive>Receive</TagReceive>
-              ) : (
-                <TagSend>Send</TagSend>
-              )}
-              <Contents>{item.message}</Contents>
-              <Address>{item.fridgeAddress}</Address>
-            </Card>
+            <Message item={item} />
           </div>
         ))}
       </Slider>

@@ -1,10 +1,37 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { axiosInstance } from 'api';
+import { useQuery } from 'react-query';
+import TakerModal from '@components/Modal/TakerModal';
 
 const Cancel = () => {};
 
-const ProfileData = ({ user, gives, takes }) => {
-  const profileImg = user.profileImage;
-  console.log(profileImg);
+const ProfileData = ({ user }) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const setCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleTaker = () => {
+    setOpenModal(true);
+  };
+
+  const { data: takeData } = useQuery(
+    ['getTakes'],
+    async () => await axiosInstance.get(`/take/getTakes`)
+  );
+  const { data: giveData } = useQuery(
+    ['getGives'],
+    async () => await axiosInstance.get(`/give/getGives`)
+  );
+
+  if (!takeData || !giveData) {
+    return null;
+  }
+
+  const takes = takeData.data.data;
+  const gives = giveData.data.data;
   return (
     <>
       {' '}
@@ -48,13 +75,17 @@ const ProfileData = ({ user, gives, takes }) => {
               <CardMC>수급자 인증이 필요합니다!</CardMC>
               <CardD>최초인증이 필요합니다</CardD>
               <Flex>
-                <CardBC>인증하기</CardBC>
+                <CardBC onClick={handleTaker}>인증하기</CardBC>
               </Flex>
+              {openModal && (
+                <>
+                  <TakerModal show={openModal} onCloseModal={setCloseModal} />
+                </>
+              )}
             </Card>
           )}
         </Wrap>
       </Wrapper>
-      <SignDate>가입일 2020.06.12</SignDate>
     </>
   );
 };

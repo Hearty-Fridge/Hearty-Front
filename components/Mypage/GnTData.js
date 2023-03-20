@@ -1,8 +1,46 @@
+import { axiosInstance } from 'api';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import LeaveMsgModal from '@components/Modal/LeaveMsgModal';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-const GnTData = ({ list }) => {
-  console.log('LIST:', list);
+const GnTData = () => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const setCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const onClickItem = () => {
+    setOpenModal(true);
+  };
+
+  const { data: givesData } = useQuery(
+    ['getGives'],
+    async () => await axiosInstance.get(`/member/getGives`)
+  );
+  const { data: takesData } = useQuery(
+    ['getTakes'],
+    async () => await axiosInstance.get(`/member/getTakes`)
+  );
+
+  if (!givesData || !takesData) {
+    return null;
+  }
+
+  console.log(givesData);
+
+  const gives = givesData.data.data;
+  const takes = takesData.data.data;
+
+  const GNT_LIST = gives.concat(takes);
+  const list = GNT_LIST.sort((a, b) => {
+    const dateA = dayjs(a.time);
+    const dateB = dayjs(b.time);
+    return dateB - dateA;
+  });
+
   return (
     <Wrapper>
       <Title>Give & Take</Title>
@@ -15,7 +53,7 @@ const GnTData = ({ list }) => {
         </TH>
         <TDWrapper>
           {list.map((item) => (
-            <TD key={item}>
+            <TD key={item.index}>
               {item.type == 'give' ? (
                 <TagGive>Give</TagGive>
               ) : (
@@ -31,7 +69,18 @@ const GnTData = ({ list }) => {
                 {item.status == 'COMPLETED' ? (
                   <OffBtn>Leave a Message</OffBtn>
                 ) : (
-                  <OnBtn>Leave a Message</OnBtn>
+                  <>
+                    <OnBtn onClick={onClickItem}>Leave a Message</OnBtn>
+                    {openModal && (
+                      <>
+                        <LeaveMsgModal
+                          show={openModal}
+                          onCloseModal={setCloseModal}
+                          item={item}
+                        />
+                      </>
+                    )}
+                  </>
                 )}
               </Buttons>
             </TD>
@@ -87,7 +136,7 @@ const THTxt = styled.div`
 `;
 const TDWrapper = styled.div`
   height: 210px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 `;
 const TD = styled.div`
