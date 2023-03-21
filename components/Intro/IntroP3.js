@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const HomeP3 = ({ className }) => {
+export const IntroP3 = ({ className }) => {
   return (
     <Wrapper className={className}>
       <Title>P3</Title>

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export const HomeP2 = ({ className }) => {
+export const IntroP4 = ({ className }) => {
   return (
     <Wrapper className={className}>
-      <Title>P2</Title>
+      <Title>P4</Title>
       <Flex>
         <SubTitle>
           <How>How?</How>

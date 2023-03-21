@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const HomeP1 = ({ className }) => {
+export const IntroP1 = ({ className }) => {
   return (
     <Wrapper className={className}>
       <BackImg1 />
