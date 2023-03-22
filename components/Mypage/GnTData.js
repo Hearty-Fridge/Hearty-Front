@@ -70,7 +70,7 @@ const GnTData = () => {
                   <OffBtn>Leave a Message</OffBtn>
                 ) : (
                   <>
-                    <OnBtn onClick={onClickItem}>Leave a Message</OnBtn>
+                    <OnBtn onChange={onClickItem}>Leave a Message</OnBtn>
                     {openModal && (
                       <>
                         <LeaveMsgModal

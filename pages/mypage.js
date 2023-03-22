@@ -14,7 +14,6 @@ const MyPage = ({ res }) => {
 
 const MypageWrap = styled.div`
   padding: 111px 80px;
-  height: 100vh;
   background-color: #f8f8f8;
 `;
 
