@@ -67,7 +67,7 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   z-index: ${getZIndex('header')};
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 `;
 
 const Navigation = styled.nav`
@@ -77,10 +77,6 @@ const Navigation = styled.nav`
   column-gap: 33px;
 `;
 
-const Logo = styled.div`
-  margin-right: 33px;
-`;
-
 const NavLink = styled(Link)`
   color: ${({ theme }) => theme.palette.secondary.main};
   ${({ selected }) =>
@@ -88,10 +84,6 @@ const NavLink = styled(Link)`
     css`
       font-weight: 800;
     `};
-`;
-
-const Bar = styled.div`
-  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 const InfoArea = styled.div`

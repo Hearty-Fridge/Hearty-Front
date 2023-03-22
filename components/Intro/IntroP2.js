@@ -1,62 +1,117 @@
 import styled from 'styled-components';
+import Image from 'next/image';
 
 export const IntroP2 = ({ className }) => {
   return (
     <Wrapper className={className}>
-      <Title>P2</Title>
-      <Flex>
-        <SubTitle>
-          <How>How?</How>
-          The expression is a simple sentence of <br />
-          promoting a healthy life and the welfare of all <br />
-          generations, e and the welfare of.
-        </SubTitle>
-      </Flex>
+      <FlexRowDiv>
+        <div>
+          <Description>
+            Donate and receive food through the
+            <span className="play-fair"> Hearty Fridge</span>
+          </Description>
+          <GnT>
+            <Detail>
+              <GnTIcon>Give</GnTIcon>
+              Look for Hearty Fridge
+              <br /> around you Look for Hearty
+            </Detail>
+            <Detail>
+              <GnTIcon>Take</GnTIcon>
+              Look for Hearty Fridge
+              <br /> around you Look for Hearty
+            </Detail>
+          </GnT>
+        </div>
+        <ImageWrapper>
+          <Image
+            className="img3"
+            src="/image/intro/food1.png"
+            width="593"
+            height="181"
+          />
+          <Image
+            className="img2"
+            src="/image/intro/food2.png"
+            width="440"
+            height="140"
+          />
+          <Image
+            className="img1"
+            src="/image/intro/food3.png"
+            width="440"
+            height="140"
+          />
+          <Image
+            className="location"
+            src="/image/intro/food4.png"
+            width="440"
+            height="141"
+          />
+        </ImageWrapper>
+      </FlexRowDiv>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  height: 1023px;
-`;
-const Title = styled.div`
-  font-family: 'Playfair Display';
-  font-style: italic;
-  font-size: 96px;
-  font-weight: 900;
-
-  line-height: 110px;
-  text-align: 'center';
-  color: ${(props) => props.theme.palette.accent};
-`;
-
-const Flex = styled.div`
+const FlexRowDiv = styled.div`
   display: flex;
-  width: 100%;
+  flex-direction: row;
+  min-height: 1080px;
+  min-width: 1920px;
 `;
 
-const SubTitle = styled.div`
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 36px;
+const Description = styled.div`
+  margin-top: 380px;
+  margin-left: 150px;
+  width: 970px;
+  height: 324px;
+  font-size: 80px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+  .play-fair {
+    font-family: 'Playfair Display';
+    font-style: italic;
+    color: ${({ theme }) => theme.palette.accent};
+  }
+`;
 
+const GnT = styled.div`
+  display: flex;
+  margin-top: -120px;
+  margin-left: 150px;
+  column-gap: 120px;
+`;
+
+const Wrapper = styled.div`
+  height: 1080px;
+`;
+
+const Detail = styled.div`
+  font-size: 20px;
+  line-height: 28px;
   letter-spacing: -0.01em;
   margin-top: 60px;
-
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.accent};
 `;
 
-const How = styled.div`
+const GnTIcon = styled.div`
   display: inline-block;
   padding: 0px 12px 0px 12px;
-  margin-right: 42px;
-  font-weight: 300;
-  font-size: 18px;
-  border-radius: 50px;
+  margin-right: 25px;
+  font-size: 12px;
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.palette.accent};
+  color: white;
+`;
 
-  color: ${(props) => props.theme.palette.accent};
-  /* border: 1px soild ${({ theme }) => theme.palette.accent}; */
-  border-style: solid;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.palette.accent};
+const ImageWrapper = styled.div`
+  width: 600px;
+  height: 575px;
+  margin-top: 260px;
+  margin-left: 20px;
+  img {
+    float: right;
+  }
+  position: relative;
+  right: 0;
 `;
