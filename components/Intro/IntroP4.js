@@ -1,62 +1,39 @@
 import styled from 'styled-components';
+import Image from 'next/image';
 
 export const IntroP4 = ({ className }) => {
   return (
     <Wrapper className={className}>
-      <Title>P4</Title>
-      <Flex>
-        <SubTitle>
-          <How>How?</How>
-          The expression is a simple sentence of <br />
-          promoting a healthy life and the welfare of all <br />
-          generations, e and the welfare of.
-        </SubTitle>
-      </Flex>
+      Say Hello to the
+      <br />
+      <div className="mb-150 play-fair">Hearty Fridge!</div>
+      <Image src="/image/intro/go.png" width="180" height="130" />
+      <div className="mt-30 play-fair underline">start with GOOGLE</div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  height: 1023px;
-`;
-const Title = styled.div`
-  font-family: 'Playfair Display';
-  font-style: italic;
-  font-size: 96px;
-  font-weight: 900;
-
-  line-height: 110px;
-  text-align: 'center';
-  color: ${(props) => props.theme.palette.accent};
-`;
-
-const Flex = styled.div`
   display: flex;
-  width: 100%;
-`;
-
-const SubTitle = styled.div`
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 36px;
-
-  letter-spacing: -0.01em;
-  margin-top: 60px;
-
-  color: ${(props) => props.theme.palette.secondary.main};
-`;
-
-const How = styled.div`
-  display: inline-block;
-  padding: 0px 12px 0px 12px;
-  margin-right: 42px;
-  font-weight: 300;
-  font-size: 18px;
-  border-radius: 50px;
-
-  color: ${(props) => props.theme.palette.accent};
-  /* border: 1px soild ${({ theme }) => theme.palette.accent}; */
-  border-style: solid;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.palette.accent};
+  flex-direction: column;
+  justify-content: center;
+  height: 1080px;
+  text-align: center;
+  font-size: 80px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+  .play-fair {
+    font-family: 'Playfair Display';
+    font-style: italic;
+    color: ${({ theme }) => theme.palette.accent};
+  }
+  .underline {
+    text-decoration: underline 2px;
+  }
+  .mb-150 {
+    margin-bottom: 150px;
+  }
+  .mt-30 {
+    margin-top: 30px;
+  }
+  background-color: ${({ theme }) => theme.palette.beige2};
 `;

@@ -9,6 +9,7 @@ export const theme = {
       main30: '#594C484D',
     },
     background: '#f8f8f8',
+    background2: '#3A3432',
     beige1: '#FAF4EC',
     beige2: '#F1EAE0',
     beigeWhite: '#fffdfa',
