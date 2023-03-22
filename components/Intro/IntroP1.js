@@ -30,7 +30,7 @@ export const IntroP1 = ({ className }) => {
               <div key={p.id} style={{ display: 'block' }}>
                 <ContentWrapper>
                   <Image
-                    src="/image/intro1/Ellipse.png"
+                    src="/image/intro/Ellipse.png"
                     width="120"
                     height="82"
                   />
@@ -49,19 +49,19 @@ export const IntroP1 = ({ className }) => {
             height="158"
           />
           <Image
-            className="img1"
+            className="img1 popIn duration10ms"
             src="/image/intro/fridge1.png"
             width="440"
             height="182"
           />
           <Image
-            className="img2"
+            className="img2 popIn delay15ms duration10ms"
             src="/image/intro/fridge2.png"
             width="440"
             height="182"
           />
           <Image
-            className="img3"
+            className="img3 popIn delay30ms duration10ms"
             src="/image/intro/fridge3.png"
             width="440"
             height="182"
@@ -134,6 +134,8 @@ const ImageWrapper = styled.div`
   margin-left: 130px;
   .img1 {
     margin-left: 200px;
+  }
+  .img2 {
   }
   .img3 {
     margin-left: 250px;

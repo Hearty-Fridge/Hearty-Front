@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 const Layout = ({ children }) => {
   // url이 map이면 Wrapper 스타일 안넣기
   const { pathname } = useRouter();
-  console.log(pathname.split('/'));
   return (
     <div
       css={

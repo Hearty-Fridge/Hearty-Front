@@ -25,25 +25,25 @@ export const IntroP2 = ({ className }) => {
         </div>
         <ImageWrapper>
           <Image
-            className="img3"
+            className="img1 scaleUp duration10ms"
             src="/image/intro/food1.png"
-            width="593"
-            height="181"
+            width="440"
+            height="140"
           />
           <Image
-            className="img2"
+            className="img2 scaleUp delay15ms duration10ms"
             src="/image/intro/food2.png"
             width="440"
             height="140"
           />
           <Image
-            className="img1"
+            className="img3 scaleUp delay30ms duration10ms"
             src="/image/intro/food3.png"
             width="440"
             height="140"
           />
           <Image
-            className="location"
+            className="img4 scaleUp delay45ms duration10ms"
             src="/image/intro/food4.png"
             width="440"
             height="141"

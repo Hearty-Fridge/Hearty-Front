@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from '@styles/theme';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { RecoilRoot } from 'recoil';
+import 'animate.css';
 
 const client = new QueryClient({
   defaultOptions: {

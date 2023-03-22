@@ -18,19 +18,19 @@ export const IntroP3 = ({ className }) => {
         </Description>
         <MessageWrapper>
           <Image
-            className="message1"
+            className="message1 popIn duration10ms"
             src="/image/intro/message1.png"
             width="680"
             height="188"
           />
           <Image
-            className="message2"
+            className="message2 popIn delay15ms duration10ms"
             src="/image/intro/message2.png"
             width="400"
             height="150"
           />
           <Image
-            className="message3"
+            className="message3 popIn delay30ms duration10ms"
             src="/image/intro/message3.png"
             width="690"
             height="188"

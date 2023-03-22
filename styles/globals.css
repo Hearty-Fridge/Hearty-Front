@@ -12,6 +12,49 @@ body {
   font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
 }
 
+@keyframes scaleUp {
+  from {
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.scaleUp {
+  animation-name: scaleUp;
+}
+
+.popIn {
+  animation-name: popIn;
+}
+
+.duration10ms {
+  animation-duration: 1s;
+}
+
+.delay15ms {
+  animation-delay: 1.5s;
+}
+
+.delay30ms {
+  animation-delay: 3s;
+}
+
+.delay45ms {
+  animation-delay: 4.5s;
+}
+
 body {
   /* color: rgb(var(--foreground-rgb)); */
   color: black;
