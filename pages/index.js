@@ -4,65 +4,64 @@ import { BiCurrentLocation } from 'react-icons/bi';
 
 const Home = () => {
   return (
-    <Layout>
-      <Full>
+    <Full>
+      <Layout>
         <Title>
           Let’s <Bold>donate</Bold> <br /> with <Bold>hearty Fridge!</Bold>
         </Title>
-        <Ellipse />
-        <Flex>
-          <Box>
-            <BoxFlex>
-              <What>What?</What>
-              <BiCurrentLocation
-                style={{
-                  width: '24px',
-                  height: '24px',
-                  color: '#FAF4EC',
-                  marginTop: '5px',
-                }}
-              />
-            </BoxFlex>
-            <BoxText>
-              We look forward to a world <br />
-              where everyone can protect <br />
-              the environment
-            </BoxText>
-          </Box>
-          {/* <FoodList>
-            <FoodNum>(1)</FoodNum>
-            <FoodImg1></FoodImg1>
-          </FoodList>
-          <FoodList>
-            <FoodNum>(2)</FoodNum>
-            <FoodImg2></FoodImg2>
-          </FoodList>
-          <FoodList>
-            <FoodNum>(3)</FoodNum>
-            <FoodImg3></FoodImg3>
-          </FoodList>
-          <FoodList>
-            <FoodNum>(4)</FoodNum>
-            <FoodImg4></FoodImg4>
-          </FoodList>
-          <FoodList>
-            <FoodNum>(5)</FoodNum>
-            <FoodImg5></FoodImg5>
-          </FoodList> */}
-        </Flex>
-      </Full>
-    </Layout>
+      </Layout>
+      <Ellipse />
+      <Flex>
+        <Box>
+          <BoxFlex>
+            <What>What?</What>
+            <BiCurrentLocation
+              style={{
+                width: '24px',
+                height: '24px',
+                color: '#FAF4EC',
+                marginTop: '5px',
+              }}
+            />
+          </BoxFlex>
+          <BoxText>
+            We look forward to a world <br />
+            where everyone can protect <br />
+            the environment
+          </BoxText>
+        </Box>
+        <FoodList>
+          <FoodNum>(1)</FoodNum>
+          <FoodImg1></FoodImg1>
+        </FoodList>
+        <FoodList>
+          <FoodNum>(2)</FoodNum>
+          <FoodImg2></FoodImg2>
+        </FoodList>
+        <FoodList>
+          <FoodNum>(3)</FoodNum>
+          <FoodImg3></FoodImg3>
+        </FoodList>
+        <FoodList>
+          <FoodNum>(4)</FoodNum>
+          <FoodImg4></FoodImg4>
+        </FoodList>
+        <FoodList>
+          <FoodNum>(5)</FoodNum>
+          <FoodImg5></FoodImg5>
+        </FoodList>
+      </Flex>
+    </Full>
   );
 };
 
 const Full = styled.div`
-  height: 90vh;
   width: 100vw;
   position: relative;
 `;
 
 const Title = styled.div`
-  padding: 139px 184px 0px 0px;
+  margin: 100px 184px 0px 0px;
   float: right;
 
   font-family: 'Playfair Display';
@@ -81,7 +80,7 @@ const Bold = styled.span`
 
 const Ellipse = styled.div`
   float: right;
-  margin-right: 68px;
+  margin-right: 143px;
   width: 140px;
   height: 110px;
   background-image: url(/image/home/ellipse.png);
@@ -89,11 +88,12 @@ const Ellipse = styled.div`
 
 const Flex = styled.div`
   display: flex;
+  margin-top: 64px;
 `;
 
 const Box = styled.div`
-  position: fixed;
-  bottom: 63px;
+  margin-left: 80px;
+  margin-right: 80px;
   width: 361px;
   height: 403px;
   background: #f2916e;
@@ -137,8 +137,7 @@ const What = styled.div`
 
 const FoodList = styled.div`
   margin-left: 20px;
-  /* position: fixed;
-  bottom: 63px; */
+  margin-top: 220px;
 `;
 
 const FoodNum = styled.div`
