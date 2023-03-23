@@ -14,8 +14,8 @@ const FridgeList = ({
   setIsFavorite,
 }) => {
   const router = useRouter();
-  const token = localStorage.getItem('accessToken');
   const [id, setId] = useState(false);
+  const [token, setToken] = useState(null);
   // 1 : memberId
   const onClickFridgeItem = useCallback(
     (info) => {
@@ -34,6 +34,7 @@ const FridgeList = ({
 
   useEffect(() => {
     setId(router.query.id);
+    setToken(localStorage.getItem('accessToken'));
   }, [setId, router.query.id]);
 
   return (

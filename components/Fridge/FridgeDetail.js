@@ -83,7 +83,9 @@ const FridgeDetail = ({ id }) => {
     <Wrapper>
       <GradientImage>
         <img
-          src={`${process.env.NEXT_PUBLIC_SERVER_NAME}/${fridgeDetailData.fridgeInfo.fridgeImage}`}
+          src={
+            'https://storage.googleapis.com/slowy_storage123/latrach-med-jamil-Eb6hMEhGlKY-unsplash.jpg'
+          }
         />
       </GradientImage>
       <ExitButton onClick={onClickExitBtn}>X</ExitButton>
