@@ -54,14 +54,14 @@ const ReservationData = () => {
                 </LocBox>
                 <Buttons>
                   <BtnCancel
-                    onClick={() => {
+                    onChange={() => {
                       handleCancel(reservation.id);
                     }}
                   >
                     Cancel
                   </BtnCancel>
                   <BtnCheck
-                    onClick={() => {
+                    onChange={() => {
                       handleCheck(reservation.id);
                     }}
                   >
