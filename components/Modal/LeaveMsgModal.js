@@ -17,10 +17,12 @@ const LeaveMsgModal = ({ show, onCloseModal, item }) => {
 
   const sendMessage = async (id) => {
     try {
-      const response = await axiosInstance.post(`/message/takeMessage`, {
+      const response = await axiosInstance.post(`/message/leaveMessage`, {
         takeId: id,
         content: value,
       });
+
+      console.log('dhidhi');
     } catch (error) {
       console.error(error);
     }
@@ -70,10 +72,9 @@ const LeaveMsgModal = ({ show, onCloseModal, item }) => {
         <Buttons>
           <CancelBtn onClick={onCloseModal}>Cancel</CancelBtn>
           <ConfirmBtn
-            onChange={() => {
+            onClick={() => {
               sendMessage(item.id);
             }}
-            onClick={onCloseModal}
           >
             Confirm
           </ConfirmBtn>

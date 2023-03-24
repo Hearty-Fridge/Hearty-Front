@@ -2,6 +2,7 @@ import { axiosInstance } from 'api';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 
 const ReservationData = () => {
   const { data } = useQuery(
@@ -53,14 +54,14 @@ const ReservationData = () => {
                 </LocBox>
                 <Buttons>
                   <BtnCancel
-                    onChange={() => {
+                    onClick={() => {
                       handleCancel(reservation.id);
                     }}
                   >
                     Cancel
                   </BtnCancel>
                   <BtnCheck
-                    onChange={() => {
+                    onClick={() => {
                       handleCheck(reservation.id);
                     }}
                   >
