@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useBookmarkMutation } from 'api/Fridges/useFridges';
 import { IoStarSharp } from 'react-icons/io5';
+import { getFridgesByKeyword } from 'api/Fridges/useFridges';
 
 // LocList: 동사무소 위치 정보, setLoc => google map center location setter
 const FridgeList = ({
@@ -14,6 +15,7 @@ const FridgeList = ({
 }) => {
   const router = useRouter();
   const [id, setId] = useState(false);
+  const [token, setToken] = useState(null);
   // 1 : memberId
   const onClickFridgeItem = useCallback(
     (info) => {
@@ -32,6 +34,7 @@ const FridgeList = ({
 
   useEffect(() => {
     setId(router.query.id);
+    setToken(localStorage.getItem('accessToken'));
   }, [setId, router.query.id]);
 
   return (
@@ -51,7 +54,16 @@ const FridgeList = ({
           My Fridge <IoStarSharp />
         </div>
       </InnerNav>
-      <SearchArea placeholder="Search" />
+      <SearchArea
+        onChange={(e) => {
+          console.log({ targat: e.target.value });
+          getFridgesByKeyword({
+            keyword: e.target.value,
+            token: token,
+          });
+        }}
+        placeholder="Search"
+      />
       <VisibleList>
         {visibleList?.map((l) => (
           <ListItem

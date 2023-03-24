@@ -3,12 +3,6 @@ import { isError, useQuery } from 'react-query';
 import { useQueryClient, useMutation } from 'react-query';
 
 export const getAllFridges = ({ token }) => {
-  // 이 부분이 너무 맘에 들지 않음
-  // let token = null;
-  // if (typeof window !== 'undefined') {
-  //   token = localStorage.getItem('accessToken');
-  // }
-
   return useQuery(
     ['fridges'],
     async () => {
@@ -54,6 +48,21 @@ export const getFridgesById = ({ fridgeId, token }) => {
       },
     }
   );
+};
+
+export const getFridgesByKeyword = async ({ keyword, token }) => {
+  const { data } = await axiosInstance.request({
+    method: 'GET',
+    url: '/fridge/searchByKeyword',
+    params: {
+      keyword: keyword,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(data.data);
+  return data.data;
 };
 
 export const addBookmark = ({ fridgeId, state, token }) => {

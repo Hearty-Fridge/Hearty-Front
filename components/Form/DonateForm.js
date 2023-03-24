@@ -7,6 +7,8 @@ import { getFridgesById } from 'api/Fridges/useFridges';
 import { IoCamera } from 'react-icons/io5';
 import { Controller } from 'react-hook-form';
 import moment from 'moment';
+import { AiFillQuestionCircle } from 'react-icons/ai';
+import { Recommend } from './RecommendExpiration';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -42,6 +44,7 @@ export default function DonateForm({ id, setShow }) {
       expirationDate: new Date(),
     },
   });
+  const [showRef, setShowRef] = useState(false);
   const { errors } = formState;
   const { mutate } = useFoodsMutation({ fridgeId: id });
 
@@ -95,6 +98,14 @@ export default function DonateForm({ id, setShow }) {
         <Section>
           <SectionName>
             <div className="name">권장 섭취 기간</div>
+            <div
+              onMouseEnter={() => setShowRef(true)}
+              onMouseLeave={() => setShowRef(false)}
+              onClick={() => setShowRef(!showRef)}
+            >
+              <AiFillQuestionCircle style={{ width: '100%' }} />
+            </div>
+            {showRef && <Recommend show={showRef} setShow={setShowRef} />}
             <div className="error">
               {errors.expirationDate && errors.expirationDate.message}
             </div>
