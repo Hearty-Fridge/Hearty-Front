@@ -32,23 +32,23 @@ const Home = () => {
         </Box>
         <FoodList>
           <FoodNum>(1)</FoodNum>
-          <FoodImg1></FoodImg1>
+          <FoodImg src="/image/home/food1.png" />
         </FoodList>
         <FoodList>
           <FoodNum>(2)</FoodNum>
-          <FoodImg2></FoodImg2>
+          <FoodImg src="/image/home/food2.png" />
         </FoodList>
         <FoodList>
           <FoodNum>(3)</FoodNum>
-          <FoodImg3></FoodImg3>
+          <FoodImg src="/image/home/food3.png" />
         </FoodList>
         <FoodList>
           <FoodNum>(4)</FoodNum>
-          <FoodImg4></FoodImg4>
+          <FoodImg src="/image/home/food4.png" />
         </FoodList>
         <FoodList>
           <FoodNum>(5)</FoodNum>
-          <FoodImg5></FoodImg5>
+          <FoodImg src="/image/home/food5.png" />
         </FoodList>
       </Flex>
     </Full>
@@ -152,40 +152,13 @@ const FoodNum = styled.div`
   color: #ed6335;
 `;
 
-const FoodImg1 = styled.div`
+const FoodImg = styled.img`
   margin-right: 17px;
   width: 131px;
   height: 131px;
+  border-radius: 10%;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
   background-image: url(/image/home/food1.png);
-`;
-const FoodImg2 = styled.div`
-  margin-right: 17px;
-  width: 131px;
-  height: 131px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-  background-image: url(/image/home/food2.png);
-`;
-const FoodImg3 = styled.div`
-  margin-right: 17px;
-  width: 131px;
-  height: 131px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-  background-image: url(/image/home/food3.png);
-`;
-const FoodImg4 = styled.div`
-  margin-right: 17px;
-  width: 131px;
-  height: 131px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-  background-image: url(/image/home/food4.png);
-`;
-const FoodImg5 = styled.div`
-  margin-right: 17px;
-  width: 131px;
-  height: 131px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-  background-image: url(/image/home/food5.png);
 `;
 
 export default Home;
