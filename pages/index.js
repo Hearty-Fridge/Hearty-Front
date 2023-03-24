@@ -7,7 +7,10 @@ const Home = () => {
     <Full>
       <Layout>
         <Title>
-          Let’s <Bold>donate</Bold> <br /> with <Bold>hearty Fridge!</Bold>
+          Let’s <Bold>donate</Bold>{' '}
+          <FridgeImg src="/image/home/fridge.png" alt="photo" /> <br />{' '}
+          <SandwichImg src="/image/home/sandwich.png" alt="photo" /> with{' '}
+          <Bold>hearty Fridge!</Bold>
         </Title>
       </Layout>
       <Ellipse />
@@ -32,23 +35,23 @@ const Home = () => {
         </Box>
         <FoodList>
           <FoodNum>(1)</FoodNum>
-          <FoodImg src="/image/home/food1.png" />
+          <FoodImg src="/image/home/food1.png" alt="photo" />
         </FoodList>
         <FoodList>
           <FoodNum>(2)</FoodNum>
-          <FoodImg src="/image/home/food2.png" />
+          <FoodImg src="/image/home/food2.png" alt="photo" />
         </FoodList>
         <FoodList>
           <FoodNum>(3)</FoodNum>
-          <FoodImg src="/image/home/food3.png" />
+          <FoodImg src="/image/home/food3.png" alt="photo" />
         </FoodList>
         <FoodList>
           <FoodNum>(4)</FoodNum>
-          <FoodImg src="/image/home/food4.png" />
+          <FoodImg src="/image/home/food4.png" alt="photo" />
         </FoodList>
         <FoodList>
           <FoodNum>(5)</FoodNum>
-          <FoodImg src="/image/home/food5.png" />
+          <FoodImg src="/image/home/food5.png" alt="photo" />
         </FoodList>
       </Flex>
     </Full>
@@ -60,7 +63,20 @@ const Full = styled.div`
   position: relative;
 `;
 
+const FridgeImg = styled.img`
+  width: 120.72px;
+  height: 145.6px;
+  margin-right: -150px;
+`;
+
+const SandwichImg = styled.img`
+  width: 157px;
+  height: 105px;
+  margin-bottom: 20px;
+`;
+
 const Title = styled.div`
+  z-index: 999;
   margin: 100px 184px 0px 0px;
   float: right;
 
