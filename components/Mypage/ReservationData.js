@@ -2,7 +2,6 @@ import { axiosInstance } from 'api';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import ReservationTime from './ReservationTime';
 
 const ReservationData = () => {
   const { data } = useQuery(
@@ -46,7 +45,7 @@ const ReservationData = () => {
           {reservations.map((reservation) => (
             <>
               <TD key={reservation.id}>
-                <ReservationTime time={reservation.time} />
+                <TDTxt>{dayjs(reservation.time).format('YYYY.MM.DD')}</TDTxt>
                 <TDTxt>{reservation.foodName}</TDTxt>
                 <LocBox>
                   <TDTxt>{reservation.fridgeName}</TDTxt>
