@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 import Modal from './Modal';
 import { IoLocationSharp } from 'react-icons/io5';
 import ConfirmFood from '@components/Food/ConfirmFood';
-import { useTakeFoodMutation } from 'api/Food/useFoods';
 import { takeFood } from 'api/Food/useFoods';
+import { getCanReserve } from 'api/Food/useFoods';
 
 const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
   const token = localStorage.getItem('accessToken');
