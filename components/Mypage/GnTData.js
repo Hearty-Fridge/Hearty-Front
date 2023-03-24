@@ -44,7 +44,7 @@ const GnTData = () => {
   return (
     <Wrapper>
       <Title>Give & Take</Title>
-      <SubTitle>내가 기부하고 수급한 내역을 확인할 수 있어요</SubTitle>
+      <SubTitle>You can see what you've donated and received.</SubTitle>
       <Table>
         <TH>
           <THTxt>Time</THTxt>
