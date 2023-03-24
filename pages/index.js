@@ -4,65 +4,80 @@ import { BiCurrentLocation } from 'react-icons/bi';
 
 const Home = () => {
   return (
-    <Layout>
-      <Full>
+    <Full>
+      <Layout>
         <Title>
-          Let’s <Bold>donate</Bold> <br /> with <Bold>hearty Fridge!</Bold>
+          Let’s <Bold>donate</Bold>{' '}
+          <FridgeImg src="/image/home/fridge.png" alt="photo" /> <br />{' '}
+          <SandwichImg src="/image/home/sandwich.png" alt="photo" /> with{' '}
+          <Bold>hearty Fridge!</Bold>
         </Title>
-        <Ellipse />
-        <Flex>
-          <Box>
-            <BoxFlex>
-              <What>What?</What>
-              <BiCurrentLocation
-                style={{
-                  width: '24px',
-                  height: '24px',
-                  color: '#FAF4EC',
-                  marginTop: '5px',
-                }}
-              />
-            </BoxFlex>
-            <BoxText>
-              We look forward to a world <br />
-              where everyone can protect <br />
-              the environment
-            </BoxText>
-          </Box>
-          {/* <FoodList>
-            <FoodNum>(1)</FoodNum>
-            <FoodImg1></FoodImg1>
-          </FoodList>
-          <FoodList>
-            <FoodNum>(2)</FoodNum>
-            <FoodImg2></FoodImg2>
-          </FoodList>
-          <FoodList>
-            <FoodNum>(3)</FoodNum>
-            <FoodImg3></FoodImg3>
-          </FoodList>
-          <FoodList>
-            <FoodNum>(4)</FoodNum>
-            <FoodImg4></FoodImg4>
-          </FoodList>
-          <FoodList>
-            <FoodNum>(5)</FoodNum>
-            <FoodImg5></FoodImg5>
-          </FoodList> */}
-        </Flex>
-      </Full>
-    </Layout>
+      </Layout>
+      <Ellipse />
+      <Flex>
+        <Box>
+          <BoxFlex>
+            <What>What?</What>
+            <BiCurrentLocation
+              style={{
+                width: '24px',
+                height: '24px',
+                color: '#FAF4EC',
+                marginTop: '5px',
+              }}
+            />
+          </BoxFlex>
+          <BoxText>
+            We look forward to a world <br />
+            where everyone can protect <br />
+            the environment
+          </BoxText>
+        </Box>
+        <FoodList>
+          <FoodNum>(1)</FoodNum>
+          <FoodImg src="/image/home/food1.png" alt="photo" />
+        </FoodList>
+        <FoodList>
+          <FoodNum>(2)</FoodNum>
+          <FoodImg src="/image/home/food2.png" alt="photo" />
+        </FoodList>
+        <FoodList>
+          <FoodNum>(3)</FoodNum>
+          <FoodImg src="/image/home/food3.png" alt="photo" />
+        </FoodList>
+        <FoodList>
+          <FoodNum>(4)</FoodNum>
+          <FoodImg src="/image/home/food4.png" alt="photo" />
+        </FoodList>
+        <FoodList>
+          <FoodNum>(5)</FoodNum>
+          <FoodImg src="/image/home/food5.png" alt="photo" />
+        </FoodList>
+      </Flex>
+    </Full>
   );
 };
 
 const Full = styled.div`
-  height: 90vh;
   width: 100vw;
   position: relative;
 `;
 
+const FridgeImg = styled.img`
+  width: 120.72px;
+  height: 145.6px;
+  margin-right: -150px;
+`;
+
+const SandwichImg = styled.img`
+  width: 157px;
+  height: 105px;
+  margin-bottom: 20px;
+`;
+
 const Title = styled.div`
-  padding: 139px 184px 0px 0px;
+  z-index: 999;
+  margin: 100px 184px 0px 0px;
   float: right;
 
   font-family: 'Playfair Display';
@@ -81,7 +96,7 @@ const Bold = styled.span`
 
 const Ellipse = styled.div`
   float: right;
-  margin-right: 68px;
+  margin-right: 143px;
   width: 140px;
   height: 110px;
   background-image: url(/image/home/ellipse.png);
@@ -89,11 +104,12 @@ const Ellipse = styled.div`
 
 const Flex = styled.div`
   display: flex;
+  margin-top: 64px;
 `;
 
 const Box = styled.div`
-  position: fixed;
-  bottom: 63px;
+  margin-left: 80px;
+  margin-right: 80px;
   width: 361px;
   height: 403px;
   background: #f2916e;
@@ -137,8 +153,7 @@ const What = styled.div`
 
 const FoodList = styled.div`
   margin-left: 20px;
-  /* position: fixed;
-  bottom: 63px; */
+  margin-top: 220px;
 `;
 
 const FoodNum = styled.div`
@@ -153,40 +168,13 @@ const FoodNum = styled.div`
   color: #ed6335;
 `;
 
-const FoodImg1 = styled.div`
+const FoodImg = styled.img`
   margin-right: 17px;
   width: 131px;
   height: 131px;
+  border-radius: 10%;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
   background-image: url(/image/home/food1.png);
-`;
-const FoodImg2 = styled.div`
-  margin-right: 17px;
-  width: 131px;
-  height: 131px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-  background-image: url(/image/home/food2.png);
-`;
-const FoodImg3 = styled.div`
-  margin-right: 17px;
-  width: 131px;
-  height: 131px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-  background-image: url(/image/home/food3.png);
-`;
-const FoodImg4 = styled.div`
-  margin-right: 17px;
-  width: 131px;
-  height: 131px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-  background-image: url(/image/home/food4.png);
-`;
-const FoodImg5 = styled.div`
-  margin-right: 17px;
-  width: 131px;
-  height: 131px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-  background-image: url(/image/home/food5.png);
 `;
 
 export default Home;
