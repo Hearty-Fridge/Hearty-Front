@@ -154,11 +154,12 @@ const Wrap = styled.div`
   padding: 20px 35px;
 `;
 const Box = memo(styled.textarea`
+  cursor: pointer;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  color: ${({ theme }) => theme.palette.main};
+  color: black;
   background-color: ${({ theme }) => theme.palette.background};
   margin-top: 20px;
   margin: 0 auto;
@@ -174,7 +175,6 @@ const Box = memo(styled.textarea`
     right: 16px;
     bottom: 10px;
     font-size: 12px;
-    color: #999;
   }
 `);
 

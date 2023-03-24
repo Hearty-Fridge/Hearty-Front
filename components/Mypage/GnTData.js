@@ -70,7 +70,7 @@ const GnTData = () => {
                   <OffBtn>Leave a Message</OffBtn>
                 ) : (
                   <>
-                    <OnBtn onChange={onClickItem}>Leave a Message</OnBtn>
+                    <OnBtn onClick={onClickItem}>Leave a Message</OnBtn>
                     {openModal && (
                       <>
                         <LeaveMsgModal
@@ -199,6 +199,7 @@ const Buttons = styled.div`
   column-gap: 23px;
 `;
 const OnBtn = styled.button`
+  cursor: pointer;
   width: 148px;
   height: 37px;
   text-align: center;
