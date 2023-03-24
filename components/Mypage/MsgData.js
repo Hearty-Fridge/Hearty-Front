@@ -35,7 +35,6 @@ const MsgData = () => {
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 3,
-    centerMode: true,
     arrows: false,
     dotsClass: 'dots_custom',
   };
