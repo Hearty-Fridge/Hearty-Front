@@ -3,8 +3,11 @@ import Modal from './Modal';
 import { IoCloseSharp } from 'react-icons/io5';
 import { useState, memo } from 'react';
 import { axiosInstance } from 'api';
+import { useQueryClient } from 'react-query';
 
 const LeaveMsgModal = ({ show, onCloseModal, item }) => {
+  const queryClient = useQueryClient();
+
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
@@ -21,17 +24,16 @@ const LeaveMsgModal = ({ show, onCloseModal, item }) => {
         takeId: id,
         content: value,
       });
-
-      console.log('dhidhi');
+      queryClient.invalidateQueries('getSendMessages');
+      queryClient.invalidateQueries('getReceiveMessages');
+      queryClient.invalidateQueries('getGives');
+      queryClient.invalidateQueries('getTakes');
+      onCloseModal();
     } catch (error) {
       console.error(error);
     }
-
-    console.log('send!');
-    console.log(id);
   };
 
-  console.log(item);
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
       <Container>
@@ -154,7 +156,33 @@ const TagGive = styled.div`
 const Wrap = styled.div`
   padding: 20px 35px;
 `;
-const Box = memo(styled.textarea`
+
+// const Box = memo(styled.textarea`
+//   cursor: pointer;
+//   font-family: 'Pretendard';
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 18px;
+//   color: black;
+//   background-color: ${({ theme }) => theme.palette.background};
+//   margin-top: 20px;
+//   margin: 0 auto;
+//   border: 1px solid #f1eae0;
+//   border-radius: 10px;
+//   height: 270px;
+//   width: 724px;
+//   padding: 24px;
+
+//   &::after {
+//     content: attr(data-counter);
+//     position: absolute;
+//     right: 16px;
+//     bottom: 10px;
+//     font-size: 12px;
+//   }
+// `);
+
+const Box = styled.textarea`
   cursor: pointer;
   font-family: 'Pretendard';
   font-style: normal;
@@ -169,15 +197,7 @@ const Box = memo(styled.textarea`
   height: 270px;
   width: 724px;
   padding: 24px;
-
-  &::after {
-    content: attr(data-counter);
-    position: absolute;
-    right: 16px;
-    bottom: 10px;
-    font-size: 12px;
-  }
-`);
+`;
 
 const Buttons = styled.div`
   display: flex;
