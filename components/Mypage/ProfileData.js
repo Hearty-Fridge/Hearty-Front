@@ -46,16 +46,16 @@ const ProfileData = ({ user }) => {
           <Title>Record</Title>
           <RecData>
             <RecFlex>
-              <div>전체 냉장고 거래</div>
-              <div>{gives.length + takes.length}회</div>
+              <div>Whole Refrigerator Deals</div>
+              <div>{gives.length + takes.length}</div>
             </RecFlex>
             <RecFlex>
-              <div>마음 주기</div>
-              <div>{gives.length}회</div>
+              <div>Sending hearts</div>
+              <div>{gives.length}</div>
             </RecFlex>
             <RecFlex>
-              <div>마음 받기</div>
-              <div>{takes.length}회</div>
+              <div>Receiving hearts</div>
+              <div>{takes.length}</div>
             </RecFlex>
           </RecData>
         </Wrap>
@@ -64,18 +64,18 @@ const ProfileData = ({ user }) => {
           <Title>Certification</Title>
           {user.isTaker ? (
             <Card>
-              <CardM>수급자 인증이 완료되었습니다!</CardM>
+              <CardM>Beneficiary authentication is complete!</CardM>
               <CardD>2022.03.21 ~ 2023.03.21</CardD>
               <Flex>
-                <CardB onClick={() => Cancel()}>취소하기</CardB>
+                <CardB onClick={() => Cancel()}>Cancel</CardB>
               </Flex>
             </Card>
           ) : (
             <Card>
-              <CardMC>수급자 인증이 필요합니다!</CardMC>
-              <CardD>최초인증이 필요합니다</CardD>
+              <CardMC>Recipient authentication is required!</CardMC>
+              <CardD>Initial authentication is required.</CardD>
               <Flex>
-                <CardBC onClick={handleTaker}>인증하기</CardBC>
+                <CardBC onClick={handleTaker}>Authenticate</CardBC>
               </Flex>
               {openModal && (
                 <>

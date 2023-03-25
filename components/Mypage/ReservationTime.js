@@ -1,3 +1,5 @@
+// 사용하지 않는 Count 컴포넌트
+
 const dayjs = require('dayjs');
 const { useState, useEffect } = require('react');
 const { default: styled } = require('styled-components');

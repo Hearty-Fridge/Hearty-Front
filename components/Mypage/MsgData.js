@@ -39,17 +39,37 @@ const MsgData = () => {
     dotsClass: 'dots_custom',
   };
 
+  const settings2 = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 3,
+    centerMode: true,
+    arrows: false,
+    dotsClass: 'dots_custom',
+  };
+
   console.log('LIST', list);
   return (
     <Wrapper>
       <Title>Hearty Messages</Title>
-      <Slider {...settings}>
-        {list.map((item) => (
-          <div>
-            <Message item={item} />
-          </div>
-        ))}
-      </Slider>
+      {list.length <= 2 ? (
+        <Slider {...settings2}>
+          {list.map((item) => (
+            <div>
+              <Message item={item} />
+            </div>
+          ))}
+        </Slider>
+      ) : (
+        <Slider {...settings}>
+          {list.map((item) => (
+            <div>
+              <Message item={item} />
+            </div>
+          ))}
+        </Slider>
+      )}
     </Wrapper>
   );
 };

@@ -1,12 +1,12 @@
 import { axiosInstance } from 'api';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import ReservationTime from './ReservationTime';
 
 const ReservationData = () => {
+  const queryClient = useQueryClient();
   const { data } = useQuery(
-    ['getReservatino'],
+    ['getReservation'],
     async () => await axiosInstance.get(`/take/getReservation`)
   );
 
@@ -14,20 +14,30 @@ const ReservationData = () => {
     return null;
   }
 
-  console.log(data);
-
   const reservations = data.data.data;
 
   const handleCancel = (id) => {
     console.log(id);
   };
 
-  const handleCheck = async (id) => {
+  const handleCheckNotification = async (id) => {
     try {
       const response = await axiosInstance.put(
-        `/take/checkFood?takeId=${id}`,
+        `/notification/checkNotice?notificationId=${id}`,
         id
       );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCheck = async (id) => {
+    try {
+      await axiosInstance.put(`/take/checkFood?takeId=${id}`, id);
+      queryClient.invalidateQueries('getGives');
+      queryClient.invalidateQueries('getTakes');
+      queryClient.invalidateQueries('getReservation');
+      handleCheckNotification(id);
     } catch (error) {
       console.error(error);
     }
@@ -46,7 +56,7 @@ const ReservationData = () => {
           {reservations.map((reservation) => (
             <>
               <TD key={reservation.id}>
-                <ReservationTime time={reservation.time} />
+                <TDTxt>{dayjs(reservation.time).format('YYYY.MM.DD')}</TDTxt>
                 <TDTxt>{reservation.foodName}</TDTxt>
                 <LocBox>
                   <TDTxt>{reservation.fridgeName}</TDTxt>
@@ -54,14 +64,14 @@ const ReservationData = () => {
                 </LocBox>
                 <Buttons>
                   <BtnCancel
-                    onChange={() => {
+                    onClick={() => {
                       handleCancel(reservation.id);
                     }}
                   >
                     Cancel
                   </BtnCancel>
                   <BtnCheck
-                    onChange={() => {
+                    onClick={() => {
                       handleCheck(reservation.id);
                     }}
                   >

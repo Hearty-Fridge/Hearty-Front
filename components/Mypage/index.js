@@ -46,6 +46,7 @@ const Boxes = styled.div`
   width: 1439px;
   margin: 0 auto;
   margin-top: 35px;
+  height: auto;
 `;
 
 const ProfileBox = styled.div`

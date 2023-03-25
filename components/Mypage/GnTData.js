@@ -44,7 +44,7 @@ const GnTData = () => {
   return (
     <Wrapper>
       <Title>Give & Take</Title>
-      <SubTitle>내가 기부하고 수급한 내역을 확인할 수 있어요</SubTitle>
+      <SubTitle>You can see what you've donated and received.</SubTitle>
       <Table>
         <TH>
           <THTxt>Time</THTxt>
@@ -53,37 +53,40 @@ const GnTData = () => {
         </TH>
         <TDWrapper>
           {list.map((item) => (
-            <TD key={item.index}>
-              {item.type == 'give' ? (
-                <TagGive>Give</TagGive>
-              ) : (
-                <TagTake>Take</TagTake>
-              )}
-              <TDTxt>{dayjs(item.time).format('YYYY.MM.DD')}</TDTxt>
-              <TDTxt>{item.foodName}</TDTxt>
-              <LocBox>
-                <TDTxt>{item.fridgeAddress}</TDTxt>
-                <TDSubTxt>{item.fridgeName}</TDSubTxt>
-              </LocBox>
-              <Buttons>
-                {item.status == 'COMPLETED' ? (
-                  <OffBtn>Leave a Message</OffBtn>
+            <>
+              <TD key={item.index}>
+                {item.type == 'give' ? (
+                  <TagGive>Give</TagGive>
                 ) : (
-                  <>
-                    <OnBtn onChange={onClickItem}>Leave a Message</OnBtn>
-                    {openModal && (
-                      <>
-                        <LeaveMsgModal
-                          show={openModal}
-                          onCloseModal={setCloseModal}
-                          item={item}
-                        />
-                      </>
-                    )}
-                  </>
+                  <TagTake>Take</TagTake>
                 )}
-              </Buttons>
-            </TD>
+                <TDTxt>{dayjs(item.time).format('YYYY.MM.DD')}</TDTxt>
+                <TDTxt>{item.foodName}</TDTxt>
+                <LocBox>
+                  <TDTxt>{item.fridgeAddress}</TDTxt>
+                  <TDSubTxt>{item.fridgeName}</TDSubTxt>
+                </LocBox>
+                <Buttons>
+                  {item.status == 'COMPLETED' ? (
+                    <OffBtn>Leave a Message</OffBtn>
+                  ) : (
+                    <>
+                      <OnBtn onClick={onClickItem}>Leave a Message</OnBtn>
+                      {openModal && (
+                        <>
+                          <LeaveMsgModal
+                            show={openModal}
+                            onCloseModal={setCloseModal}
+                            item={item}
+                          />
+                        </>
+                      )}
+                    </>
+                  )}
+                </Buttons>
+              </TD>
+              <Divider />
+            </>
           ))}
         </TDWrapper>
       </Table>
@@ -199,6 +202,7 @@ const Buttons = styled.div`
   column-gap: 23px;
 `;
 const OnBtn = styled.button`
+  cursor: pointer;
   width: 148px;
   height: 37px;
   text-align: center;
@@ -217,6 +221,13 @@ const OffBtn = styled.button`
   background: rgba(89, 76, 72, 0.3);
   border: 1px solid white;
   border-radius: 10px;
+`;
+
+const Divider = styled.hr`
+  width: 965px;
+  height: 0px;
+
+  border: 1px solid #e9dfd2;
 `;
 
 export default GnTData;
