@@ -20,12 +20,24 @@ const ReservationData = () => {
     console.log(id);
   };
 
+  const handleCheckNotification = async (id) => {
+    try {
+      const response = await axiosInstance.put(
+        `/notification/checkNotice?notificationId=${id}`,
+        id
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleCheck = async (id) => {
     try {
       await axiosInstance.put(`/take/checkFood?takeId=${id}`, id);
       queryClient.invalidateQueries('getGives');
       queryClient.invalidateQueries('getTakes');
       queryClient.invalidateQueries('getReservation');
+      handleCheckNotification(id);
     } catch (error) {
       console.error(error);
     }
