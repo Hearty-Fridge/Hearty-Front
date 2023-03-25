@@ -1,20 +1,18 @@
 import { axiosInstance } from 'api';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { useState } from 'react';
 
 const ReservationData = () => {
+  const queryClient = useQueryClient();
   const { data } = useQuery(
-    ['getReservatino'],
+    ['getReservation'],
     async () => await axiosInstance.get(`/take/getReservation`)
   );
 
   if (!data) {
     return null;
   }
-
-  console.log(data);
 
   const reservations = data.data.data;
 
@@ -24,10 +22,10 @@ const ReservationData = () => {
 
   const handleCheck = async (id) => {
     try {
-      const response = await axiosInstance.put(
-        `/take/checkFood?takeId=${id}`,
-        id
-      );
+      await axiosInstance.put(`/take/checkFood?takeId=${id}`, id);
+      queryClient.invalidateQueries('getGives');
+      queryClient.invalidateQueries('getTakes');
+      queryClient.invalidateQueries('getReservation');
     } catch (error) {
       console.error(error);
     }
