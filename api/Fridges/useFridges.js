@@ -61,8 +61,7 @@ export const getFridgesByKeyword = async ({ keyword, token }) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(data.data);
-  return data.data;
+  return data.data.fridgeList;
 };
 
 export const addBookmark = ({ fridgeId, state, token }) => {

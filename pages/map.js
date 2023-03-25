@@ -123,6 +123,7 @@ const MapPage = () => {
         visibleList={visibleList}
         isFavorite={isFavorite}
         setIsFavorite={setIsFavorite}
+        setDetail={setDetail}
       />
       {detail && <FridgeDetail id={detail} />}
       <Map

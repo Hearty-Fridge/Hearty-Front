@@ -1,10 +1,11 @@
 import ListItem from '@components/Fridge/FridgeListItem';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useBookmarkMutation } from 'api/Fridges/useFridges';
+import styled, { css } from 'styled-components';
 import { IoStarSharp } from 'react-icons/io5';
 import { getFridgesByKeyword } from 'api/Fridges/useFridges';
+import { IoLocationSharp } from 'react-icons/io5';
+import { BiSearchAlt2 } from 'react-icons/bi';
 
 // LocList: 동사무소 위치 정보, setLoc => google map center location setter
 const FridgeList = ({
@@ -16,6 +17,7 @@ const FridgeList = ({
   const router = useRouter();
   const [id, setId] = useState(false);
   const [token, setToken] = useState(null);
+  const [matchedList, setMatchedList] = useState([]);
   // 1 : memberId
   const onClickFridgeItem = useCallback(
     (info) => {
@@ -24,9 +26,23 @@ const FridgeList = ({
         lat: info.fridgeInfo.lat,
         lng: info.fridgeInfo.lng,
       });
+      setMatchedList([]);
     },
     [setCenterLoc]
   );
+
+  const onChangeSearchList = async (e) => {
+    if (e.target.value === '') {
+      setMatchedList([]);
+    } else {
+      setMatchedList(
+        await getFridgesByKeyword({
+          keyword: e.target.value,
+          token: token,
+        })
+      );
+    }
+  };
 
   const onClickNav = (flag) => {
     setIsFavorite(flag);
@@ -54,16 +70,36 @@ const FridgeList = ({
           My Fridge <IoStarSharp />
         </div>
       </InnerNav>
-      <SearchArea
-        onChange={(e) => {
-          console.log({ targat: e.target.value });
-          getFridgesByKeyword({
-            keyword: e.target.value,
-            token: token,
-          });
-        }}
-        placeholder="Search"
-      />
+      <SearchWrapper
+        css={matchedList.length >= 1 ? ActivateSearch : InactivateSearch}
+      >
+        <ColoredSearchIcon />
+        <SearchArea onChange={onChangeSearchList} placeholder="Search" />
+      </SearchWrapper>
+      {matchedList.length >= 1 && (
+        <SearchedList>
+          <SizedHr />
+          {matchedList.map((ls) => (
+            <SearchedListItem
+              key={ls.fridgeInfo.fridgeId}
+              onClick={() => onClickFridgeItem(ls)}
+            >
+              <div className="name">
+                <IoLocationSharp
+                  style={{
+                    marginLeft: '30px',
+                    marginRight: '12px',
+                    width: '20px',
+                    height: '20px',
+                  }}
+                />
+                {ls.fridgeInfo.fridgeName}
+              </div>
+              <div className="addr">{ls.fridgeInfo.fridgeAddress}</div>
+            </SearchedListItem>
+          ))}
+        </SearchedList>
+      )}
       <VisibleList>
         {visibleList?.map((l) => (
           <ListItem
@@ -104,28 +140,82 @@ const InnerNav = styled.div`
   }
 `;
 
-const SearchArea = styled.input`
-  background-color: ${({ theme }) => theme.palette.secondary.main30};
-  color: white;
-  margin: 24px 51px 16px 0px;
-  padding: 0px 20px;
-  font-size: 18px;
-  width: 384px;
+const ActivateSearch = css`
+  border-bottom: none;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+`;
+
+const InactivateSearch = css`
+  border-radius: 28px;
+`;
+
+const SearchWrapper = styled.div`
+  border: ${({ theme }) => theme.palette.accent} 1px solid;
+  display: flex;
+  align-items: center;
+  margin: 24px 51px 0px 0px;
+  width: 399px;
   height: 55px;
+`;
+
+const SearchArea = styled.input`
+  background-color: white;
+  color: ${({ theme }) => theme.palette.secondary.main};
+  font-weight: 700;
+  font-size: 18px;
   border: none;
-  border-radius: 50px;
   ::placeholder {
-    color: white;
-    background-image: url('https://cdn.discordapp.com/attachments/909308714161410071/1068343439441281164/icons.png');
-    background-size: contain;
-    background-position: 1px center;
-    background-repeat: no-repeat;
-    /* text-align: center; */
-    text-indent: 30px;
+    color: ${({ theme }) => theme.palette.secondary.main30};
+    font-weight: 500;
+  }
+  :focus {
+    outline: none;
   }
 `;
 
+const ColoredSearchIcon = styled(BiSearchAlt2)`
+  color: ${({ theme }) => theme.palette.accent};
+  margin-left: 24px;
+  margin-right: 10px;
+  width: 24px;
+  height: 24px;
+`;
+
 const VisibleList = styled.div`
-  height: calc(100vh - 268px);
+  height: calc(100vh - 293px);
+  margin-top: 16px;
   overflow-y: scroll;
+`;
+
+const SearchedList = styled.div`
+  max-height: 333px;
+  overflow-y: scroll;
+  border: ${({ theme }) => theme.palette.accent} 1px solid;
+  border-top: none;
+  width: 399px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+`;
+
+const SearchedListItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 14px;
+  height: 65px;
+  .name {
+    display: flex;
+    align-items: center;
+    color: ${({ theme }) => theme.palette.secondary.main};
+  }
+  .addr {
+    color: ${({ theme }) => theme.palette.secondary.main70};
+    margin-left: 62px;
+  }
+`;
+
+const SizedHr = styled.hr`
+  margin-left: 20px;
+  width: 359px;
 `;
