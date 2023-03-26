@@ -11,8 +11,7 @@ export const IntroP3 = ({ className }) => {
           <Flex>
             <SubTitle>
               <How>How?</How>
-              Look for Hearty Fridge around you Look Look for Hearty Fridge
-              around you Look Hearty
+              Make someone's day with a warm message from the Hearty-fridge.
             </SubTitle>
           </Flex>
         </Description>

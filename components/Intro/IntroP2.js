@@ -13,13 +13,13 @@ export const IntroP2 = ({ className }) => {
           <GnT>
             <Detail>
               <GnTIcon>Give</GnTIcon>
-              Look for Hearty Fridge
-              <br /> around you Look for Hearty
+              Use the Hearty Fridge to
+              <br /> donate food!
             </Detail>
             <Detail>
               <GnTIcon>Take</GnTIcon>
-              Look for Hearty Fridge
-              <br /> around you Look for Hearty
+              Get food donations with
+              <br /> Hearty Fridge!
             </Detail>
           </GnT>
         </div>

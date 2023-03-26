@@ -4,15 +4,16 @@ import Image from 'next/image';
 const Phrases = [
   {
     id: 1,
-    content: '내 주위의 공유 냉장고를 확인해보세요!',
+    content: 'Shared Fridge Near Me around me!',
   },
   {
     id: 2,
-    content: '공유 냉장고를 선택하여 음식의 현황을 확인해보세요!',
+    content: 'Select a shared fridge to to check the status of your food!',
   },
   {
     id: 3,
-    content: '공유 냉장고를 통해 손쉽게 기부와 수급을 완료해보세요!',
+    content:
+      'Shared fridges make it easy to giving and receiving through your refrigerator!',
   },
 ];
 
