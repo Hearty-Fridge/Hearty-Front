@@ -102,9 +102,12 @@ export default function DonateForm({ id, setShow }) {
             <div
               onMouseEnter={(e) => {
                 setShowRef(true);
-                setCoord({ x: e.clientX - 500, y: e.clientY - 100 });
               }}
               onMouseLeave={() => setShowRef(false)}
+              onClick={(e) => {
+                setCoord({ x: e.clientX - 500, y: e.clientY - 100 });
+                setShowRef(true);
+              }}
             >
               <AiFillQuestionCircle style={{ width: '100%' }} />
             </div>
