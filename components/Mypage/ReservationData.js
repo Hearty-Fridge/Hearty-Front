@@ -23,6 +23,7 @@ const ReservationData = () => {
         id
       );
       queryClient.invalidateQueries('getReservation');
+      alert('Cancel!');
     } catch (error) {
       console.error(error);
     }
@@ -46,6 +47,7 @@ const ReservationData = () => {
       queryClient.invalidateQueries('getTakes');
       queryClient.invalidateQueries('getReservation');
       handleCheckNotification(id);
+      alert('Complete!');
     } catch (error) {
       console.error(error);
     }
