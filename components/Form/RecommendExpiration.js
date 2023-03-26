@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { IoCloseSharp } from 'react-icons/io5';
 
-export const Recommend = ({ show, setShow }) => {
+export const Recommend = ({ show, setShow, coord }) => {
   return (
-    <Wrapper>
+    <Wrapper style={{ top: coord.y, left: coord.x }}>
       <Top>
         <div>Recommended intake period</div>
         <IoCloseSharp onClick={() => setShow(false)} />
@@ -26,8 +26,6 @@ export const Recommend = ({ show, setShow }) => {
 
 const Wrapper = styled.div`
   position: absolute;
-  left: 280px;
-  top: 300px;
   width: 328px;
   height: 331px;
   padding: 18px 24px 21px;

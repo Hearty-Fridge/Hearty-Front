@@ -45,6 +45,7 @@ export default function DonateForm({ id, setShow }) {
     },
   });
   const [showRef, setShowRef] = useState(false);
+  const [coord, setCoord] = useState({ x: 0, y: 0 });
   const { errors } = formState;
   const { mutate } = useFoodsMutation({ fridgeId: id });
 
@@ -99,13 +100,17 @@ export default function DonateForm({ id, setShow }) {
           <SectionName>
             <div className="name">Recommended intake period</div>
             <div
-              onMouseEnter={() => setShowRef(true)}
+              onMouseEnter={(e) => {
+                setShowRef(true);
+                setCoord({ x: e.clientX - 500, y: e.clientY - 100 });
+              }}
               onMouseLeave={() => setShowRef(false)}
-              onClick={() => setShowRef(!showRef)}
             >
               <AiFillQuestionCircle style={{ width: '100%' }} />
             </div>
-            {showRef && <Recommend show={showRef} setShow={setShowRef} />}
+            {showRef && (
+              <Recommend coord={coord} show={showRef} setShow={setShowRef} />
+            )}
             <div className="error">
               {errors.expirationDate && errors.expirationDate.message}
             </div>
