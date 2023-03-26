@@ -24,7 +24,7 @@ const TakerForm = () => {
                   <RadioGroupItem value="comfortable" id="r2">
                     <RadioGroupIndicator />
                   </RadioGroupItem>
-                  <Label htmlFor="r2">기타</Label>
+                  <Label htmlFor="r2">etc</Label>
                 </Flex>
               </RadioGroupRoot>
             </RadioForm>
