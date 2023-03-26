@@ -7,7 +7,23 @@ import { getFridgesByKeyword } from 'api/Fridges/useFridges';
 import { IoLocationSharp } from 'react-icons/io5';
 import { BiSearchAlt2 } from 'react-icons/bi';
 
-// LocList: 동사무소 위치 정보, setLoc => google map center location setter
+const getMatchingData = ({ keyword, fridgeName }) => {
+  const idx = fridgeName.indexOf(keyword);
+  if (idx === -1) {
+    return <>{fridgeName}</>;
+  } else {
+    return (
+      <>
+        {fridgeName.substring(0, idx)}
+        <span className="matched">
+          {fridgeName.substring(idx, idx + keyword.length)}
+        </span>
+        {fridgeName.substring(idx + keyword.length)}
+      </>
+    );
+  }
+};
+
 const FridgeList = ({
   visibleList,
   setCenterLoc,
@@ -18,7 +34,8 @@ const FridgeList = ({
   const [id, setId] = useState(false);
   const [token, setToken] = useState(null);
   const [matchedList, setMatchedList] = useState([]);
-  // 1 : memberId
+  const [keyword, setKeyword] = useState('');
+
   const onClickFridgeItem = useCallback(
     (info) => {
       router.push(`/map?id=${info.fridgeInfo.fridgeId}`);
@@ -32,6 +49,7 @@ const FridgeList = ({
   );
 
   const onChangeSearchList = async (e) => {
+    setKeyword(e.target.value);
     if (e.target.value === '') {
       setMatchedList([]);
     } else {
@@ -93,7 +111,10 @@ const FridgeList = ({
                     height: '20px',
                   }}
                 />
-                {ls.fridgeInfo.fridgeName}
+                {getMatchingData({
+                  keyword: keyword,
+                  fridgeName: ls.fridgeInfo.fridgeName,
+                })}
               </div>
               <div className="addr">{ls.fridgeInfo.fridgeAddress}</div>
             </SearchedListItem>
@@ -201,6 +222,9 @@ const SearchedList = styled.div`
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
   ::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0);
   }
@@ -216,6 +240,10 @@ const SearchedListItem = styled.div`
     display: flex;
     align-items: center;
     color: ${({ theme }) => theme.palette.secondary.main};
+    .matched {
+      color: ${({ theme }) => theme.palette.accent};
+      font-weight: 700;
+    }
   }
   .addr {
     color: ${({ theme }) => theme.palette.secondary.main70};
