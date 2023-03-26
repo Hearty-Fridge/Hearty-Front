@@ -10,7 +10,7 @@ const TakerForm = () => {
         <Section>
           <SectionName>
             <div className="name">
-              <Dot>*</Dot> 발급 사이트
+              <Dot>*</Dot> Issuing site
             </div>
             <RadioForm>
               <RadioGroupRoot defaultValue="default" aria-label="View density">
@@ -18,7 +18,7 @@ const TakerForm = () => {
                   <RadioGroupItem value="default" id="r1">
                     <RadioGroupIndicator />
                   </RadioGroupItem>
-                  <Label htmlFor="r1">정부 24(www.gov.kr)</Label>
+                  <Label htmlFor="r1">Government 24(www.gov.kr)</Label>
                 </Flex>
                 <Flex css={{ alignItems: 'center' }}>
                   <RadioGroupItem value="comfortable" id="r2">
@@ -34,7 +34,7 @@ const TakerForm = () => {
         <Section>
           <SectionName>
             <div className="name">
-              <Dot>*</Dot> 이름
+              <Dot>*</Dot> name
             </div>
           </SectionName>
           <TextInput placeholder="" />
@@ -43,7 +43,7 @@ const TakerForm = () => {
         <Section2>
           <SectionName>
             <div className="name">
-              <Dot>*</Dot>문서 확인 번호
+              <Dot>*</Dot>Document Verification Number
             </div>
             {/* <div className="error">
               {errors.expirationDate && errors.expirationDate.message}

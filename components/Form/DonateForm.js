@@ -82,7 +82,7 @@ export default function DonateForm({ id, setShow }) {
       <Container>
         <Section>
           <SectionName>
-            <div className="name">음식명</div>
+            <div className="name">Food name</div>
             <div className="error">
               {errors.foodName && errors.foodName.message}
             </div>
@@ -90,14 +90,14 @@ export default function DonateForm({ id, setShow }) {
           <input
             placeholder="Food Name"
             {...register('foodName', {
-              required: '음식명을 입력해주세요.',
+              required: 'Input Food Name.',
             })}
           />
         </Section>
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
           <SectionName>
-            <div className="name">권장 섭취 기간</div>
+            <div className="name">Recommended intake period</div>
             <div
               onMouseEnter={() => setShowRef(true)}
               onMouseLeave={() => setShowRef(false)}
@@ -114,7 +114,7 @@ export default function DonateForm({ id, setShow }) {
             name="expirationDate"
             control={control}
             rules={{
-              required: '권장 섭취 기간을 입력해주세요.',
+              required: 'Input Recommended intake period.',
             }}
             render={({ field: { onChange, value } }) => (
               <Calendar expirationDate={value} setExpirationDate={onChange} />
@@ -124,7 +124,7 @@ export default function DonateForm({ id, setShow }) {
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
           <SectionName>
-            <div className="name">음식량</div>
+            <div className="name">Food Amount</div>
             <div className="error">
               {errors.foodAmount && errors.foodAmount.message}
             </div>
@@ -132,14 +132,14 @@ export default function DonateForm({ id, setShow }) {
           <input
             placeholder="Food Amount"
             {...register('foodAmount', {
-              required: '음식량을 입력해주세요.',
+              required: 'Input Food Amount',
             })}
           />
         </Section>
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
           <SectionName>
-            <div className="name">음식 종류</div>
+            <div className="name">Category</div>
             <div className="error">
               {errors.category && errors.category.message}
             </div>
@@ -148,7 +148,7 @@ export default function DonateForm({ id, setShow }) {
             name="category"
             control={control}
             rules={{
-              required: '음식 종류를 선택해주세요.',
+              required: 'Select Category',
             }}
             render={({ field: { onChange, value } }) => (
               <CategoryWrapper>
@@ -174,22 +174,20 @@ export default function DonateForm({ id, setShow }) {
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
           <SectionName>
-            <div className="name">음식 사진</div>
+            <div className="name">Food Photo</div>
             <div className="error">
               {errors.selectedImage && errors.selectedImage.message}
             </div>
           </SectionName>
-          <Info>사진을 입력해주세요</Info>
+          <Info>If not selected, the default photo will be used</Info>
           <label style={{ cursor: 'pointer', display: 'inline-block' }}>
-            {/* react hook form controller를 사용해서 해결해보기 */}
-            {/* 현재 버그는 필수 항목으로 만들고 싶지만, display: none이 적용되지 않는 것 */}
             <input
               accept="image/*"
               type="file"
               disabled={selectedImage}
               style={{ display: 'none' }}
               {...register('selectedImage', {
-                required: '사진을 입력해주세요',
+                required: 'Input Food Photo',
                 onChange: (e) => selectedImageChange(e),
               })}
             />
@@ -218,16 +216,16 @@ export default function DonateForm({ id, setShow }) {
         <hr style={{ marginBottom: '36px', width: '690px' }} />
         <Section>
           <SectionName>
-            <div className="name">쪽지 남기기</div>
+            <div className="name">Leave a Hearty Message</div>
             <div className="error">
               {errors.message && errors.message.message}
             </div>
           </SectionName>
-          <Info>잘 먹으라고 인사하세요~!~!</Info>
+          <Info>Leave a message to enjoy your meal!</Info>
           <input
             placeholder="Hearty Message"
             {...register('message', {
-              required: '메세지를 입력해주세요.',
+              required: 'Input a Hearty Message',
             })}
           />
         </Section>

@@ -30,7 +30,7 @@ export const IntroP1 = ({ className }) => {
               <div key={p.id} style={{ display: 'block' }}>
                 <ContentWrapper>
                   <Image
-                    src="/image/intro/Ellipse.png"
+                    src="/image/intro/ellipse.png"
                     width="120"
                     height="82"
                   />

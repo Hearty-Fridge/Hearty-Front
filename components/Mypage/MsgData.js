@@ -49,7 +49,6 @@ const MsgData = () => {
     dotsClass: 'dots_custom',
   };
 
-  console.log('LIST', list);
   return (
     <Wrapper>
       <Title>Hearty Messages</Title>

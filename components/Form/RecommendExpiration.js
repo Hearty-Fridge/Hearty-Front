@@ -5,12 +5,12 @@ export const Recommend = ({ show, setShow }) => {
   return (
     <Wrapper>
       <Top>
-        <div>권장 섭취 기간</div>
+        <div>Recommended intake period</div>
         <IoCloseSharp onClick={() => setShow(false)} />
       </Top>
       <Info>
-        <div>식품유형</div>
-        <div>소비기한</div>
+        <div>Category</div>
+        <div>expiration date</div>
       </Info>
       <FoodArea>
         {Expiration.map((exp) => (
@@ -68,99 +68,99 @@ const FoodWrapper = styled.div`
 
 const Expiration = [
   {
-    name: '즉섭섭취식품(비살균)',
-    expiration: '73시간',
+    name: 'Instant food (non-sterile)',
+    expiration: '73 hours',
   },
   {
-    name: '전란액(액상 계란)',
-    expiration: '4일',
+    name: 'Liquid egg',
+    expiration: '4 days',
   },
   {
-    name: '즉석조리식품(인스턴트)',
-    expiration: '5일',
+    name: 'Instant cooking food',
+    expiration: '5 days',
   },
   {
-    name: '간편조리세트(밀키트)',
-    expiration: '8일',
+    name: 'meal kit',
+    expiration: '8 days',
   },
   {
-    name: '신선편의식품(간편 샐러드 등)',
-    expiration: '8일',
+    name: 'Fresh convenience food',
+    expiration: '8 days',
   },
   {
-    name: '묵류',
-    expiration: '19일',
+    name: 'Starch jelly',
+    expiration: '19 days',
   },
   {
-    name: '과채음료',
-    expiration: '20일',
+    name: 'Fruit and vegetable juice',
+    expiration: '20 days',
   },
   {
-    name: '두부',
-    expiration: '23일',
+    name: 'Tofu',
+    expiration: '23 days',
   },
   {
-    name: '가공유(가공우유)',
-    expiration: '24일',
+    name: 'Processed milk',
+    expiration: '24 days',
   },
   {
-    name: '농후발효유',
-    expiration: '24일',
+    name: 'Matured fermented milk',
+    expiration: '24 days',
   },
   {
-    name: '유산균 음료',
-    expiration: '26일',
+    name: 'Probiotic drink',
+    expiration: '26 days',
   },
   {
-    name: '크림발효유',
-    expiration: '28일',
+    name: 'Creamy fermented milk',
+    expiration: '28 days',
   },
   {
-    name: '베이컨류',
-    expiration: '28일',
+    name: 'Bacon',
+    expiration: '28 days',
   },
   {
-    name: '빵류',
-    expiration: '31일',
+    name: 'Bread',
+    expiration: '31 days',
   },
   {
-    name: '발효유',
-    expiration: '32일',
+    name: 'Fermented milk',
+    expiration: '32 days',
   },
   {
-    name: '과채주스',
-    expiration: '35일',
+    name: 'Fruit and vegetable juice',
+    expiration: '35 days',
   },
   {
-    name: '생면',
-    expiration: '42일',
+    name: 'Fresh noodles',
+    expiration: '42 days',
   },
   {
-    name: '어묵',
-    expiration: '42일',
+    name: 'Fish cake',
+    expiration: '42 days',
   },
   {
-    name: '즉석섭취식품(살균)',
-    expiration: '44일',
+    name: 'Instant food (sterilized)',
+    expiration: '44 days',
   },
   {
-    name: '영/유아용 이유식',
-    expiration: '46일',
+    name: 'Baby food',
+    expiration: '46 days',
   },
   {
-    name: '소시지',
-    expiration: '56일',
+    name: 'Sausage',
+    expiration: '56 days',
   },
   {
-    name: '햄',
-    expiration: '57일',
+    name: 'Ham',
+    expiration: '57 days',
   },
   {
-    name: '프레스햄',
-    expiration: '66일',
+    name: 'Pressed ham',
+    expiration: '66 days',
   },
   {
-    name: '과자',
-    expiration: '81일',
+    name: 'Snacks',
+    expiration: '81 days',
   },
 ];

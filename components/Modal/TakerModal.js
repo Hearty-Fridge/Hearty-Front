@@ -8,7 +8,7 @@ const TakerModal = ({ show, onCloseModal }) => {
     <Modal show={show} onCloseModal={onCloseModal}>
       <Container>
         <Top>
-          <Title>수급자 인증</Title>
+          <Title>Recipient authentication</Title>
           <Exit onClick={onCloseModal}>
             <IoCloseSharp
               style={{
@@ -20,7 +20,10 @@ const TakerModal = ({ show, onCloseModal }) => {
             />
           </Exit>
         </Top>
-        <Info>기초생활 수급자를 인증하고 Hearty Fridge를 이용해 보세요.</Info>
+        <Info>
+          Authenticate your Supplemental Security Income recipient and try
+          Hearty Fridge.
+        </Info>
         <TakerForm />
       </Container>
     </Modal>
