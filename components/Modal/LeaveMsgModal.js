@@ -39,7 +39,7 @@ const LeaveMsgModal = ({ show, onCloseModal, item }) => {
       <Container>
         <Top>
           <Title>
-            <Food>{item.foodName}</Food>에 대한 메시지
+            Message about <Food> {item.foodName}</Food>
           </Title>
           <Exit onClick={onCloseModal}>
             <IoCloseSharp

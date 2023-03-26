@@ -4,15 +4,16 @@ import Image from 'next/image';
 const Phrases = [
   {
     id: 1,
-    content: '내 주위의 공유 냉장고를 확인해보세요!',
+    content: 'Shared Fridge Near Me around me!',
   },
   {
     id: 2,
-    content: '공유 냉장고를 선택하여 음식의 현황을 확인해보세요!',
+    content: 'Select a shared fridge to to check the status of your food!',
   },
   {
     id: 3,
-    content: '공유 냉장고를 통해 손쉽게 기부와 수급을 완료해보세요!',
+    content:
+      'Shared fridges make it easy to giving and receiving through your refrigerator!',
   },
 ];
 
@@ -30,9 +31,10 @@ export const IntroP1 = ({ className }) => {
               <div key={p.id} style={{ display: 'block' }}>
                 <ContentWrapper>
                   <Image
-                    src="/image/intro/Ellipse.png"
+                    src="/image/intro/ellipse.png"
                     width="120"
                     height="82"
+                    alt="ellipse"
                   />
                   <div className="id">{p.id}.</div>
                 </ContentWrapper>
@@ -47,24 +49,28 @@ export const IntroP1 = ({ className }) => {
             src="/image/intro/location128.png"
             width="148"
             height="158"
+            alt="icon"
           />
           <Image
             className="img1 popIn duration10ms"
             src="/image/intro/fridge1.png"
             width="440"
             height="182"
+            alt="fridge1"
           />
           <Image
             className="img2 popIn delay15ms duration10ms"
             src="/image/intro/fridge2.png"
             width="440"
             height="182"
+            alt="fridge2"
           />
           <Image
             className="img3 popIn delay30ms duration10ms"
             src="/image/intro/fridge3.png"
             width="440"
             height="182"
+            alt="fridge3"
           />
         </ImageWrapper>
       </FlexRowDiv>

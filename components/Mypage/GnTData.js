@@ -29,8 +29,6 @@ const GnTData = () => {
     return null;
   }
 
-  console.log(givesData);
-
   const gives = givesData.data.data;
   const takes = takesData.data.data;
 

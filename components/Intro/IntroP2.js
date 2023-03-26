@@ -13,13 +13,13 @@ export const IntroP2 = ({ className }) => {
           <GnT>
             <Detail>
               <GnTIcon>Give</GnTIcon>
-              Look for Hearty Fridge
-              <br /> around you Look for Hearty
+              Use the Hearty Fridge to
+              <br /> donate food!
             </Detail>
             <Detail>
               <GnTIcon>Take</GnTIcon>
-              Look for Hearty Fridge
-              <br /> around you Look for Hearty
+              Get food donations with
+              <br /> Hearty Fridge!
             </Detail>
           </GnT>
         </div>
@@ -29,24 +29,28 @@ export const IntroP2 = ({ className }) => {
             src="/image/intro/food1.png"
             width="440"
             height="140"
+            alt="food1"
           />
           <Image
             className="img2 scaleUp delay15ms duration10ms"
             src="/image/intro/food2.png"
             width="440"
             height="140"
+            alt="food2"
           />
           <Image
             className="img3 scaleUp delay30ms duration10ms"
             src="/image/intro/food3.png"
             width="440"
             height="140"
+            alt="food3"
           />
           <Image
             className="img4 scaleUp delay45ms duration10ms"
             src="/image/intro/food4.png"
             width="440"
             height="141"
+            alt="food4"
           />
         </ImageWrapper>
       </FlexRowDiv>

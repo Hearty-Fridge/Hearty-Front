@@ -51,10 +51,10 @@ const FridgeDetail = ({ id }) => {
 
   const ReservationHandleSubmit = () => {
     if (reservationList.length === 0) {
-      alert('하나 이상의 음식을 선택하세요!');
+      alert('Choose one or more foods!');
     } else if (numCanReserve < reservationList.length) {
       alert(
-        `예약 가능 음식 개수를 초과했습니다. 예약 가능 음식 개수 : ${numCanReserve}`
+        `You have exceeded the number of food available for reservation. Number of foods available for reservation : ${numCanReserve}`
       );
     } else {
       setIsReservation(false);

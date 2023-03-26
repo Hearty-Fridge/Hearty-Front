@@ -12,8 +12,7 @@ export const IntroP3 = ({ className }) => {
           <Flex>
             <SubTitle>
               <How>How?</How>
-              Look for Hearty Fridge around you Look Look for Hearty Fridge
-              around you Look Hearty
+              Make someone's day with a warm message from the Hearty-fridge.
             </SubTitle>
           </Flex>
         </Description>
@@ -24,18 +23,21 @@ export const IntroP3 = ({ className }) => {
             src="/image/intro/message1.png"
             width="680"
             height="188"
+            alt="message3"
           />
           <Image
             className="message2 popIn delay15ms duration10ms"
             src="/image/intro/message2.png"
             width="400"
             height="150"
+            alt="message2"
           />
           <Image
             className="message3 popIn delay30ms duration10ms"
             src="/image/intro/message3.png"
             width="690"
             height="188"
+            alt="message3"
           /> */}
         </MessageWrapper>
       </FlexRowDiv>
