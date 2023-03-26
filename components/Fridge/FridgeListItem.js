@@ -59,7 +59,7 @@ const Wrapper = styled.div`
   margin-bottom: 16px;
   margin-top: 2px;
   margin-left: 2px;
-  width: 401px;
+  width: 399px;
   height: 116px;
   background-color: ${({ theme }) => theme.palette.beigeWhite};
   /* background-color: #ffffff; */

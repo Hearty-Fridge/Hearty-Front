@@ -144,6 +144,7 @@ const ActivateSearch = css`
   border-bottom: none;
   border-top-left-radius: 28px;
   border-top-right-radius: 28px;
+  box-shadow: 0px -10px 20px 0px rgba(0, 0, 0, 0.1);
 `;
 
 const InactivateSearch = css`
@@ -151,11 +152,12 @@ const InactivateSearch = css`
 `;
 
 const SearchWrapper = styled.div`
+  position: relative;
   border: ${({ theme }) => theme.palette.accent} 1px solid;
   display: flex;
   align-items: center;
   margin: 24px 51px 0px 0px;
-  width: 399px;
+  width: 402px;
   height: 55px;
 `;
 
@@ -189,13 +191,19 @@ const VisibleList = styled.div`
 `;
 
 const SearchedList = styled.div`
+  position: absolute;
   max-height: 333px;
   overflow-y: scroll;
   border: ${({ theme }) => theme.palette.accent} 1px solid;
+  background-color: white;
   border-top: none;
-  width: 399px;
+  width: 402px;
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
 `;
 
 const SearchedListItem = styled.div`
