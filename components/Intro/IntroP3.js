@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import gif from 'public/image/intro/intro3_1.gif';
+import gif from 'public/image/intro/intro3.gif';
 
 export const IntroP3 = ({ className }) => {
   return (
@@ -17,28 +17,12 @@ export const IntroP3 = ({ className }) => {
           </Flex>
         </Description>
         <MessageWrapper>
-          <Image src={gif} height={800} width={778} />
-          {/* <Image
-            className="message1 popIn duration10ms"
-            src="/image/intro/message1.png"
-            width="680"
-            height="188"
-            alt="message3"
-          />
           <Image
-            className="message2 popIn delay15ms duration10ms"
-            src="/image/intro/message2.png"
-            width="400"
-            height="150"
-            alt="message2"
+            src={gif}
+            height={800}
+            width={800}
+            style={{ marginLeft: '-100px' }}
           />
-          <Image
-            className="message3 popIn delay30ms duration10ms"
-            src="/image/intro/message3.png"
-            width="690"
-            height="188"
-            alt="message3"
-          /> */}
         </MessageWrapper>
       </FlexRowDiv>
     </Wrapper>

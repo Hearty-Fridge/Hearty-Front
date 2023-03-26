@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import gif from 'public/image/intro/intro1.gif';
 
 const Phrases = [
   {
@@ -43,36 +44,13 @@ export const IntroP1 = ({ className }) => {
             ))}
           </FlexDiv>
         </div>
-        <ImageWrapper>
-          <Image
-            className="location"
-            src="/image/intro/location128.png"
-            width="148"
-            height="158"
-            alt="icon"
-          />
-          <Image
-            className="img1 popIn duration10ms"
-            src="/image/intro/fridge1.png"
-            width="440"
-            height="182"
-            alt="fridge1"
-          />
-          <Image
-            className="img2 popIn delay15ms duration10ms"
-            src="/image/intro/fridge2.png"
-            width="440"
-            height="182"
-            alt="fridge2"
-          />
-          <Image
-            className="img3 popIn delay30ms duration10ms"
-            src="/image/intro/fridge3.png"
-            width="440"
-            height="182"
-            alt="fridge3"
-          />
-        </ImageWrapper>
+        <Image
+          src={gif}
+          height={900}
+          width={800}
+          style={{ paddingTop: '100px' }}
+          alt="gif"
+        />
       </FlexRowDiv>
     </Wrapper>
   );
