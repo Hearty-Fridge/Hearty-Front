@@ -7,7 +7,7 @@ export const IntroP4 = ({ className }) => {
       Say Hello to the
       <br />
       <div className="mb-150 play-fair">Hearty Fridge!</div>
-      <Image src="/image/intro/go.png" width="180" height="130" />
+      <Image src="/image/intro/go.png" width="180" height="130" alt="go" />
       <div className="mt-30 play-fair underline">start with GOOGLE</div>
     </Wrapper>
   );
