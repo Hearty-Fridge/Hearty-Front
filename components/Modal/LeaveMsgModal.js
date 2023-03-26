@@ -28,6 +28,7 @@ const LeaveMsgModal = ({ show, onCloseModal, item }) => {
       queryClient.invalidateQueries('getReceiveMessages');
       queryClient.invalidateQueries('getGives');
       queryClient.invalidateQueries('getTakes');
+      alert('Complete!');
       onCloseModal();
     } catch (error) {
       console.error(error);

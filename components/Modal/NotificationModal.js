@@ -14,7 +14,6 @@ const NotificationModal = ({ show, onCloseModal, list }) => {
         `/notification/checkNotice?notificationId=${id}`,
         id
       );
-      console.log('click!');
     } catch (error) {
       console.error(error);
     }
