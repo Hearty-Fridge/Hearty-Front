@@ -16,8 +16,16 @@ const ReservationData = () => {
 
   const reservations = data.data.data;
 
-  const handleCancel = (id) => {
-    console.log(id);
+  const handleCancel = async (id) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/take/cancel?takeId=${id}`,
+        id
+      );
+      queryClient.invalidateQueries('getReservation');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCheckNotification = async (id) => {
