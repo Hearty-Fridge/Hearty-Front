@@ -20,7 +20,7 @@ const ReservationModal = ({
         );
       } else {
         if (reservationList.length == 2) {
-          alert('2개까지 선택할 수 있습니다.');
+          alert('You can choose up to 2 foods');
           obj.target.checked = false;
         } else {
           setReservationList(() => [...reservationList, food]);

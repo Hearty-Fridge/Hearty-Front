@@ -44,7 +44,6 @@ export const useFoodsMutation = ({ fridgeId }) => {
     // mutate 요청이 성공한 후 queryClient.invalidateQueries 함수를 통해
     // useTodosQuery에서 불러온 API Response의 Cache를 초기화
     onSuccess: () => {
-      console.log('Success!');
       queryClient.invalidateQueries(['fridges']);
       queryClient.invalidateQueries(['fridgesById', fridgeId.toString()]);
     },
@@ -53,7 +52,6 @@ export const useFoodsMutation = ({ fridgeId }) => {
       for (const [key, value] of newData.body.entries()) {
         obj[key] = value;
       }
-      console.log(obj);
       const [fridgesQueryKey, fridgeQueryKey] = [
         ['fridges'],
         ['fridgesById', fridgeId.toString()],
@@ -85,17 +83,14 @@ export const useFoodsMutation = ({ fridgeId }) => {
         fridgeName: fridgeData.fridgeInfo.fridgeName,
         isReserved: false,
       });
-      console.log(fridgeData.foodList);
       fridgeData.messageList.push({
         giveId: -1,
         message: obj.message,
         messageId: -1,
         sendTime: new Date(),
       });
-      console.log(fridgeData.messageList);
       fridgesData.fridgeList[fridgeId - 1].numFoods += 1;
       fridgesData.fridgeList[fridgeId - 1].numMessages += 1;
-      console.log(fridgesData.fridgeList[fridgeId - 1]);
 
       queryClient.setQueryData(fridgesQueryKey, fridgesData);
       queryClient.setQueryData(fridgeQueryKey, fridgeData);
@@ -103,7 +98,6 @@ export const useFoodsMutation = ({ fridgeId }) => {
       return { previousData };
     },
     onError: (err, newData, context) => {
-      console.log(err, context, newData);
       queryClient.setQueryData(['fridges'], context.previousData.fridges);
       queryClient.setQueryData(
         ['fridgesById', fridgeId],
@@ -139,7 +133,7 @@ export const getFoodImageById = ({ giveId, token }) => {
     },
     {
       onError: (e) => {
-        console.log(e);
+        console.error(e);
       },
     }
   );
@@ -163,7 +157,7 @@ export const getCanReserve = ({ token }) => {
     },
     {
       onError: (e) => {
-        console.log(e);
+        console.error(e);
       },
     }
   );

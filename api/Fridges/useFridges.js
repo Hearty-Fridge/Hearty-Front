@@ -19,7 +19,7 @@ export const getAllFridges = ({ token }) => {
     {
       retryOnMount: true,
       onError: (e) => {
-        console.log('error: ', e);
+        console.error(e);
       },
     }
   );
@@ -44,7 +44,7 @@ export const getFridgesById = ({ fridgeId, token }) => {
     },
     {
       onError: (e) => {
-        console.log(e);
+        console.error(e);
       },
     }
   );
@@ -61,8 +61,7 @@ export const getFridgesByKeyword = async ({ keyword, token }) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(data.data);
-  return data.data;
+  return data.data.fridgeList;
 };
 
 export const addBookmark = ({ fridgeId, state, token }) => {
@@ -132,7 +131,7 @@ export const useBookmarkMutation = (fridgeNum) => {
     },
 
     onError: (err, newData, context) => {
-      console.log(err);
+      console.error(err);
       queryClient.setQueryData(['fridges'], context.previousData.fridges);
       queryClient.setQueryData(
         ['fridgesById', fridgeNum],

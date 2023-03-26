@@ -38,7 +38,7 @@ const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
         </Info>
         <ContentWrapper>
           {data?.map((t) => (
-            <ConfirmFood data={t.food} />
+            <ConfirmFood key={t.id} data={t.food} />
           ))}
           <Notification>
             <div>Please leave a message</div>
