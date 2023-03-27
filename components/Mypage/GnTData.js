@@ -69,8 +69,8 @@ const GnTData = () => {
                 <TDTxt>{dayjs(item.time).format('YYYY.MM.DD')}</TDTxt>
                 <TDTxt>{item.foodName}</TDTxt>
                 <LocBox>
-                  <TDTxt>{item.fridgeAddress}</TDTxt>
-                  <TDSubTxt>{item.fridgeName}</TDSubTxt>
+                  <LocTxt>{item.fridgeAddress}</LocTxt>
+                  <LocSubTxt>{item.fridgeName}</LocSubTxt>
                 </LocBox>
                 <Buttons>
                   {item.status == 'COMPLETED' ? (
@@ -172,7 +172,7 @@ const TD = styled.div`
   align-items: center;
   padding-left: 44px;
   width: 966px;
-  height: 70px;
+  height: auto;
 `;
 const TagTake = styled.div`
   margin-right: 28px;
@@ -209,7 +209,17 @@ const TDTxt = styled.div`
   line-height: 19px;
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
-const TDSubTxt = styled.div`
+const LocTxt = styled.div`
+  padding-top: 18px;
+  width: 300px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+const LocSubTxt = styled.div`
+  padding-bottom: 18px;
+  width: 300px;
   padding-top: 4px;
   font-weight: 400;
   font-size: 14px;

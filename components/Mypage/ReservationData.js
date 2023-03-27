@@ -53,8 +53,6 @@ const ReservationData = () => {
     }
   };
 
-  console.log(reservations);
-
   return (
     <>
       <Wrapper>
@@ -80,14 +78,8 @@ const ReservationData = () => {
                   <TDTxt>{dayjs(reservation.time).format('YYYY.MM.DD')}</TDTxt>
                   <TDTxt>{reservation.foodName}</TDTxt>
                   <LocBox>
-                    <TDTxt>
-                      Wolgye hearty fridge Wolgye hearty fridge hearty fridge
-                      Wolgye hearty fridge Wolgye hear
-                    </TDTxt>
-                    <TDSubTxt>
-                      {reservation.fridgeAddress}Wolgye 1-dong, Nowon-gu, Seoul
-                      Wolgye 1-dong, Nowon-gu, Seoul
-                    </TDSubTxt>
+                    <TDTxt>{reservation.fridgeName}</TDTxt>
+                    <TDSubTxt>{reservation.fridgeAddress}</TDSubTxt>
                   </LocBox>
                   <Buttons>
                     <BtnCancel
@@ -174,7 +166,7 @@ const Divider = styled.hr`
 `;
 
 const TDWrapper = styled.div`
-  height: 154px;
+  height: 160px;
   overflow-y: auto;
   overflow-x: hidden;
 `;
