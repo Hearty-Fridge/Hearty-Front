@@ -73,35 +73,43 @@ const ReservationData = () => {
           ) : (
             <></>
           )}
-          {reservations.map((reservation) => (
-            <>
-              <TD key={reservation.id}>
-                <TDTxt>{dayjs(reservation.time).format('YYYY.MM.DD')}</TDTxt>
-                <TDTxt>{reservation.foodName}</TDTxt>
-                <LocBox>
-                  <TDTxt>{reservation.fridgeName}</TDTxt>
-                  <TDSubTxt>{reservation.fridgeName}</TDSubTxt>
-                </LocBox>
-                <Buttons>
-                  <BtnCancel
-                    onClick={() => {
-                      handleCancel(reservation.id);
-                    }}
-                  >
-                    Cancel
-                  </BtnCancel>
-                  <BtnCheck
-                    onClick={() => {
-                      handleCheck(reservation.id);
-                    }}
-                  >
-                    Check
-                  </BtnCheck>
-                </Buttons>
-              </TD>
-              <Divider />
-            </>
-          ))}
+          <TDWrapper>
+            {reservations.map((reservation) => (
+              <>
+                <TD key={reservation.id}>
+                  <TDTxt>{dayjs(reservation.time).format('YYYY.MM.DD')}</TDTxt>
+                  <TDTxt>{reservation.foodName}</TDTxt>
+                  <LocBox>
+                    <TDTxt>
+                      Wolgye hearty fridge Wolgye hearty fridge hearty fridge
+                      Wolgye hearty fridge Wolgye hear
+                    </TDTxt>
+                    <TDSubTxt>
+                      {reservation.fridgeAddress}Wolgye 1-dong, Nowon-gu, Seoul
+                      Wolgye 1-dong, Nowon-gu, Seoul
+                    </TDSubTxt>
+                  </LocBox>
+                  <Buttons>
+                    <BtnCancel
+                      onClick={() => {
+                        handleCancel(reservation.id);
+                      }}
+                    >
+                      Cancel
+                    </BtnCancel>
+                    <BtnCheck
+                      onClick={() => {
+                        handleCheck(reservation.id);
+                      }}
+                    >
+                      Check
+                    </BtnCheck>
+                  </Buttons>
+                </TD>
+                <Divider />
+              </>
+            ))}
+          </TDWrapper>
         </Table>
       </Wrapper>
     </>
@@ -165,12 +173,19 @@ const Divider = styled.hr`
   border: 1px solid #e9dfd2;
 `;
 
+const TDWrapper = styled.div`
+  height: 154px;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
 const TD = styled.div`
   display: flex;
   align-items: center;
   padding-left: 44px;
   width: 966px;
-  height: 70px;
+  height: auto;
+  padding-top: 18px;
+  padding-bottom: 18px;
 `;
 const Time = styled.div`
   width: 185px;
@@ -180,7 +195,8 @@ const Time = styled.div`
   color: ${({ theme }) => theme.palette.accent};
 `;
 const TDTxt = styled.div`
-  width: 185px;
+  padding-right: 40px;
+  width: 360px;
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
