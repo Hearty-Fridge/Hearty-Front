@@ -52,6 +52,14 @@ const MsgData = () => {
   return (
     <Wrapper>
       <Title>Hearty Messages</Title>
+      {list.length == 0 ? (
+        <NoneText>
+          <First>There is no Hearty Messages.</First>
+          <Second>Use Hearty Fridge and leave a message!</Second>
+        </NoneText>
+      ) : (
+        <></>
+      )}
       {list.length <= 2 ? (
         <Slider {...settings2}>
           {list.map((item) => (
@@ -85,65 +93,21 @@ const Title = styled.div`
 
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
-
-const Card = styled.div`
-  position: relative;
-  width: 310px;
-  padding: 26px 30px;
-  height: 198.96px;
-
-  background: #f8f8f8;
-
-  border: 1px solid #f1eae0;
-  border-radius: 10px;
-`;
-
-const TagSend = styled.div`
-  margin-right: 28px;
-  padding: 4px 10px;
-  width: 46px;
-  height: 22px;
-  font-weight: 500;
-  font-size: 12px;
-
-  background: #a6cda5;
-  border-radius: 5px;
-  color: white;
-
+const NoneText = styled.div`
   text-align: center;
-`;
-const TagReceive = styled.div`
-  margin-right: 28px;
-  padding: 4px 10px;
-  width: 64px;
-  height: 22px;
-  font-weight: 500;
-  font-size: 12px;
-
-  background: #d6a9a9;
-  border-radius: 5px;
-  color: white;
-
-  text-align: center;
-`;
-
-const Contents = styled.div`
-  margin-top: 18px;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-
+  margin-top: 90px;
   color: #594c48;
 `;
-
-const Address = styled.div`
-  position: absolute;
-  bottom: 25px;
+const First = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+`;
+const Second = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 17px;
-
-  color: #594c48;
 `;
-
 export default MsgData;

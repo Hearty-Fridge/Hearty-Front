@@ -53,6 +53,8 @@ const ReservationData = () => {
     }
   };
 
+  console.log(reservations);
+
   return (
     <>
       <Wrapper>
@@ -63,6 +65,14 @@ const ReservationData = () => {
             <THTxt>Food</THTxt>
             <THTxt>Location</THTxt>
           </TH>
+          {reservations.length == 0 ? (
+            <NoneText>
+              <First>There is no food currently being reserved.</First>
+              <Second>Use the Map function to reserve food!</Second>
+            </NoneText>
+          ) : (
+            <></>
+          )}
           {reservations.map((reservation) => (
             <>
               <TD key={reservation.id}>
@@ -132,6 +142,25 @@ const THTxt = styled.div`
 
   color: rgba(89, 76, 72, 0.7);
 `;
+
+const NoneText = styled.div`
+  text-align: center;
+  margin-top: 60px;
+  color: #594c48;
+`;
+const First = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+`;
+const Second = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+`;
+
 const Divider = styled.hr`
   border: 1px solid #e9dfd2;
 `;

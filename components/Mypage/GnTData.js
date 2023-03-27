@@ -49,6 +49,14 @@ const GnTData = () => {
           <THTxt>Food</THTxt>
           <THTxt>Location</THTxt>
         </TH>
+        {list.length == 0 ? (
+          <NoneText>
+            <First>There is no recent activity.</First>
+            <Second>Try the map function!</Second>
+          </NoneText>
+        ) : (
+          <></>
+        )}
         <TDWrapper>
           {list.map((item) => (
             <>
@@ -135,6 +143,25 @@ const THTxt = styled.div`
 
   color: rgba(89, 76, 72, 0.7);
 `;
+
+const NoneText = styled.div`
+  text-align: center;
+  margin-top: 90px;
+  color: #594c48;
+`;
+const First = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+`;
+const Second = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+`;
+
 const TDWrapper = styled.div`
   height: 210px;
   overflow-y: auto;
