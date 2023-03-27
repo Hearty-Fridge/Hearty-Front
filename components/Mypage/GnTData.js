@@ -6,23 +6,19 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 const GnTData = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [showId, setShowId] = useState(-1);
 
   const setCloseModal = () => {
-    setOpenModal(false);
-  };
-
-  const onClickItem = () => {
-    setOpenModal(true);
+    setShowId(-1);
   };
 
   const { data: givesData } = useQuery(
     ['getGives'],
-    async () => await axiosInstance.get(`/member/getGives`)
+    async () => await axiosInstance.get(`/give/getGives`)
   );
   const { data: takesData } = useQuery(
     ['getTakes'],
-    async () => await axiosInstance.get(`/member/getTakes`)
+    async () => await axiosInstance.get(`/take/getTakes`)
   );
 
   if (!givesData || !takesData) {
@@ -52,7 +48,7 @@ const GnTData = () => {
         <TDWrapper>
           {list.map((item) => (
             <>
-              <TD key={item.index}>
+              <TD key={item.id}>
                 {item.type == 'give' ? (
                   <TagGive>Give</TagGive>
                 ) : (
@@ -69,15 +65,15 @@ const GnTData = () => {
                     <OffBtn>Leave a Message</OffBtn>
                   ) : (
                     <>
-                      <OnBtn onClick={onClickItem}>Leave a Message</OnBtn>
-                      {openModal && (
-                        <>
-                          <LeaveMsgModal
-                            show={openModal}
-                            onCloseModal={setCloseModal}
-                            item={item}
-                          />
-                        </>
+                      <OnBtn onClick={() => setShowId(item.id)}>
+                        Leave a Message
+                      </OnBtn>
+                      {showId === item.id && (
+                        <LeaveMsgModal
+                          show={true}
+                          onCloseModal={setCloseModal}
+                          item={item}
+                        />
                       )}
                     </>
                   )}
