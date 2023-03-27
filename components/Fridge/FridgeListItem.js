@@ -33,7 +33,7 @@ const ListItem = ({ id, onClick, info, activate }) => {
                   : `${info.dist}m`}{' '}
               </span>
               <span className="seperator">|</span>{' '}
-              <span classname="loc">{info.fridgeInfo.fridgeAddress}</span>
+              <span className="loc">{info.fridgeInfo.fridgeAddress}</span>
             </div>
           ) : (
             <div className="loc">{info.fridgeInfo.fridgeAddress}</div>
