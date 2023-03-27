@@ -1,7 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Modal from './Modal';
 import { IoCloseSharp } from 'react-icons/io5';
-import TakerForm from '@components/Form/TakerForm';
 import { axiosInstance } from 'api';
 import { useState } from 'react';
 
@@ -43,7 +42,6 @@ const TakerModal = ({ show, onCloseModal }) => {
 
   const submitForm = async () => {
     try {
-      console.log(num1);
       const response = await axiosInstance.put(`/member/authTaker`, {
         name: name,
         issueNum: 0,
