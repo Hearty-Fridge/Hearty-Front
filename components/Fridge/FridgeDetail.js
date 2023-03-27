@@ -10,6 +10,7 @@ import ReservationModal from '@components/Modal/ReservationModal';
 import DonationModal from '@components/Modal/DonationModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 import { getCanReserve } from 'api/Food/useFoods';
+import { IoCloseSharp } from 'react-icons/io5';
 
 const FridgeDetail = ({ id }) => {
   const router = useRouter();
@@ -88,8 +89,14 @@ const FridgeDetail = ({ id }) => {
           }
         />
       </GradientImage>
-      <ExitButton onClick={onClickExitBtn}>X</ExitButton>
-      {/* onClick 구현 */}
+      <ExitButton onClick={onClickExitBtn}>
+        <IoCloseSharp
+          style={{
+            width: '30px',
+            height: '30px',
+          }}
+        />
+      </ExitButton>
       <Bookmark
         onClick={() => {
           mutate({
