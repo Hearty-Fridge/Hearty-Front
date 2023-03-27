@@ -1,14 +1,22 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import { useLogin } from '@hooks/useLogin';
 
 export const IntroP4 = ({ className }) => {
+  const { isLogin, handleLogin } = useLogin();
+
   return (
     <Wrapper className={className}>
       Say Hello to the
       <br />
       <div className="mb-150 play-fair">Hearty Fridge!</div>
       <Image src="/image/intro/go.png" width="180" height="130" alt="go" />
-      <div className="mt-30 play-fair underline">start with GOOGLE</div>
+      <div
+        className="mt-30 play-fair underline"
+        onClick={isLogin ? null : handleLogin}
+      >
+        start with GOOGLE
+      </div>
     </Wrapper>
   );
 };
