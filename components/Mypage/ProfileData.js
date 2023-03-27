@@ -62,7 +62,7 @@ const ProfileData = ({ user }) => {
         <Bar />
         <Wrap>
           <Title>Certification</Title>
-          {user.isTaker ? (
+          {!user.isTaker ? (
             <Card>
               <CardM>Beneficiary authentication is complete!</CardM>
               <CardD>2022.03.21 ~ 2023.03.21</CardD>

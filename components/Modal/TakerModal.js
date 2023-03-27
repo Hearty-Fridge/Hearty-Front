@@ -3,13 +3,19 @@ import Modal from './Modal';
 import { IoCloseSharp } from 'react-icons/io5';
 import { axiosInstance } from 'api';
 import { useState } from 'react';
+import * as RadioGroup from '@radix-ui/react-radio-group';
 
 const TakerModal = ({ show, onCloseModal }) => {
   const [name, setName] = useState('');
+  const [issueNum, setIssueNum] = useState(0);
   const [num1, setNum1] = useState();
   const [num2, setNum2] = useState();
   const [num3, setNum3] = useState();
   const [num4, setNum4] = useState();
+
+  const handleRadio = (e) => {
+    console.log(e.target.value);
+  };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -82,10 +88,29 @@ const TakerModal = ({ show, onCloseModal }) => {
               <SectionName>
                 <div className="name">Issuing site</div>
               </SectionName>
-              <Flex>
-                <BigDot />
-                <Label htmlFor="r1">Government 24(www.gov.kr)</Label>
-              </Flex>
+              <RadioForm>
+                <RadioGroupRoot
+                  defaultValue="default"
+                  aria-label="View density"
+                >
+                  <Flex css={{ alignItems: 'center' }}>
+                    <RadioGroupItem value="default" id="r1">
+                      <RadioGroupIndicator />
+                    </RadioGroupItem>
+                    <Label htmlFor="r1" for="0">
+                      정부 24(www.gov.kr)
+                    </Label>
+                  </Flex>
+                  <Flex css={{ alignItems: 'center' }}>
+                    <RadioGroupItem value="comfortable" id="r2">
+                      <RadioGroupIndicator />
+                    </RadioGroupItem>
+                    <Label htmlFor="r2" for="1">
+                      기타
+                    </Label>
+                  </Flex>
+                </RadioGroupRoot>
+              </RadioForm>
             </Section0>
             <Bar />
             <Section>
@@ -262,7 +287,49 @@ const Bar = styled.hr`
 `;
 
 // radio custom
+const RadioForm = styled.form`
+  display: flex;
+`;
 
+const RadioGroupRoot = styled(RadioGroup.Root)`
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 36px;
+  display: flex;
+  gap: 24px;
+`;
+
+const RadioGroupItem = styled(RadioGroup.Item)`
+  all: unset;
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  box-shadow: 0 0 0 2px #f2916e;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px #f2916e;
+  }
+`;
+
+const RadioGroupIndicator = styled(RadioGroup.Indicator)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #f2916e;
+  }
+`;
 const Flex = styled.div`
   display: flex;
   margin-left: 36px;
