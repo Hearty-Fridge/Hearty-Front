@@ -97,7 +97,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  padding-bottom: 12px;
+  padding-bottom: 5px;
   font-weight: 800;
   font-size: 24px;
   line-height: 29px;
