@@ -175,7 +175,7 @@ const CardM = styled.div`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
 const CardD = styled.div`
-  padding-bottom: 22px;
+  padding-bottom: 10px;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -192,7 +192,7 @@ const CardBC = styled.button`
   padding: 9px 16px;
   background: ${({ theme }) => theme.palette.primary};
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
   line-height: 21px;
   text-align: center;
@@ -205,7 +205,7 @@ const CardB = styled.button`
   padding: 9px 16px;
   background: rgba(89, 76, 72, 0.3);
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
   line-height: 21px;
   text-align: center;
