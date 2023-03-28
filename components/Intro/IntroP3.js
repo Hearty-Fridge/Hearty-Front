@@ -21,7 +21,7 @@ export const IntroP3 = ({ className }) => {
             src={gif}
             height={800}
             width={800}
-            style={{ marginLeft: '-100px' }}
+            style={{ marginLeft: '-50px' }}
           />
         </MessageWrapper>
       </FlexRowDiv>

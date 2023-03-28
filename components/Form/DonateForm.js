@@ -100,9 +100,6 @@ export default function DonateForm({ id, setShow }) {
           <SectionName>
             <div className="name">Recommended intake period</div>
             <div
-              onMouseEnter={(e) => {
-                setShowRef(true);
-              }}
               onMouseLeave={() => setShowRef(false)}
               onClick={(e) => {
                 setCoord({ x: e.clientX - 500, y: e.clientY - 100 });

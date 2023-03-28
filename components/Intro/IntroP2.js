@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import gif from 'public/image/intro/intro2.gif';
 
 export const IntroP2 = ({ className }) => {
   return (
@@ -23,36 +24,13 @@ export const IntroP2 = ({ className }) => {
             </Detail>
           </GnT>
         </div>
-        <ImageWrapper>
-          <Image
-            className="img1 scaleUp duration10ms"
-            src="/image/intro/food1.png"
-            width="440"
-            height="140"
-            alt="food1"
-          />
-          <Image
-            className="img2 scaleUp delay15ms duration10ms"
-            src="/image/intro/food2.png"
-            width="440"
-            height="140"
-            alt="food2"
-          />
-          <Image
-            className="img3 scaleUp delay30ms duration10ms"
-            src="/image/intro/food3.png"
-            width="440"
-            height="140"
-            alt="food3"
-          />
-          <Image
-            className="img4 scaleUp delay45ms duration10ms"
-            src="/image/intro/food4.png"
-            width="440"
-            height="141"
-            alt="food4"
-          />
-        </ImageWrapper>
+        <Image
+          src={gif}
+          height={900}
+          width={800}
+          style={{ paddingTop: '150px', marginLeft: '-50px' }}
+          alt="gif"
+        />
       </FlexRowDiv>
     </Wrapper>
   );
@@ -73,6 +51,7 @@ const Description = styled.div`
   font-size: 80px;
   color: ${({ theme }) => theme.palette.secondary.main};
   .play-fair {
+    z-index: 99999;
     font-family: 'Playfair Display';
     font-style: italic;
     color: ${({ theme }) => theme.palette.accent};
@@ -96,6 +75,7 @@ const Detail = styled.div`
   letter-spacing: -0.01em;
   margin-top: 60px;
   color: ${(props) => props.theme.palette.accent};
+  z-index: 999;
 `;
 
 const GnTIcon = styled.div`
