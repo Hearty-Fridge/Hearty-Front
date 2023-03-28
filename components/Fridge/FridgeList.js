@@ -81,12 +81,12 @@ const FridgeList = ({
           Map
         </div>
         <div> | </div>
-        <div
+        <MyFridge
           className={isFavorite ? 'activate' : ''}
           onClick={() => onClickNav(true)}
         >
-          My Fridge <IoStarSharp />
-        </div>
+          My Fridge <IoStarSharp style={{ marginLeft: '7px' }} />
+        </MyFridge>
       </InnerNav>
       <SearchWrapper
         css={matchedList.length >= 1 ? ActivateSearch : InactivateSearch}
@@ -145,7 +145,6 @@ const ListWrapper = styled.div`
   height: calc(100vh - 112px);
   padding-left: 80px;
   background-color: ${({ theme }) => theme.palette.backgound};
-  /* background-color: #f8f8f8; */
 `;
 
 const InnerNav = styled.div`
@@ -159,6 +158,11 @@ const InnerNav = styled.div`
   .activate {
     color: ${({ theme }) => theme.palette.secondary.main};
   }
+`;
+
+const MyFridge = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const ActivateSearch = css`
@@ -207,7 +211,8 @@ const ColoredSearchIcon = styled(BiSearchAlt2)`
 
 const VisibleList = styled.div`
   height: calc(100vh - 293px);
-  margin-top: 16px;
+  margin-top: 18px;
+  padding-top: 2px;
   overflow-y: scroll;
 `;
 
@@ -219,8 +224,8 @@ const SearchedList = styled.div`
   background-color: white;
   border-top: none;
   width: 402px;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
   ::-webkit-scrollbar {
     width: 10px;

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import gif from 'public/image/intro/intro3.gif';
 
 export const IntroP3 = ({ className }) => {
   return (
@@ -17,25 +18,10 @@ export const IntroP3 = ({ className }) => {
         </Description>
         <MessageWrapper>
           <Image
-            className="message1 popIn duration10ms"
-            src="/image/intro/message1.png"
-            width="680"
-            height="188"
-            alt="message3"
-          />
-          <Image
-            className="message2 popIn delay15ms duration10ms"
-            src="/image/intro/message2.png"
-            width="400"
-            height="150"
-            alt="message2"
-          />
-          <Image
-            className="message3 popIn delay30ms duration10ms"
-            src="/image/intro/message3.png"
-            width="690"
-            height="188"
-            alt="message3"
+            src={gif}
+            height={800}
+            width={800}
+            style={{ marginLeft: '-100px' }}
           />
         </MessageWrapper>
       </FlexRowDiv>
@@ -64,7 +50,7 @@ const Description = styled.div`
 `;
 
 const Wrapper = styled.div`
-  background-color: #383838;
+  background-color: #373537;
 `;
 
 const SubTitle = styled.div`
@@ -99,7 +85,7 @@ const How = styled.div`
 `;
 
 const MessageWrapper = styled.div`
-  margin-top: 300px;
+  margin-top: 150px;
   width: 776px;
   height: 545px;
   .message1 {

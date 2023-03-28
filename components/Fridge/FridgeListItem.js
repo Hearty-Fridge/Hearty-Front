@@ -24,19 +24,20 @@ const ListItem = ({ id, onClick, info, activate }) => {
         <div className={`title ${activate ? 'activate' : ''}`}>
           {info.fridgeInfo.fridgeName}
         </div>
-        <div style={{ display: 'flex', flexFlow: 'wrap' }}>
-          {Object.keys(info).includes('dist') && info.dist && (
-            <div
-              className="distance"
-              style={{ width: 'fit-content', minWidth: '60px' }}
-            >
-              {info.dist >= 1000
-                ? `${(info.dist / 1000).toFixed(2)}km`
-                : `${info.dist}m`}{' '}
-              |{' '}
+        <div className="address" style={{ display: 'flex', flexFlow: 'wrap' }}>
+          {Object.keys(info).includes('dist') && info.dist ? (
+            <div style={{ width: 'fit-content', minWidth: '60px' }}>
+              <span className="distance">
+                {info.dist >= 1000
+                  ? `${(info.dist / 1000).toFixed(2)}km`
+                  : `${info.dist}m`}{' '}
+              </span>
+              <span className="seperator">|</span>{' '}
+              <span className="loc">{info.fridgeInfo.fridgeAddress}</span>
             </div>
+          ) : (
+            <div className="loc">{info.fridgeInfo.fridgeAddress}</div>
           )}
-          <div className="loc">{info.fridgeInfo.fridgeAddress}</div>
         </div>
         <div className="status">
           Food Status: {info.numFoods} | Hearty Message: {info.numMessages}
@@ -54,15 +55,12 @@ export default ListItem;
 const Wrapper = styled.div`
   display: flex;
   align-items: stretch;
-  padding-left: 34px;
   padding: 20px;
   margin-bottom: 16px;
-  margin-top: 2px;
   margin-left: 2px;
   width: 399px;
-  height: 116px;
+  max-height: 214px;
   background-color: ${({ theme }) => theme.palette.beigeWhite};
-  /* background-color: #ffffff; */
   border-radius: 10px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 25%);
   &.activate {
@@ -71,7 +69,6 @@ const Wrapper = styled.div`
 `;
 
 const ImgArea = styled.img`
-  /* padding: 1%; */
   width: 78px;
   height: 78px;
   border-radius: 10px;
@@ -82,22 +79,34 @@ const InfoArea = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-left: 20px;
-  width: 80%;
+  width: 261px;
+  max-height: 174px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+  .address {
+    margin-top: 6px;
+    max-height: 72px;
+  }
   .title {
+    max-height: 72px;
     font-size: 20px;
     font-weight: 700;
-    color: ${({ theme }) => theme.palette.secondary.main};
     &.activate {
       color: ${({ theme }) => theme.palette.primary};
     }
   }
-  .loc {
-    font-size: 14px;
-    color: ${({ theme }) => theme.palette.secondary.main};
-  }
   .status {
+    margin-top: 6px;
     font-size: 14px;
-    color: ${({ theme }) => theme.palette.gray};
+    font-weight: 700;
+    color: ${({ theme }) => theme.palette.secondary.main70};
+  }
+  .distance {
+    font-weight: 700;
+  }
+  .seperator {
+    color: ${({ theme }) => theme.palette.secondary.main30};
+    font-size: 16px;
+    font-weight: 700;
   }
 `;
 

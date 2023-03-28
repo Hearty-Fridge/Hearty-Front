@@ -53,14 +53,16 @@ const ReservationModal = ({
         </Top>
         <Info>* You can make a reservation up to two foods per person.</Info>
         <FoodWrapper>
-          {data?.map((food) => (
-            <ReservationFood
-              key={food.food.id}
-              data={food}
-              onClickCheck={onClickCheck}
-              disabled={food.isReserved}
-            />
-          ))}
+          {data?.map((food) => {
+            if (food.isReserved) return '';
+            return (
+              <ReservationFood
+                key={food.food.id}
+                data={food}
+                onClickCheck={onClickCheck}
+              />
+            );
+          })}
         </FoodWrapper>
         <BtnWrapper>
           <button type="button" className="cancel" onClick={onCloseModal}>
