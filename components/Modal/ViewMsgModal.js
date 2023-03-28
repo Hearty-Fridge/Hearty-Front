@@ -8,7 +8,7 @@ const ViewMsgModal = ({ show, onCloseModal, item }) => {
       <Container>
         <Top>
           <Title>
-            Message About <Food>우유 1팩</Food>
+            Message About <Food>{item.foodName}</Food>
           </Title>
           <Exit onClick={onCloseModal}>
             <IoCloseSharp
