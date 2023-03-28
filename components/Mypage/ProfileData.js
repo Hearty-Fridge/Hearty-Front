@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { axiosInstance } from 'api';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import TakerModal from '@components/Modal/TakerModal';
-
-const Cancel = () => {};
 
 const ProfileData = ({ user }) => {
   const [openModal, setOpenModal] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const Cancel = async () => {
+    try {
+      await axiosInstance.put(`/member/cancelTaker`);
+      alert('Your authentication has been revoked.');
+      queryClient.invalidateQueries('getProfile');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const setCloseModal = () => {
     setOpenModal(false);
@@ -62,7 +72,7 @@ const ProfileData = ({ user }) => {
         <Bar />
         <Wrap>
           <Title>Certification</Title>
-          {!user.isTaker ? (
+          {user.isTaker ? (
             <Card>
               <CardM>Beneficiary authentication is complete!</CardM>
               <CardD>2022.03.21 ~ 2023.03.21</CardD>
