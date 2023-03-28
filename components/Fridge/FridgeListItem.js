@@ -57,6 +57,7 @@ const Wrapper = styled.div`
   align-items: stretch;
   padding: 20px;
   margin-bottom: 16px;
+  margin-left: 2px;
   width: 399px;
   max-height: 214px;
   background-color: ${({ theme }) => theme.palette.beigeWhite};

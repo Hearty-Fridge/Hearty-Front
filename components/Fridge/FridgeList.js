@@ -211,7 +211,8 @@ const ColoredSearchIcon = styled(BiSearchAlt2)`
 
 const VisibleList = styled.div`
   height: calc(100vh - 293px);
-  margin-top: 16px;
+  margin-top: 18px;
+  padding-top: 2px;
   overflow-y: scroll;
 `;
 

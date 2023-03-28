@@ -33,7 +33,7 @@ export function useLogin() {
             if (router.pathname.split('/')[1] !== '') {
               router.push('/');
             }
-            alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
+            alert('Token is expired. Please Login.');
             handleLogout();
           });
       }
