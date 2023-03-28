@@ -7,7 +7,7 @@ export const IntroP3 = ({ className }) => {
     <Wrapper className={className}>
       <FlexRowDiv>
         <Description>
-          leave a <br />
+          Leave a <br />
           <span className="play-fair">Hearty Fridge</span>
           <Flex>
             <SubTitle>

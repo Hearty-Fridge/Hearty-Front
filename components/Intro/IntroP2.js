@@ -40,12 +40,10 @@ const FlexRowDiv = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 1080px;
-  min-width: 1920px;
 `;
 
 const Description = styled.div`
   margin-top: 380px;
-  margin-left: 150px;
   width: 970px;
   height: 324px;
   font-size: 80px;
@@ -61,12 +59,14 @@ const Description = styled.div`
 const GnT = styled.div`
   display: flex;
   margin-top: -120px;
-  margin-left: 150px;
   column-gap: 120px;
 `;
 
 const Wrapper = styled.div`
   height: 1080px;
+  width: 100vw;
+  margin-right: 90px;
+  margin-left: 90px;
 `;
 
 const Detail = styled.div`

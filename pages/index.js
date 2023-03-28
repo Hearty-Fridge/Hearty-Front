@@ -10,7 +10,7 @@ const Home = () => {
           Let’s <Bold>donate</Bold>{' '}
           <FridgeImg src="/image/home/fridge.png" alt="photo" /> <br />{' '}
           <SandwichImg src="/image/home/sandwich.png" alt="photo" /> with{' '}
-          <Bold>hearty Fridge!</Bold>
+          <Bold>Hearty Fridge!</Bold>
         </Title>
       </Layout>
       <Ellipse />
