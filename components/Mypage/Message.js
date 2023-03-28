@@ -94,7 +94,7 @@ const Address = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-
+  margin-right: 20px;
   color: #594c48;
 `;
 
