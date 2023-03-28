@@ -241,23 +241,25 @@ const Bookmark = styled.div`
 `;
 
 const Info = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 423px;
-  height: 193px;
+  max-height: 236px;
   position: relative;
   z-index: 3;
-  display: flex;
   margin: -20px 26px 0px 31px;
   padding: 42px 0px;
   background-color: white;
-  flex-direction: column;
   border-radius: 10px;
-  align-items: center;
-  justify-content: center;
   border: 1px solid ${({ theme }) => theme.palette.beige2};
   box-shadow: 0px 0px 20 rgba(0, 0, 0, 5%);
 `;
 
 const Title = styled.div`
+  max-width: 382px;
   font-size: 32px;
   font-weight: 700;
   color: ${({ theme }) => theme.palette.secondary.main};
@@ -265,6 +267,7 @@ const Title = styled.div`
 `;
 
 const Address = styled.div`
+  max-width: 343px;
   font-size: 16px;
   color: ${({ theme }) => theme.palette.secondary.main70};
   margin-bottom: 21px;
