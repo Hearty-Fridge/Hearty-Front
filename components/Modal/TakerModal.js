@@ -4,6 +4,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { axiosInstance } from 'api';
 import { useState } from 'react';
 import * as RadioGroup from '@radix-ui/react-radio-group';
+import { useQuery, useQueryClient } from 'react-query';
 
 const TakerModal = ({ show, onCloseModal }) => {
   const [name, setName] = useState('');
@@ -12,6 +13,8 @@ const TakerModal = ({ show, onCloseModal }) => {
   const [num2, setNum2] = useState();
   const [num3, setNum3] = useState();
   const [num4, setNum4] = useState();
+
+  const queryClient = useQueryClient();
 
   const handleRadio = (e) => {
     console.log(e.target.value);
@@ -48,7 +51,7 @@ const TakerModal = ({ show, onCloseModal }) => {
 
   const submitForm = async () => {
     try {
-      const response = await axiosInstance.put(`/member/authTaker`, {
+      await axiosInstance.put(`/member/authTaker`, {
         name: name,
         issueNum: 0,
         serialNum1: num1,
@@ -57,6 +60,7 @@ const TakerModal = ({ show, onCloseModal }) => {
         serialNum4: num4,
       });
       alert('Complete!');
+      queryClient.invalidateQueries('getProfile');
       onCloseModal();
     } catch (error) {
       console.error(error);
@@ -134,29 +138,13 @@ const TakerModal = ({ show, onCloseModal }) => {
                 </div>
               </SectionName>
               <NumberInput>
-                <NumInput
-                  type="number"
-                  value={num1}
-                  onChange={handleNum1Change}
-                />{' '}
+                <NumInput value={num1} onChange={handleNum1Change} />{' '}
                 <Dash>-</Dash>
-                <NumInput
-                  type="number"
-                  value={num2}
-                  onChange={handleNum2Change}
-                />{' '}
+                <NumInput value={num2} onChange={handleNum2Change} />{' '}
                 <Dash>-</Dash>
-                <NumInput
-                  type="number"
-                  value={num3}
-                  onChange={handleNum3Change}
-                />{' '}
+                <NumInput value={num3} onChange={handleNum3Change} />{' '}
                 <Dash>-</Dash>
-                <NumInput
-                  type="number"
-                  value={num4}
-                  onChange={handleNum4Change}
-                />
+                <NumInput value={num4} onChange={handleNum4Change} />
               </NumberInput>
             </Section2>
           </Container2>
