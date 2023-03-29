@@ -4,6 +4,7 @@ import { IoLocationSharp } from 'react-icons/io5';
 import ConfirmFood from '@components/Food/ConfirmFood';
 import { takeFood } from 'api/Food/useFoods';
 import { getCanReserve } from 'api/Food/useFoods';
+import { RxCross2 } from 'react-icons/rx';
 
 const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
   const token = localStorage.getItem('accessToken');
@@ -30,7 +31,11 @@ const ConfirmModal = ({ data, loc, show, onCloseModal, showReservation }) => {
       <Container>
         <Top>
           <Title>Confirmation of reservation</Title>
-          <Exit onClick={onCloseModal}>X</Exit>
+          <Exit onClick={onCloseModal}>
+            <RxCross2
+              style={{ color: '#594C48', width: '35px', height: '35px' }}
+            />
+          </Exit>
         </Top>
         <Info>
           <IoLocationSharp />
@@ -102,25 +107,25 @@ const BtnStyle = css`
   height: 40px;
   border-radius: 100px;
   border: none;
+  color: white;
 `;
 
 const BtnWrapper = styled.div`
   display: flex;
   width: 100%;
-  min-height: 40px;
+  height: 40px;
   column-gap: 36px;
   font-size: 14px;
   justify-content: end;
   align-items: center;
-  padding-top: 36px;
-  padding-bottom: 48px;
+  margin-top: 24px;
   .cancel {
     ${BtnStyle};
-    background-color: ${({ theme }) => theme.palette.gray};
+    background-color: #d9d9d9;
   }
   .submit {
     ${BtnStyle};
-    background-color: ${({ theme }) => theme.palette.primary};
+    background-color: ${({ theme }) => theme.palette.accent};
   }
 `;
 

@@ -1,8 +1,6 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { axiosInstance } from 'api';
 import { userState } from 'atoms/user';
-import axios from 'axios';
-import { headers } from 'next.config';
 import { useRouter } from 'next/router';
 
 import { useEffect, useState } from 'react';

@@ -56,7 +56,10 @@ const ReservationFood = ({ data, onClickCheck }) => {
           <div className="foodName">{data.food.name}</div>
           {expLeft == 1 && <Tag>{`${expLeft} day`}</Tag>}
         </div>
-        <div className="etc">{`${data.food.amount} | ~${expirationDate}`}</div>
+        <div className="etc">
+          {data.food.amount} <span className="seperator">|</span> ~
+          {expirationDate}
+        </div>
         <div className="message">{data.food.message}</div>
       </Info>
     </FoodWrapper>
@@ -83,6 +86,7 @@ const FoodCheckbox = styled.input`
   appearance: none;
   margin-left: 10px;
   border: max(2px, 0.1em) solid gray;
+  border-radius: 10px;
   :checked {
     content: '✓';
     border: 0.4em solid tomato;
@@ -118,6 +122,9 @@ const Info = styled.div`
     -webkit-line-clamp: 2;
     overflow: hidden;
     -webkit-box-orient: vertical;
+  }
+  .seperator {
+    color: ${({ theme }) => theme.palette.secondary.main30};
   }
 `;
 

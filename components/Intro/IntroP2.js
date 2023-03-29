@@ -70,6 +70,8 @@ const Wrapper = styled.div`
 `;
 
 const Detail = styled.div`
+  display: flex;
+  align-items: start;
   font-size: 20px;
   line-height: 28px;
   letter-spacing: -0.01em;
@@ -86,16 +88,4 @@ const GnTIcon = styled.div`
   border-radius: 10px;
   background-color: ${(props) => props.theme.palette.accent};
   color: white;
-`;
-
-const ImageWrapper = styled.div`
-  width: 600px;
-  height: 575px;
-  margin-top: 260px;
-  margin-left: 20px;
-  img {
-    float: right;
-  }
-  position: relative;
-  right: 0;
 `;
