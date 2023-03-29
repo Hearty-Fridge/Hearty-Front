@@ -39,7 +39,6 @@ export default Intro;
 
 const Full = styled.div`
   width: 100vw;
-  position: relative;
 `;
 
 const IndicatorWrapper = styled.div`

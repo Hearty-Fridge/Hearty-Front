@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import gif from 'public/image/intro/intro2.gif';
+import gif from 'public/image/intro/intro2_2.gif';
 
 export const IntroP2 = ({ className }) => {
   return (
@@ -26,9 +26,9 @@ export const IntroP2 = ({ className }) => {
         </div>
         <Image
           src={gif}
-          height={900}
-          width={800}
-          style={{ paddingTop: '150px', marginLeft: '-50px' }}
+          height={800}
+          width={620}
+          style={{ marginLeft: '-50px' }}
           alt="gif"
         />
       </FlexRowDiv>
@@ -39,11 +39,10 @@ export const IntroP2 = ({ className }) => {
 const FlexRowDiv = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 1080px;
 `;
 
 const Description = styled.div`
-  margin-top: 380px;
+  margin-top: 260px;
   width: 970px;
   height: 324px;
   font-size: 80px;
@@ -63,10 +62,10 @@ const GnT = styled.div`
 `;
 
 const Wrapper = styled.div`
-  height: 1080px;
-  width: 100vw;
   margin-right: 90px;
   margin-left: 90px;
+  width: 100%;
+  height: 100%;
 `;
 
 const Detail = styled.div`
