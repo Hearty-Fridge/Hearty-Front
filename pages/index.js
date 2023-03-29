@@ -56,7 +56,7 @@ const Home = () => {
 
 const Full = styled.div`
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   position: relative;
   background-color: ${({ theme }) => theme.palette.beige1};
 `;

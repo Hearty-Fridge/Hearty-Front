@@ -8,7 +8,7 @@ export const IntroP3 = ({ className }) => {
       <FlexRowDiv>
         <Description>
           Leave a <br />
-          <span className="play-fair">Hearty Fridge</span>
+          <span className="play-fair">Hearty Message</span>
           <Flex>
             <SubTitle>
               <How>How?</How>
@@ -16,14 +16,12 @@ export const IntroP3 = ({ className }) => {
             </SubTitle>
           </Flex>
         </Description>
-        <MessageWrapper>
-          <Image
-            src={gif}
-            height={800}
-            width={800}
-            style={{ marginLeft: '-50px' }}
-          />
-        </MessageWrapper>
+        <Image
+          src={gif}
+          height={800}
+          width={800}
+          style={{ marginLeft: '-50px', marginTop: '-50px' }}
+        />
       </FlexRowDiv>
     </Wrapper>
   );
@@ -31,14 +29,12 @@ export const IntroP3 = ({ className }) => {
 const FlexRowDiv = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 1080px;
-  min-width: 1920px;
 `;
 
 const Description = styled.div`
-  margin-top: 380px;
+  margin-top: 180px;
   margin-left: 150px;
-  width: 810px;
+  width: 770px;
   height: 350px;
   font-size: 80px;
   color: ${({ theme }) => theme.palette.beige2};
@@ -51,6 +47,8 @@ const Description = styled.div`
 
 const Wrapper = styled.div`
   background-color: #373537;
+  width: 100%;
+  height: 100%;
 `;
 
 const SubTitle = styled.div`
@@ -82,16 +80,4 @@ const How = styled.div`
   border-style: solid;
   border-width: 1px;
   border-color: ${({ theme }) => theme.palette.accent};
-`;
-
-const MessageWrapper = styled.div`
-  margin-top: 150px;
-  width: 776px;
-  height: 545px;
-  .message1 {
-    margin-left: 130px;
-  }
-  .message2 {
-    margin-left: 240px;
-  }
 `;

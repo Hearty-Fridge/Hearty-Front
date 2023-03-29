@@ -48,7 +48,7 @@ export const IntroP1 = ({ className }) => {
           src={gif}
           height={900}
           width={800}
-          style={{ paddingTop: '100px' }}
+          style={{ marginTop: '50px' }}
           alt="gif"
         />
       </FlexRowDiv>
@@ -56,16 +56,20 @@ export const IntroP1 = ({ className }) => {
   );
 };
 
+const Wrapper = styled.div`
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: ${({ theme }) => theme.palette.background2};
+`;
+
 const FlexRowDiv = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 1080px;
-  min-width: 1920px;
 `;
 
 const IntroMessage = styled.div`
-  padding-top: 321px;
-  padding-left: 160px;
+  margin-top: 301px;
+  margin-left: 160px;
   font-size: 80px;
   color: ${({ theme }) => theme.palette.beige2};
   .play-fair {
@@ -75,14 +79,10 @@ const IntroMessage = styled.div`
   }
 `;
 
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.palette.background2};
-`;
-
 const FlexDiv = styled.div`
   display: flex;
   padding-top: 80px;
-  padding-left: 100px;
+  margin-left: 100px;
   color: ${({ theme }) => theme.palette.accent};
 `;
 
@@ -108,25 +108,5 @@ const ContentWrapper = styled.div`
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-`;
-
-const ImageWrapper = styled.div`
-  width: 680px;
-  height: 500px;
-  margin-top: 302px;
-  margin-left: 130px;
-  .img1 {
-    margin-left: 200px;
-  }
-  .img2 {
-  }
-  .img3 {
-    margin-left: 250px;
-  }
-  .location {
-    position: absolute;
-    right: 225px;
-    top: 220px;
   }
 `;
