@@ -47,7 +47,7 @@ const ProfileData = ({ user }) => {
       {' '}
       <Wrapper>
         <Wrap>
-          <UserImg src="http://34.64.101.33:8080/images/defaultImage.png" />
+          <UserImg src="https://storage.googleapis.com/slowy_storage123/defaultImage.png" />
           <UserName>{user.name}</UserName>
           <UserMail>{user.email}</UserMail>
         </Wrap>
