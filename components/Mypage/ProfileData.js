@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { axiosInstance } from 'api';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import TakerModal from '@components/Modal/TakerModal';
-
-const Cancel = () => {};
 
 const ProfileData = ({ user }) => {
   const [openModal, setOpenModal] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const Cancel = async () => {
+    try {
+      await axiosInstance.put(`/member/cancelTaker`);
+      alert('Your authentication has been revoked.');
+      queryClient.invalidateQueries('getProfile');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const setCloseModal = () => {
     setOpenModal(false);
@@ -37,7 +47,7 @@ const ProfileData = ({ user }) => {
       {' '}
       <Wrapper>
         <Wrap>
-          <UserImg src="http://34.64.101.33:8080/images/defaultImage.png" />
+          <UserImg src="https://storage.googleapis.com/slowy_storage123/defaultImage.png" />
           <UserName>{user.name}</UserName>
           <UserMail>{user.email}</UserMail>
         </Wrap>
@@ -46,16 +56,16 @@ const ProfileData = ({ user }) => {
           <Title>Record</Title>
           <RecData>
             <RecFlex>
-              <div>전체 냉장고 거래</div>
-              <div>{gives.length + takes.length}회</div>
+              <div>Whole Refrigerator Deals</div>
+              <div>{gives.length + takes.length}</div>
             </RecFlex>
             <RecFlex>
-              <div>마음 주기</div>
-              <div>{gives.length}회</div>
+              <div>Sending hearts</div>
+              <div>{gives.length}</div>
             </RecFlex>
             <RecFlex>
-              <div>마음 받기</div>
-              <div>{takes.length}회</div>
+              <div>Receiving hearts</div>
+              <div>{takes.length}</div>
             </RecFlex>
           </RecData>
         </Wrap>
@@ -64,18 +74,18 @@ const ProfileData = ({ user }) => {
           <Title>Certification</Title>
           {user.isTaker ? (
             <Card>
-              <CardM>수급자 인증이 완료되었습니다!</CardM>
+              <CardM>Beneficiary authentication is complete!</CardM>
               <CardD>2022.03.21 ~ 2023.03.21</CardD>
               <Flex>
-                <CardB onClick={() => Cancel()}>취소하기</CardB>
+                <CardB onClick={() => Cancel()}>Cancel</CardB>
               </Flex>
             </Card>
           ) : (
             <Card>
-              <CardMC>수급자 인증이 필요합니다!</CardMC>
-              <CardD>최초인증이 필요합니다</CardD>
+              <CardMC>Recipient authentication is required!</CardMC>
+              <CardD>Initial authentication is required.</CardD>
               <Flex>
-                <CardBC onClick={handleTaker}>인증하기</CardBC>
+                <CardBC onClick={handleTaker}>Authenticate</CardBC>
               </Flex>
               {openModal && (
                 <>
@@ -175,7 +185,7 @@ const CardM = styled.div`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
 const CardD = styled.div`
-  padding-bottom: 22px;
+  padding-bottom: 10px;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -192,7 +202,7 @@ const CardBC = styled.button`
   padding: 9px 16px;
   background: ${({ theme }) => theme.palette.primary};
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
   line-height: 21px;
   text-align: center;
@@ -205,7 +215,7 @@ const CardB = styled.button`
   padding: 9px 16px;
   background: rgba(89, 76, 72, 0.3);
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
   line-height: 21px;
   text-align: center;

@@ -13,13 +13,16 @@ const DetailFoodList = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((d) => (
-          <tr key={d.giveId} style={{ height: '34px' }}>
-            <td>{d.food.name}</td>
-            <td>{d.food.amount}</td>
-            <td>{`~ ${moment(d.food.expiration).format('YYYY.MM.DD')}`}</td>
-          </tr>
-        ))}
+        {data?.map((d) => {
+          if (d.isReserved) return '';
+          return (
+            <tr key={d.giveId} style={{ height: '34px' }}>
+              <td>{d.food.name}</td>
+              <td>{d.food.amount}</td>
+              <td>{`~ ${moment(d.food.expiration).format('YYYY.MM.DD')}`}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </Table>
   );

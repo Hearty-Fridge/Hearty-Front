@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import gif from 'public/image/intro/intro2_2.gif';
 
 export const IntroP2 = ({ className }) => {
   return (
@@ -13,42 +14,23 @@ export const IntroP2 = ({ className }) => {
           <GnT>
             <Detail>
               <GnTIcon>Give</GnTIcon>
-              Look for Hearty Fridge
-              <br /> around you Look for Hearty
+              Use the Hearty Fridge to
+              <br /> donate food!
             </Detail>
             <Detail>
               <GnTIcon>Take</GnTIcon>
-              Look for Hearty Fridge
-              <br /> around you Look for Hearty
+              Get food donations with
+              <br /> Hearty Fridge!
             </Detail>
           </GnT>
         </div>
-        <ImageWrapper>
-          <Image
-            className="img1 scaleUp duration10ms"
-            src="/image/intro/food1.png"
-            width="440"
-            height="140"
-          />
-          <Image
-            className="img2 scaleUp delay15ms duration10ms"
-            src="/image/intro/food2.png"
-            width="440"
-            height="140"
-          />
-          <Image
-            className="img3 scaleUp delay30ms duration10ms"
-            src="/image/intro/food3.png"
-            width="440"
-            height="140"
-          />
-          <Image
-            className="img4 scaleUp delay45ms duration10ms"
-            src="/image/intro/food4.png"
-            width="440"
-            height="141"
-          />
-        </ImageWrapper>
+        <Image
+          src={gif}
+          height={800}
+          width={620}
+          style={{ marginLeft: '-50px' }}
+          alt="gif"
+        />
       </FlexRowDiv>
     </Wrapper>
   );
@@ -57,18 +39,16 @@ export const IntroP2 = ({ className }) => {
 const FlexRowDiv = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 1080px;
-  min-width: 1920px;
 `;
 
 const Description = styled.div`
-  margin-top: 380px;
-  margin-left: 150px;
+  margin-top: 260px;
   width: 970px;
   height: 324px;
   font-size: 80px;
   color: ${({ theme }) => theme.palette.secondary.main};
   .play-fair {
+    z-index: 99999;
     font-family: 'Playfair Display';
     font-style: italic;
     color: ${({ theme }) => theme.palette.accent};
@@ -78,20 +58,25 @@ const Description = styled.div`
 const GnT = styled.div`
   display: flex;
   margin-top: -120px;
-  margin-left: 150px;
   column-gap: 120px;
 `;
 
 const Wrapper = styled.div`
-  height: 1080px;
+  margin-right: 90px;
+  margin-left: 90px;
+  width: 100%;
+  height: 100%;
 `;
 
 const Detail = styled.div`
+  display: flex;
+  align-items: start;
   font-size: 20px;
   line-height: 28px;
   letter-spacing: -0.01em;
   margin-top: 60px;
   color: ${(props) => props.theme.palette.accent};
+  z-index: 999;
 `;
 
 const GnTIcon = styled.div`
@@ -102,16 +87,4 @@ const GnTIcon = styled.div`
   border-radius: 10px;
   background-color: ${(props) => props.theme.palette.accent};
   color: white;
-`;
-
-const ImageWrapper = styled.div`
-  width: 600px;
-  height: 575px;
-  margin-top: 260px;
-  margin-left: 20px;
-  img {
-    float: right;
-  }
-  position: relative;
-  right: 0;
 `;

@@ -1,6 +1,7 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { axiosInstance } from 'api';
 import { userState } from 'atoms/user';
+import { useRouter } from 'next/router';
 
 import { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
@@ -9,13 +10,31 @@ const TOKEN_KEY = 'accessToken';
 
 export function useLogin() {
   const [isLogin, setIsLogin] = useState(false);
+  const router = useRouter();
 
   const [curUserData, setCurUserData] = useRecoilState(userState);
   const resetUserState = useResetRecoilState(userState);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setIsLogin(!!localStorage.getItem(TOKEN_KEY));
+      if (localStorage.getItem(TOKEN_KEY)) {
+        axiosInstance
+          .get('/member/testToken', {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+            },
+          })
+          .then(() => {
+            setIsLogin(true);
+          })
+          .catch(() => {
+            if (router.pathname.split('/')[1] !== '') {
+              router.push('/');
+            }
+            alert('Token is expired. Please Login.');
+            handleLogout();
+          });
+      }
     }
   }, []);
 

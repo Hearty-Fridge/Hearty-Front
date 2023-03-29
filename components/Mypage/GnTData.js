@@ -6,30 +6,24 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 const GnTData = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [showId, setShowId] = useState(-1);
 
   const setCloseModal = () => {
-    setOpenModal(false);
-  };
-
-  const onClickItem = () => {
-    setOpenModal(true);
+    setShowId(-1);
   };
 
   const { data: givesData } = useQuery(
     ['getGives'],
-    async () => await axiosInstance.get(`/member/getGives`)
+    async () => await axiosInstance.get(`/give/getGives`)
   );
   const { data: takesData } = useQuery(
     ['getTakes'],
-    async () => await axiosInstance.get(`/member/getTakes`)
+    async () => await axiosInstance.get(`/take/getTakes`)
   );
 
   if (!givesData || !takesData) {
     return null;
   }
-
-  console.log(givesData);
 
   const gives = givesData.data.data;
   const takes = takesData.data.data;
@@ -44,46 +38,57 @@ const GnTData = () => {
   return (
     <Wrapper>
       <Title>Give & Take</Title>
-      <SubTitle>내가 기부하고 수급한 내역을 확인할 수 있어요</SubTitle>
+      <SubTitle>You can see what you've donated and received.</SubTitle>
       <Table>
         <TH>
           <THTxt>Time</THTxt>
           <THTxt>Food</THTxt>
           <THTxt>Location</THTxt>
         </TH>
+        {list.length == 0 ? (
+          <NoneText>
+            <First>There is no recent activity.</First>
+            <Second>Try the map function!</Second>
+          </NoneText>
+        ) : (
+          <></>
+        )}
         <TDWrapper>
           {list.map((item) => (
-            <TD key={item.index}>
-              {item.type == 'give' ? (
-                <TagGive>Give</TagGive>
-              ) : (
-                <TagTake>Take</TagTake>
-              )}
-              <TDTxt>{dayjs(item.time).format('YYYY.MM.DD')}</TDTxt>
-              <TDTxt>{item.foodName}</TDTxt>
-              <LocBox>
-                <TDTxt>{item.fridgeAddress}</TDTxt>
-                <TDSubTxt>{item.fridgeName}</TDSubTxt>
-              </LocBox>
-              <Buttons>
-                {item.status == 'COMPLETED' ? (
-                  <OffBtn>Leave a Message</OffBtn>
+            <>
+              <TD key={item.id}>
+                {item.type == 'give' ? (
+                  <TagGive>Give</TagGive>
                 ) : (
-                  <>
-                    <OnBtn onChange={onClickItem}>Leave a Message</OnBtn>
-                    {openModal && (
-                      <>
+                  <TagTake>Take</TagTake>
+                )}
+                <TDTxt>{dayjs(item.time).format('YYYY.MM.DD')}</TDTxt>
+                <TDTxt>{item.foodName}</TDTxt>
+                <LocBox>
+                  <LocTxt>{item.fridgeAddress}</LocTxt>
+                  <LocSubTxt>{item.fridgeName}</LocSubTxt>
+                </LocBox>
+                <Buttons>
+                  {item.status == 'COMPLETED' ? (
+                    <OffBtn>Leave a Message</OffBtn>
+                  ) : (
+                    <>
+                      <OnBtn onClick={() => setShowId(item.id)}>
+                        Leave a Message
+                      </OnBtn>
+                      {showId === item.id && (
                         <LeaveMsgModal
-                          show={openModal}
+                          show={true}
                           onCloseModal={setCloseModal}
                           item={item}
                         />
-                      </>
-                    )}
-                  </>
-                )}
-              </Buttons>
-            </TD>
+                      )}
+                    </>
+                  )}
+                </Buttons>
+              </TD>
+              <Divider />
+            </>
           ))}
         </TDWrapper>
       </Table>
@@ -96,7 +101,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  padding-bottom: 12px;
+  padding-bottom: 5px;
   font-weight: 800;
   font-size: 24px;
   line-height: 29px;
@@ -134,6 +139,25 @@ const THTxt = styled.div`
 
   color: rgba(89, 76, 72, 0.7);
 `;
+
+const NoneText = styled.div`
+  text-align: center;
+  margin-top: 90px;
+  color: #594c48;
+`;
+const First = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+`;
+const Second = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+`;
+
 const TDWrapper = styled.div`
   height: 210px;
   overflow-y: auto;
@@ -144,7 +168,7 @@ const TD = styled.div`
   align-items: center;
   padding-left: 44px;
   width: 966px;
-  height: 70px;
+  height: auto;
 `;
 const TagTake = styled.div`
   margin-right: 28px;
@@ -181,7 +205,17 @@ const TDTxt = styled.div`
   line-height: 19px;
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
-const TDSubTxt = styled.div`
+const LocTxt = styled.div`
+  padding-top: 18px;
+  width: 300px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+const LocSubTxt = styled.div`
+  padding-bottom: 18px;
+  width: 300px;
   padding-top: 4px;
   font-weight: 400;
   font-size: 14px;
@@ -199,6 +233,7 @@ const Buttons = styled.div`
   column-gap: 23px;
 `;
 const OnBtn = styled.button`
+  cursor: pointer;
   width: 148px;
   height: 37px;
   text-align: center;
@@ -217,6 +252,13 @@ const OffBtn = styled.button`
   background: rgba(89, 76, 72, 0.3);
   border: 1px solid white;
   border-radius: 10px;
+`;
+
+const Divider = styled.hr`
+  width: 965px;
+  height: 0px;
+
+  border: 1px solid #e9dfd2;
 `;
 
 export default GnTData;

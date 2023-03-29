@@ -1,12 +1,12 @@
 import { axiosInstance } from 'api';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import ReservationTime from './ReservationTime';
 
 const ReservationData = () => {
+  const queryClient = useQueryClient();
   const { data } = useQuery(
-    ['getReservatino'],
+    ['getReservation'],
     async () => await axiosInstance.get(`/take/getReservation`)
   );
 
@@ -14,20 +14,40 @@ const ReservationData = () => {
     return null;
   }
 
-  console.log(data);
-
   const reservations = data.data.data;
 
-  const handleCancel = (id) => {
-    console.log(id);
+  const handleCancel = async (id) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/take/cancel?takeId=${id}`,
+        id
+      );
+      queryClient.invalidateQueries('getReservation');
+      alert('Cancel!');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCheckNotification = async (id) => {
+    try {
+      const response = await axiosInstance.put(
+        `/notification/checkNotice?notificationId=${id}`,
+        id
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCheck = async (id) => {
     try {
-      const response = await axiosInstance.put(
-        `/take/checkFood?takeId=${id}`,
-        id
-      );
+      await axiosInstance.put(`/take/checkFood?takeId=${id}`, id);
+      queryClient.invalidateQueries('getGives');
+      queryClient.invalidateQueries('getTakes');
+      queryClient.invalidateQueries('getReservation');
+      handleCheckNotification(id);
+      alert('Complete!');
     } catch (error) {
       console.error(error);
     }
@@ -43,35 +63,45 @@ const ReservationData = () => {
             <THTxt>Food</THTxt>
             <THTxt>Location</THTxt>
           </TH>
-          {reservations.map((reservation) => (
-            <>
-              <TD key={reservation.id}>
-                <ReservationTime time={reservation.time} />
-                <TDTxt>{reservation.foodName}</TDTxt>
-                <LocBox>
-                  <TDTxt>{reservation.fridgeName}</TDTxt>
-                  <TDSubTxt>{reservation.fridgeName}</TDSubTxt>
-                </LocBox>
-                <Buttons>
-                  <BtnCancel
-                    onChange={() => {
-                      handleCancel(reservation.id);
-                    }}
-                  >
-                    Cancel
-                  </BtnCancel>
-                  <BtnCheck
-                    onChange={() => {
-                      handleCheck(reservation.id);
-                    }}
-                  >
-                    Check
-                  </BtnCheck>
-                </Buttons>
-              </TD>
-              <Divider />
-            </>
-          ))}
+          {reservations.length == 0 ? (
+            <NoneText>
+              <First>There is no food currently being reserved.</First>
+              <Second>Use the Map function to reserve food!</Second>
+            </NoneText>
+          ) : (
+            <></>
+          )}
+          <TDWrapper>
+            {reservations.map((reservation) => (
+              <>
+                <TD key={reservation.id}>
+                  <TDTxt>{dayjs(reservation.time).format('YYYY.MM.DD')}</TDTxt>
+                  <TDTxt>{reservation.foodName}</TDTxt>
+                  <LocBox>
+                    <TDTxt>{reservation.fridgeName}</TDTxt>
+                    <TDSubTxt>{reservation.fridgeAddress}</TDSubTxt>
+                  </LocBox>
+                  <Buttons>
+                    <BtnCancel
+                      onClick={() => {
+                        handleCancel(reservation.id);
+                      }}
+                    >
+                      Cancel
+                    </BtnCancel>
+                    <BtnCheck
+                      onClick={() => {
+                        handleCheck(reservation.id);
+                      }}
+                    >
+                      Check
+                    </BtnCheck>
+                  </Buttons>
+                </TD>
+                <Divider />
+              </>
+            ))}
+          </TDWrapper>
         </Table>
       </Wrapper>
     </>
@@ -84,7 +114,7 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   padding-bottom: 24px;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 24px;
   line-height: 29px;
 
@@ -112,16 +142,42 @@ const THTxt = styled.div`
 
   color: rgba(89, 76, 72, 0.7);
 `;
+
+const NoneText = styled.div`
+  text-align: center;
+  margin-top: 60px;
+  color: #594c48;
+`;
+const First = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+`;
+const Second = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+`;
+
 const Divider = styled.hr`
   border: 1px solid #e9dfd2;
 `;
 
+const TDWrapper = styled.div`
+  height: 160px;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
 const TD = styled.div`
   display: flex;
   align-items: center;
   padding-left: 44px;
   width: 966px;
-  height: 70px;
+  height: auto;
+  padding-top: 18px;
+  padding-bottom: 18px;
 `;
 const Time = styled.div`
   width: 185px;
@@ -131,7 +187,8 @@ const Time = styled.div`
   color: ${({ theme }) => theme.palette.accent};
 `;
 const TDTxt = styled.div`
-  width: 185px;
+  padding-right: 40px;
+  width: 360px;
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;

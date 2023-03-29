@@ -25,7 +25,6 @@ const MapPage = () => {
   const setVisibleListInBoundary = useCallback(() => {
     // 이 부분 업데이트 될 때마다 Ka , Va 저 부분 바뀌는거 같음
     // TODO : 버그 고치기
-    console.log(boundsRef.current);
     const minLat = boundsRef.current?.Va.lo;
     const maxLat = boundsRef.current?.Va.hi;
     const minLng = boundsRef.current?.Ga.lo;
@@ -124,6 +123,7 @@ const MapPage = () => {
         visibleList={visibleList}
         isFavorite={isFavorite}
         setIsFavorite={setIsFavorite}
+        setDetail={setDetail}
       />
       {detail && <FridgeDetail id={detail} />}
       <Map

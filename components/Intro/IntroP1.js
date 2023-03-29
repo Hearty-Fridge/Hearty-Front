@@ -1,18 +1,20 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import gif from 'public/image/intro/intro1.gif';
 
 const Phrases = [
   {
     id: 1,
-    content: '내 주위의 공유 냉장고를 확인해보세요!',
+    content: 'Shared Fridge Near Me around me!',
   },
   {
     id: 2,
-    content: '공유 냉장고를 선택하여 음식의 현황을 확인해보세요!',
+    content: 'Select a shared fridge to to check the status of your food!',
   },
   {
     id: 3,
-    content: '공유 냉장고를 통해 손쉽게 기부와 수급을 완료해보세요!',
+    content:
+      'Shared fridges make it easy to giving and receiving through your refrigerator!',
   },
 ];
 
@@ -30,9 +32,10 @@ export const IntroP1 = ({ className }) => {
               <div key={p.id} style={{ display: 'block' }}>
                 <ContentWrapper>
                   <Image
-                    src="/image/intro/Ellipse.png"
+                    src="/image/intro/ellipse.png"
                     width="120"
                     height="82"
+                    alt="ellipse"
                   />
                   <div className="id">{p.id}.</div>
                 </ContentWrapper>
@@ -41,47 +44,32 @@ export const IntroP1 = ({ className }) => {
             ))}
           </FlexDiv>
         </div>
-        <ImageWrapper>
-          <Image
-            className="location"
-            src="/image/intro/location128.png"
-            width="148"
-            height="158"
-          />
-          <Image
-            className="img1 popIn duration10ms"
-            src="/image/intro/fridge1.png"
-            width="440"
-            height="182"
-          />
-          <Image
-            className="img2 popIn delay15ms duration10ms"
-            src="/image/intro/fridge2.png"
-            width="440"
-            height="182"
-          />
-          <Image
-            className="img3 popIn delay30ms duration10ms"
-            src="/image/intro/fridge3.png"
-            width="440"
-            height="182"
-          />
-        </ImageWrapper>
+        <Image
+          src={gif}
+          height={900}
+          width={800}
+          style={{ marginTop: '50px' }}
+          alt="gif"
+        />
       </FlexRowDiv>
     </Wrapper>
   );
 };
 
+const Wrapper = styled.div`
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: ${({ theme }) => theme.palette.background2};
+`;
+
 const FlexRowDiv = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 1080px;
-  min-width: 1920px;
 `;
 
 const IntroMessage = styled.div`
-  padding-top: 321px;
-  padding-left: 160px;
+  margin-top: 301px;
+  margin-left: 160px;
   font-size: 80px;
   color: ${({ theme }) => theme.palette.beige2};
   .play-fair {
@@ -91,14 +79,10 @@ const IntroMessage = styled.div`
   }
 `;
 
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.palette.background2};
-`;
-
 const FlexDiv = styled.div`
   display: flex;
   padding-top: 80px;
-  padding-left: 100px;
+  margin-left: 100px;
   color: ${({ theme }) => theme.palette.accent};
 `;
 
@@ -124,25 +108,5 @@ const ContentWrapper = styled.div`
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-`;
-
-const ImageWrapper = styled.div`
-  width: 680px;
-  height: 500px;
-  margin-top: 302px;
-  margin-left: 130px;
-  .img1 {
-    margin-left: 200px;
-  }
-  .img2 {
-  }
-  .img3 {
-    margin-left: 250px;
-  }
-  .location {
-    position: absolute;
-    right: 225px;
-    top: 220px;
   }
 `;

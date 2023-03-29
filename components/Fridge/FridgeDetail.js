@@ -3,13 +3,14 @@ import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IoLocationSharp } from 'react-icons/io5';
-import { IoStarSharp, IoStarOutline } from 'react-icons/io5';
 import DetailFoodList from '@components/Food/DetailFoodList';
 import MessageList from '@components/Message/messageList';
 import ReservationModal from '@components/Modal/ReservationModal';
 import DonationModal from '@components/Modal/DonationModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 import { getCanReserve } from 'api/Food/useFoods';
+import { RxCross2 } from 'react-icons/rx';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 const FridgeDetail = ({ id }) => {
   const router = useRouter();
@@ -51,10 +52,10 @@ const FridgeDetail = ({ id }) => {
 
   const ReservationHandleSubmit = () => {
     if (reservationList.length === 0) {
-      alert('하나 이상의 음식을 선택하세요!');
+      alert('Choose one or more foods!');
     } else if (numCanReserve < reservationList.length) {
       alert(
-        `예약 가능 음식 개수를 초과했습니다. 예약 가능 음식 개수 : ${numCanReserve}`
+        `You have exceeded the number of food available for reservation. Number of foods available for reservation : ${numCanReserve}`
       );
     } else {
       setIsReservation(false);
@@ -88,8 +89,15 @@ const FridgeDetail = ({ id }) => {
           }
         />
       </GradientImage>
-      <ExitButton onClick={onClickExitBtn}>X</ExitButton>
-      {/* onClick 구현 */}
+      <ExitButton onClick={onClickExitBtn}>
+        <RxCross2
+          style={{
+            width: '30px',
+            height: '30px',
+            color: 'white',
+          }}
+        />
+      </ExitButton>
       <Bookmark
         onClick={() => {
           mutate({
@@ -99,7 +107,7 @@ const FridgeDetail = ({ id }) => {
           });
         }}
       >
-        {fridgeDetailData.isBookmark ? <IoStarSharp /> : <IoStarOutline />}
+        {fridgeDetailData.isBookmark ? <AiFillStar /> : <AiOutlineStar />}
       </Bookmark>
       <Info>
         <Title>{fridgeDetailData.fridgeInfo.fridgeName}</Title>
@@ -234,23 +242,25 @@ const Bookmark = styled.div`
 `;
 
 const Info = styled.div`
-  width: 423px;
-  height: 193px;
-  position: relative;
-  z-index: 3;
-  display: flex;
-  margin: -20px 26px 0px 31px;
-  padding: 42px 0px;
-  background-color: white;
+  display: inline-flex;
   flex-direction: column;
-  border-radius: 10px;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  width: 423px;
+  max-height: 236px;
+  position: relative;
+  z-index: 3;
+  margin: -20px 59px 0px 31px;
+  padding: 42px 0px;
+  background-color: white;
+  border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.palette.beige2};
   box-shadow: 0px 0px 20 rgba(0, 0, 0, 5%);
 `;
 
 const Title = styled.div`
+  max-width: 382px;
   font-size: 32px;
   font-weight: 700;
   color: ${({ theme }) => theme.palette.secondary.main};
@@ -258,6 +268,7 @@ const Title = styled.div`
 `;
 
 const Address = styled.div`
+  max-width: 343px;
   font-size: 16px;
   color: ${({ theme }) => theme.palette.secondary.main70};
   margin-bottom: 21px;

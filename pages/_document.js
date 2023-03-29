@@ -29,6 +29,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta name="viewport" content="width=device-width" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
@@ -48,7 +49,6 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <div id="modal"></div>
           <NextScript />
         </body>
       </Html>

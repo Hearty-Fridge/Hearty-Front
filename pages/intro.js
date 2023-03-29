@@ -10,7 +10,7 @@ const Intro = () => {
   const { hash } = useUrlHash('P1');
 
   return (
-    <>
+    <Full>
       <Layout>
         <ReactFullpage
           anchors={ANCHORS}
@@ -31,11 +31,15 @@ const Intro = () => {
           <Indicator key={dot} href={`#${dot}`} active={dot === hash} />
         ))}
       </IndicatorWrapper>
-    </>
+    </Full>
   );
 };
 
 export default Intro;
+
+const Full = styled.div`
+  width: 100vw;
+`;
 
 const IndicatorWrapper = styled.div`
   position: fixed;

@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { getFoodImageById } from 'api/Food/useFoods';
 
-const ReservationFood = ({ data, onClickCheck, disabled }) => {
+const ReservationFood = ({ data, onClickCheck }) => {
   const token = localStorage.getItem('accessToken');
   const [expirationDate] = useState(
     moment(data.food.expiration).format('YYYY.MM.DD')
@@ -26,7 +26,7 @@ const ReservationFood = ({ data, onClickCheck, disabled }) => {
   }, [setExpLeft]);
 
   return (
-    <FoodWrapper disabled={disabled}>
+    <FoodWrapper>
       <div
         style={{
           marginLeft: '20 px',
@@ -38,7 +38,6 @@ const ReservationFood = ({ data, onClickCheck, disabled }) => {
         <FoodCheckbox
           id={`reserve-${data.food.id}`}
           type="checkbox"
-          disabled={disabled}
           onClick={(obj) => onClickCheck(obj, data)}
         />
       </div>
@@ -50,14 +49,17 @@ const ReservationFood = ({ data, onClickCheck, disabled }) => {
       ) : (
         <NotLoaded></NotLoaded>
       )}
-      <Info disabled={disabled}>
+      <Info>
         <div
           style={{ display: 'flex', columnGap: '12px', alignItems: 'center' }}
         >
           <div className="foodName">{data.food.name}</div>
           {expLeft == 1 && <Tag>{`${expLeft} day`}</Tag>}
         </div>
-        <div className="etc">{`${data.food.amount} | ~${expirationDate}`}</div>
+        <div className="etc">
+          {data.food.amount} <span className="seperator">|</span> ~
+          {expirationDate}
+        </div>
         <div className="message">{data.food.message}</div>
       </Info>
     </FoodWrapper>
@@ -72,11 +74,8 @@ const FoodWrapper = styled.div`
   border-top: solid 1px ${({ theme }) => theme.palette.beige2};
   padding-top: 18px;
   column-gap: 20px;
-  background-color: ${(props) =>
-    props.disabled ? props.theme.palette.background : ''};
   :hover {
-    background-color: ${(props) =>
-      props.disabled ? '' : props.theme.palette.beige1};
+    background-color: ${({ theme }) => theme.palette.beige1};
   }
 `;
 
@@ -87,19 +86,16 @@ const FoodCheckbox = styled.input`
   appearance: none;
   margin-left: 10px;
   border: max(2px, 0.1em) solid gray;
+  border-radius: 10px;
   :checked {
     content: '✓';
     border: 0.4em solid tomato;
-  }
-  :disabled {
-    background-color: gray;
   }
 `;
 
 const StyledImg = styled.img`
   width: 63px;
   height: 63px;
-  /* background-color: ${(props) => (props.disabled ? '#f8f8f8B3' : 'red')}; */
 `;
 const NotLoaded = styled.div`
   min-width: 63px;
@@ -113,28 +109,22 @@ const Info = styled.div`
   .foodName {
     font-size: 18px;
     font-weight: 700;
-    color: ${(props) =>
-      props.disabled
-        ? props.theme.palette.secondary.main50
-        : props.theme.palette.primary};
+    color: ${({ theme }) => theme.palette.primary};
   }
   .etc {
     font-weight: 600;
-    color: ${(props) =>
-      props.disabled
-        ? props.theme.palette.secondary.main50
-        : props.theme.palette.secondary.main};
+    color: ${({ theme }) => theme.palette.secondary.main};
   }
   .message {
     display: -webkit-box;
     text-overflow: ellipsis;
-    color: ${(props) =>
-      props.disabled
-        ? props.theme.palette.secondary.main50
-        : props.theme.palette.secondary.main30};
+    color: ${({ theme }) => theme.palette.secondary.main30};
     -webkit-line-clamp: 2;
     overflow: hidden;
     -webkit-box-orient: vertical;
+  }
+  .seperator {
+    color: ${({ theme }) => theme.palette.secondary.main30};
   }
 `;
 

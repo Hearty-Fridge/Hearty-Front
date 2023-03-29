@@ -3,6 +3,7 @@ import Modal from './Modal';
 import ReservationFood from '@components/Food/ReservationFood';
 import { IoCloseSharp } from 'react-icons/io5';
 import { useCallback, useEffect } from 'react';
+import { RxCross2 } from 'react-icons/rx';
 
 const ReservationModal = ({
   data,
@@ -20,7 +21,7 @@ const ReservationModal = ({
         );
       } else {
         if (reservationList.length == 2) {
-          alert('2개까지 선택할 수 있습니다.');
+          alert('You can choose up to 2 foods');
           obj.target.checked = false;
         } else {
           setReservationList(() => [...reservationList, food]);
@@ -43,24 +44,27 @@ const ReservationModal = ({
         <Top>
           <Title>Reservation</Title>
           <Exit onClick={onCloseModal}>
-            <IoCloseSharp
+            <RxCross2
               style={{
-                width: '41px',
-                height: '41px',
+                width: '35px',
+                height: '35px',
+                color: '#594C48',
               }}
             />
           </Exit>
         </Top>
         <Info>* You can make a reservation up to two foods per person.</Info>
         <FoodWrapper>
-          {data?.map((food) => (
-            <ReservationFood
-              key={food.food.id}
-              data={food}
-              onClickCheck={onClickCheck}
-              disabled={food.isReserved}
-            />
-          ))}
+          {data?.map((food) => {
+            if (food.isReserved) return '';
+            return (
+              <ReservationFood
+                key={food.food.id}
+                data={food}
+                onClickCheck={onClickCheck}
+              />
+            );
+          })}
         </FoodWrapper>
         <BtnWrapper>
           <button type="button" className="cancel" onClick={onCloseModal}>
@@ -117,6 +121,7 @@ const BtnStyle = css`
   height: 40px;
   border-radius: 100px;
   border: none;
+  color: white;
 `;
 
 const BtnWrapper = styled.div`
@@ -130,10 +135,10 @@ const BtnWrapper = styled.div`
   margin-top: 24px;
   .cancel {
     ${BtnStyle};
-    background-color: ${({ theme }) => theme.palette.gray};
+    background-color: #d9d9d9;
   }
   .submit {
     ${BtnStyle};
-    background-color: ${({ theme }) => theme.palette.primary};
+    background-color: ${({ theme }) => theme.palette.accent};
   }
 `;

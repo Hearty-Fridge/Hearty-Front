@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 import React from 'react';
-import * as RadioGroup from '@radix-ui/react-radio-group';
 
 const TakerForm = () => {
   return (
@@ -9,32 +7,18 @@ const TakerForm = () => {
       <Container>
         <Section>
           <SectionName>
-            <div className="name">
-              <Dot>*</Dot> 발급 사이트
-            </div>
-            <RadioForm>
-              <RadioGroupRoot defaultValue="default" aria-label="View density">
-                <Flex css={{ alignItems: 'center' }}>
-                  <RadioGroupItem value="default" id="r1">
-                    <RadioGroupIndicator />
-                  </RadioGroupItem>
-                  <Label htmlFor="r1">정부 24(www.gov.kr)</Label>
-                </Flex>
-                <Flex css={{ alignItems: 'center' }}>
-                  <RadioGroupItem value="comfortable" id="r2">
-                    <RadioGroupIndicator />
-                  </RadioGroupItem>
-                  <Label htmlFor="r2">기타</Label>
-                </Flex>
-              </RadioGroupRoot>
-            </RadioForm>
+            <div className="name">Issuing site</div>
           </SectionName>
+          <Flex>
+            <BigDot />
+            <Label htmlFor="r1">Government 24(www.gov.kr)</Label>
+          </Flex>
         </Section>
         <Bar />
         <Section>
           <SectionName>
             <div className="name">
-              <Dot>*</Dot> 이름
+              <Dot>*</Dot> name
             </div>
           </SectionName>
           <TextInput placeholder="" />
@@ -43,18 +27,18 @@ const TakerForm = () => {
         <Section2>
           <SectionName>
             <div className="name">
-              <Dot>*</Dot>문서 확인 번호
+              <Dot>*</Dot>Document Verification Number
             </div>
             {/* <div className="error">
               {errors.expirationDate && errors.expirationDate.message}
             </div> */}
-            <NumberInput>
-              <NumInput /> <Dash>-</Dash>
-              <NumInput /> <Dash>-</Dash>
-              <NumInput /> <Dash>-</Dash>
-              <NumInput />
-            </NumberInput>
           </SectionName>
+          <NumberInput>
+            <NumInput /> <Dash>-</Dash>
+            <NumInput /> <Dash>-</Dash>
+            <NumInput /> <Dash>-</Dash>
+            <NumInput />
+          </NumberInput>
         </Section2>
       </Container>
     </StyledForm>
@@ -141,51 +125,19 @@ const Bar = styled.hr`
 `;
 
 // radio custom
-const RadioForm = styled.form`
-  display: flex;
-`;
-
-const RadioGroupRoot = styled(RadioGroup.Root)`
-  margin-top: 30px;
-  margin-left: 36px;
-  display: flex;
-  gap: 24px;
-`;
-
-const RadioGroupItem = styled(RadioGroup.Item)`
-  all: unset;
-  background-color: white;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  box-shadow: 0 0 0 2px #f2916e;
-  &:hover {
-    cursor: pointer;
-  }
-  &:focus {
-    box-shadow: 0 0 0 2px #f2916e;
-  }
-`;
-
-const RadioGroupIndicator = styled(RadioGroup.Indicator)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  &::after {
-    content: '';
-    display: block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #f2916e;
-  }
-`;
 
 const Flex = styled.div`
-  display: 'flex';
+  display: flex;
+  margin-left: 36px;
+  margin-top: 24px;
+`;
+
+const BigDot = styled.div`
+  margin-top: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.palette.primary};
 `;
 
 const Label = styled.label`
