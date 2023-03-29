@@ -49,6 +49,16 @@ const MsgData = () => {
     dotsClass: 'dots_custom',
   };
 
+  const settings1 = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 3,
+    centerMode: true,
+    arrows: false,
+    dotsClass: 'dots_custom',
+  };
+
   return (
     <Wrapper>
       <Title>Hearty Messages</Title>
@@ -61,13 +71,23 @@ const MsgData = () => {
         <></>
       )}
       {list.length <= 2 ? (
-        <Slider {...settings2}>
-          {list.map((item) => (
-            <div>
-              <Message item={item} />
-            </div>
-          ))}
-        </Slider>
+        list.length == 1 ? (
+          <Slider {...settings1}>
+            {list.map((item) => (
+              <div>
+                <Message item={item} />
+              </div>
+            ))}
+          </Slider>
+        ) : (
+          <Slider {...settings2}>
+            {list.map((item) => (
+              <div>
+                <Message item={item} />
+              </div>
+            ))}
+          </Slider>
+        )
       ) : (
         <Slider {...settings}>
           {list.map((item) => (
