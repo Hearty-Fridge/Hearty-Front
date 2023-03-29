@@ -231,7 +231,7 @@ const Bookmark = styled.div`
   height: 48px;
   background-color: white;
   border-radius: 10% 10% 0px 0px;
-  margin: 158px 26px -18px 31px;
+  margin: 158px 26px 0px 31px;
   z-index: 4;
   svg {
     color: ${({ theme }) => theme.palette.primary};
