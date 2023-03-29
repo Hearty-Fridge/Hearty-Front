@@ -115,7 +115,7 @@ const Title = styled.div`
 
 const SubTitle = styled.div`
   padding-bottom: 22px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 18px;
   line-height: 21px;
 
