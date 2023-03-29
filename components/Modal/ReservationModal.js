@@ -3,6 +3,7 @@ import Modal from './Modal';
 import ReservationFood from '@components/Food/ReservationFood';
 import { IoCloseSharp } from 'react-icons/io5';
 import { useCallback, useEffect } from 'react';
+import { RxCross2 } from 'react-icons/rx';
 
 const ReservationModal = ({
   data,
@@ -43,10 +44,11 @@ const ReservationModal = ({
         <Top>
           <Title>Reservation</Title>
           <Exit onClick={onCloseModal}>
-            <IoCloseSharp
+            <RxCross2
               style={{
-                width: '41px',
-                height: '41px',
+                width: '35px',
+                height: '35px',
+                color: '#594C48',
               }}
             />
           </Exit>
@@ -119,6 +121,7 @@ const BtnStyle = css`
   height: 40px;
   border-radius: 100px;
   border: none;
+  color: white;
 `;
 
 const BtnWrapper = styled.div`
@@ -132,10 +135,10 @@ const BtnWrapper = styled.div`
   margin-top: 24px;
   .cancel {
     ${BtnStyle};
-    background-color: ${({ theme }) => theme.palette.gray};
+    background-color: #d9d9d9;
   }
   .submit {
     ${BtnStyle};
-    background-color: ${({ theme }) => theme.palette.primary};
+    background-color: ${({ theme }) => theme.palette.accent};
   }
 `;

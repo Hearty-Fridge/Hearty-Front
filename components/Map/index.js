@@ -1,8 +1,7 @@
 import GoogleMapReact from 'google-map-react';
-import { useCallback, useState, useEffect, useRef, forwardRef } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Marker } from './Marker';
-import { getAllFridges } from 'api/Fridges/useFridges';
 import { useRouter } from 'next/router';
 
 const Map = ({
@@ -52,6 +51,7 @@ const Map = ({
         onChange={() => {
           handleBoundsChanged();
         }}
+        options={{ disableDefaultUI: true }}
       >
         {visibleList?.map((m) => (
           <Marker

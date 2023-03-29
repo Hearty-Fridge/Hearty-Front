@@ -7,7 +7,7 @@ export const IntroP3 = ({ className }) => {
     <Wrapper className={className}>
       <FlexRowDiv>
         <Description>
-          leave a <br />
+          Leave a <br />
           <span className="play-fair">Hearty Fridge</span>
           <Flex>
             <SubTitle>
@@ -73,10 +73,10 @@ const Flex = styled.div`
 const How = styled.div`
   display: inline-block;
   padding: 0px 12px 0px 12px;
-  margin-right: 42px;
+  margin-right: 25px;
   font-weight: 300;
   font-size: 12px;
-  border-radius: 50px;
+  border-radius: 10px;
 
   color: ${(props) => props.theme.palette.accent};
   border-style: solid;

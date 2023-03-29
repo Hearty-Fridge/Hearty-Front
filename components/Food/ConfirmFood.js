@@ -44,6 +44,7 @@ const FoodWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.palette.beige2};
   background-color: ${({ theme }) => theme.palette.beigeWhite};
   color: ${({ theme }) => theme.palette.secondary.main};
+  box-shadow: 0 0 20px rgba(0, 0, 0, 5%);
 `;
 
 const StyledImg = styled.img`
@@ -71,4 +72,5 @@ const Detail = styled.div`
   font-weight: 16px;
   font-weight: 600;
   line-height: 1.6rem;
+  margin-bottom: 8px;
 `;

@@ -2,10 +2,10 @@ import ListItem from '@components/Fridge/FridgeListItem';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { IoStarSharp } from 'react-icons/io5';
 import { getFridgesByKeyword } from 'api/Fridges/useFridges';
 import { IoLocationSharp } from 'react-icons/io5';
 import { BiSearchAlt2 } from 'react-icons/bi';
+import { AiFillStar } from 'react-icons/ai';
 
 const getMatchingData = ({ keyword, fridgeName }) => {
   const idx = fridgeName.indexOf(keyword);
@@ -85,7 +85,7 @@ const FridgeList = ({
           className={isFavorite ? 'activate' : ''}
           onClick={() => onClickNav(true)}
         >
-          My Fridge <IoStarSharp style={{ marginLeft: '7px' }} />
+          My Fridge <AiFillStar style={{ marginLeft: '7px' }} />
         </MyFridge>
       </InnerNav>
       <SearchWrapper
@@ -257,6 +257,7 @@ const SearchedListItem = styled.div`
 `;
 
 const SizedHr = styled.hr`
+  border: ${({ theme }) => theme.palette.beige2} solid 0.5px;
   margin-left: 20px;
   width: 359px;
 `;

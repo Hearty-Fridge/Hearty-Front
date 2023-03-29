@@ -3,14 +3,14 @@ import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IoLocationSharp } from 'react-icons/io5';
-import { IoStarSharp, IoStarOutline } from 'react-icons/io5';
 import DetailFoodList from '@components/Food/DetailFoodList';
 import MessageList from '@components/Message/messageList';
 import ReservationModal from '@components/Modal/ReservationModal';
 import DonationModal from '@components/Modal/DonationModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 import { getCanReserve } from 'api/Food/useFoods';
-import { IoCloseSharp } from 'react-icons/io5';
+import { RxCross2 } from 'react-icons/rx';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 const FridgeDetail = ({ id }) => {
   const router = useRouter();
@@ -90,10 +90,11 @@ const FridgeDetail = ({ id }) => {
         />
       </GradientImage>
       <ExitButton onClick={onClickExitBtn}>
-        <IoCloseSharp
+        <RxCross2
           style={{
             width: '30px',
             height: '30px',
+            color: 'white',
           }}
         />
       </ExitButton>
@@ -106,7 +107,7 @@ const FridgeDetail = ({ id }) => {
           });
         }}
       >
-        {fridgeDetailData.isBookmark ? <IoStarSharp /> : <IoStarOutline />}
+        {fridgeDetailData.isBookmark ? <AiFillStar /> : <AiOutlineStar />}
       </Bookmark>
       <Info>
         <Title>{fridgeDetailData.fridgeInfo.fridgeName}</Title>
@@ -250,7 +251,7 @@ const Info = styled.div`
   max-height: 236px;
   position: relative;
   z-index: 3;
-  margin: -20px 26px 0px 31px;
+  margin: -20px 59px 0px 31px;
   padding: 42px 0px;
   background-color: white;
   border-radius: 10px;

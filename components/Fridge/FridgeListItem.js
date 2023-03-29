@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { IoStarSharp, IoStarOutline } from 'react-icons/io5';
 import { useBookmarkMutation } from 'api/Fridges/useFridges';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 const ListItem = ({ id, onClick, info, activate }) => {
   const token = localStorage.getItem('accessToken');
@@ -44,7 +44,7 @@ const ListItem = ({ id, onClick, info, activate }) => {
         </div>
       </InfoArea>
       <Prefer onClick={onClickBookmark}>
-        {info.isBookmark ? <IoStarSharp /> : <IoStarOutline />}
+        {info.isBookmark ? <AiFillStar /> : <AiOutlineStar />}
       </Prefer>
     </Wrapper>
   );
@@ -62,7 +62,8 @@ const Wrapper = styled.div`
   max-height: 214px;
   background-color: ${({ theme }) => theme.palette.beigeWhite};
   border-radius: 10px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 25%);
+  border: solid inset ${({ theme }) => theme.palette.beige2} 1px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 5%);
   &.activate {
     background-color: white;
   }
@@ -79,7 +80,7 @@ const InfoArea = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-left: 20px;
-  width: 261px;
+  width: 250px;
   max-height: 174px;
   color: ${({ theme }) => theme.palette.secondary.main};
   .address {
@@ -88,6 +89,7 @@ const InfoArea = styled.div`
   }
   .title {
     max-height: 72px;
+    width: 240px;
     font-size: 20px;
     font-weight: 700;
     &.activate {
@@ -97,7 +99,7 @@ const InfoArea = styled.div`
   .status {
     margin-top: 6px;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 400;
     color: ${({ theme }) => theme.palette.secondary.main70};
   }
   .distance {
@@ -106,10 +108,11 @@ const InfoArea = styled.div`
   .seperator {
     color: ${({ theme }) => theme.palette.secondary.main30};
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
   }
 `;
 
 const Prefer = styled.div`
+  margin-top: 5px;
   color: ${({ theme }) => theme.palette.primary};
 `;

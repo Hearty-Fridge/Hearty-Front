@@ -10,7 +10,7 @@ const Home = () => {
           Let’s <Bold>donate</Bold>{' '}
           <FridgeImg src="/image/home/fridge.png" alt="photo" /> <br />{' '}
           <SandwichImg src="/image/home/sandwich.png" alt="photo" /> with{' '}
-          <Bold>hearty Fridge!</Bold>
+          <Bold>Hearty Fridge!</Bold>
         </Title>
       </Layout>
       <Ellipse />
@@ -18,19 +18,15 @@ const Home = () => {
         <Box>
           <BoxFlex>
             <What>What?</What>
-            <BiCurrentLocation
-              style={{
-                width: '24px',
-                height: '24px',
-                color: '#FAF4EC',
-                marginTop: '5px',
-              }}
-            />
           </BoxFlex>
           <BoxText>
-            We look forward to a world <br />
-            where everyone can protect <br />
-            the environment
+            A shared Refrigerator <br />
+            management platform <br />
+            for the socially
+            <br />
+            vulnerable
+            <br />
+            the environment.
           </BoxText>
         </Box>
         <FoodList>
@@ -60,7 +56,9 @@ const Home = () => {
 
 const Full = styled.div`
   width: 100vw;
+  height: 100%;
   position: relative;
+  background-color: ${({ theme }) => theme.palette.beige1};
 `;
 
 const FridgeImg = styled.img`
@@ -127,13 +125,14 @@ const BoxFlex = styled.div`
 
 const BoxText = styled.div`
   font-weight: 400;
-  font-size: 36px;
+  font-size: 32px;
+  line-height: 48px;
   display: flex;
   align-items: flex-end;
   text-align: right;
   color: #faf4ec;
   letter-spacing: -0.01em;
-  margin-top: 100px;
+  margin-top: 80px;
 `;
 
 const What = styled.div`
@@ -166,6 +165,7 @@ const FoodNum = styled.div`
   text-align: right;
   letter-spacing: -0.01em;
   color: #ed6335;
+  margin-right: 17px;
 `;
 
 const FoodImg = styled.img`

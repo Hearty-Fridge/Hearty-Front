@@ -4,7 +4,6 @@ import Image from 'next/image';
 import styled, { css } from 'styled-components';
 import { useRouter } from 'next/router';
 import { getZIndex } from '@styles/zIndex';
-import { AiFillBell } from 'react-icons/ai';
 import { useLogin } from '@hooks/useLogin';
 
 import Notification from './Notification';
@@ -38,7 +37,7 @@ const Header = () => {
       <InfoArea>
         {isLogin ? (
           <>
-            <Notification />
+            <Notification width={50} height={50} />
             <Link href="/">
               <LogOutButton onClick={handleLogout}>Log out</LogOutButton>
             </Link>
@@ -79,6 +78,7 @@ const Navigation = styled.nav`
 
 const NavLink = styled(Link)`
   color: ${({ theme }) => theme.palette.secondary.main};
+  width: 40px;
   ${({ selected }) =>
     selected &&
     css`
@@ -135,6 +135,6 @@ const MyPageButton = styled(Link)`
   min-width: 92.32px;
   outline: none;
   border: none;
-  font-size: 14px;
+  font-size: 18px;
   background-color: ${({ theme }) => theme.palette.primary};
 `;

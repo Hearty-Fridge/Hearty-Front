@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import Modal from './Modal';
 import Food from '@components/Food/ReservationFood';
 import DonateForm from '@components/Form/DonateForm';
-import { IoCloseSharp } from 'react-icons/io5';
+import { RxCross2 } from 'react-icons/rx';
 
 const DonationModal = ({ id, show, setShow, onCloseModal }) => {
   // category
@@ -12,10 +12,11 @@ const DonationModal = ({ id, show, setShow, onCloseModal }) => {
         <Top>
           <Title>Donation</Title>
           <Exit onClick={onCloseModal}>
-            <IoCloseSharp
+            <RxCross2
               style={{
-                width: '41px',
-                height: '41px',
+                width: '35px',
+                height: '35px',
+                color: '#594C48',
               }}
             />
           </Exit>

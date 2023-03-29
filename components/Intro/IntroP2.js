@@ -40,12 +40,10 @@ const FlexRowDiv = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 1080px;
-  min-width: 1920px;
 `;
 
 const Description = styled.div`
   margin-top: 380px;
-  margin-left: 150px;
   width: 970px;
   height: 324px;
   font-size: 80px;
@@ -61,15 +59,19 @@ const Description = styled.div`
 const GnT = styled.div`
   display: flex;
   margin-top: -120px;
-  margin-left: 150px;
   column-gap: 120px;
 `;
 
 const Wrapper = styled.div`
   height: 1080px;
+  width: 100vw;
+  margin-right: 90px;
+  margin-left: 90px;
 `;
 
 const Detail = styled.div`
+  display: flex;
+  align-items: start;
   font-size: 20px;
   line-height: 28px;
   letter-spacing: -0.01em;
@@ -86,16 +88,4 @@ const GnTIcon = styled.div`
   border-radius: 10px;
   background-color: ${(props) => props.theme.palette.accent};
   color: white;
-`;
-
-const ImageWrapper = styled.div`
-  width: 600px;
-  height: 575px;
-  margin-top: 260px;
-  margin-left: 20px;
-  img {
-    float: right;
-  }
-  position: relative;
-  right: 0;
 `;
