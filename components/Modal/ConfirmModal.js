@@ -64,7 +64,7 @@ const Container = styled.div`
   width: 700px;
   min-height: 500px;
   background-color: white;
-  padding: 48px 48px 0px 59px;
+  padding: 48px 48px 48px 59px;
   border-radius: 10px;
 `;
 
