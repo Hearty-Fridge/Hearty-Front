@@ -85,7 +85,7 @@ const FridgeDetail = ({ id }) => {
       <GradientImage>
         <img
           src={
-            'https://storage.googleapis.com/slowy_storage123/latrach-med-jamil-Eb6hMEhGlKY-unsplash.jpg'
+            'https://storage.googleapis.com/slowy_gcs_1/defaultFridgeImage.png'
           }
         />
       </GradientImage>

@@ -17,7 +17,7 @@ const ListItem = ({ id, onClick, info, activate }) => {
   return (
     <Wrapper className={activate ? 'activate' : ''} onClick={onClick}>
       <ImgArea
-        src={`https://storage.googleapis.com/slowy_storage123/latrach-med-jamil-Eb6hMEhGlKY-unsplash.jpg`}
+        src={`https://storage.googleapis.com/slowy_gcs_1/defaultFridgeImage.png`}
         alt="fridge-image"
       />
       <InfoArea>
