@@ -41,11 +41,8 @@ const ReservationFood = ({ data, onClickCheck }) => {
           onClick={(obj) => onClickCheck(obj, data)}
         />
       </div>
-      {imageData && imageData.images.length ? (
-        <StyledImg
-          src={`${imageData.baseUri}${imageData.images[0].uuidFileName}`}
-          alt="hi"
-        />
+      {imageData && imageData.url ? (
+        <StyledImg src={`${imageData.url}`} alt="hi" />
       ) : (
         <NotLoaded></NotLoaded>
       )}
