@@ -70,8 +70,7 @@ export default function DonateForm({ id, setShow }) {
     formData.append('category', e.category);
     formData.append('message', e.message);
     formData.append('fridgeId', id);
-    formData.append('giverId', 11);
-    if (selectedImage) formData.append('images', selectedImage);
+    if (selectedImage) formData.append('image', selectedImage);
     mutate({ body: formData, token: token });
     setShow(false);
     refetch();

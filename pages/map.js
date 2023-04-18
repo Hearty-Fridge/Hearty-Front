@@ -25,10 +25,10 @@ const MapPage = () => {
   const setVisibleListInBoundary = useCallback(() => {
     // 이 부분 업데이트 될 때마다 Ka , Va 저 부분 바뀌는거 같음
     // TODO : 버그 고치기
-    const minLat = boundsRef.current?.Wa.lo;
-    const maxLat = boundsRef.current?.Wa.hi;
-    const minLng = boundsRef.current?.Ga.lo;
-    const maxLng = boundsRef.current?.Ga.hi;
+    const minLat = boundsRef.current?.Va.lo;
+    const maxLat = boundsRef.current?.Va.hi;
+    const minLng = boundsRef.current?.Ha.lo;
+    const maxLng = boundsRef.current?.Ha.hi;
 
     const tmp = data?.fridgeList
       .filter(

@@ -3,12 +3,10 @@ import { useMutation, useQueryClient, useQuery } from 'react-query';
 import axios from 'axios';
 
 const giveFood = async ({ body, token }) => {
-  console.log(token);
-  console.log(body);
   if (!token) {
     return { isLoading: false, error: 'Access token is missing' };
   }
-  await axiosInstance.post('/give/giveFood', body, {
+  return await axiosInstance.post('/give/giveFood', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`,
@@ -45,7 +43,7 @@ export const useFoodsMutation = ({ fridgeId }) => {
     // useTodosQuery에서 불러온 API Response의 Cache를 초기화
     onSuccess: () => {
       queryClient.invalidateQueries(['fridges']);
-      queryClient.invalidateQueries(['fridgesById', fridgeId.toString()]);
+      queryClient.invalidateQueries(['fridgesById', fridgeId]);
     },
     onMutate: async (newData) => {
       let obj = {};
@@ -69,6 +67,7 @@ export const useFoodsMutation = ({ fridgeId }) => {
         queryClient.cancelQueries(fridgesQueryKey),
         queryClient.cancelQueries(fridgeQueryKey),
       ]);
+
       fridgeData.foodList.push({
         giveId: -1,
         giveTime: new Date(),
@@ -89,19 +88,24 @@ export const useFoodsMutation = ({ fridgeId }) => {
         messageId: -1,
         sendTime: new Date(),
       });
+
       fridgesData.fridgeList[fridgeId - 1].numFoods += 1;
       fridgesData.fridgeList[fridgeId - 1].numMessages += 1;
 
       queryClient.setQueryData(fridgesQueryKey, fridgesData);
       queryClient.setQueryData(fridgeQueryKey, fridgeData);
 
+      console.log(fridgesQueryKey, fridgeQueryKey);
+      console.log(fridgeData, fridgesData);
+
       return { previousData };
     },
     onError: (err, newData, context) => {
-      queryClient.setQueryData(['fridges'], context.previousData.fridges);
+      console.log(context.previousData);
+      queryClient.setQueryData(['fridges'], context.previousData.fridges[0][1]);
       queryClient.setQueryData(
         ['fridgesById', fridgeId],
-        context.previousData.fridge
+        context.previousData.fridge[0][1]
       );
     },
     // Always refetch after error or success:
