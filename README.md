@@ -88,13 +88,3 @@ The **SDGs** that can be achieved through our service is as follows
 
 
 <br>
-
-## 🎥 Demo
-
-<br>
-
-## 👨‍👩‍👧‍👦 Team slowy’s Member
-
-| [김효근](https://github.com/HiGeuni) | [김연수](https://github.com/dustnehowl) | [오예진](https://github.com/yexjin) | [유현영](https://github.com/lhy7963) |
-| --- | --- | --- | --- |
-| Leader, FE | BE | FE | Designer |
